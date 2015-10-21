@@ -3,6 +3,7 @@
 	<name>Serv</name>
 	<comment></comment>
 	<projects>
+		<project>AgeOfEmpiresTaller</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
