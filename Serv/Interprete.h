@@ -9,7 +9,7 @@
 #define INTERPRETE_H_
 
 #include <string>
-#include "GameControllerSrv.h"
+#include "GameControllerSrc/GameControllerServer.h"
 #include "User.h"
 
 using namespace std;
@@ -33,7 +33,8 @@ public:
 	virtual ~Interprete();
 
 private:
-	GameControllerSrv* gameCtrl;
+	GameControllerServer* gameCtrl;
+
 };
 
 #endif /* INTERPRETE_H_ */

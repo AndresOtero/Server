@@ -8,7 +8,7 @@
 #include "Interprete.h"
 
 Interprete::Interprete() {
-	this->gameCtrl = new GameControllerSrv();
+	this->gameCtrl = NULL;
 }
 string Interprete:: getKeepAliveMsg(){
 	return string("ALIVE");
@@ -45,6 +45,6 @@ void Interprete::postLoginMsg(string& msg, User* user){
 }
 
 Interprete::~Interprete() {
-	delete this->gameCtrl;
+
 }
 
