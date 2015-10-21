@@ -63,10 +63,9 @@ void agregarACola(Cola* colaEventos,string* evento,User* client, SDL_mutex *mute
 	}
 }
 
-void* notifierClientThread(void *threadArg){
+void enviarNotificaciones(void *threadArg){
 	struct thread_notifier_data* data;
 	string verification,notificacion;
-	double tiempo_actual,tiempo_viejo=0;
 
 	data = (struct thread_notifier_data*) threadArg;
 
@@ -74,28 +73,13 @@ void* notifierClientThread(void *threadArg){
 	User* user = data ->user;
 	Interprete* interprete = data ->interprete;
 
-	tiempo_viejo=SDL_GetTicks();
+	while( (user->isColaVacia() == false) && (socket->isConnected())){
+		 notificacion = user->popNotifiacion();
 
-	while (socket->isConnected()){
-		if (user->isColaVacia()){
-			enviarKeepAlive(socket, interprete);
-		}else{
-			while( (user->isColaVacia() == false) && (socket->isConnected())){
-				 notificacion = user->popNotifiacion();
-
-				 socket->sendMessage(notificacion);
-				 socket->recieveMessage(verification);
-				 if (user->isColaVacia()){
-					 enviarKeepAlive(socket, interprete);
-				 }
-			}
-		}
-
-		 usleep((40 - (tiempo_actual-tiempo_viejo))*1000);
-		 tiempo_actual= SDL_GetTicks();
-		 tiempo_viejo=tiempo_actual;
+		 socket->sendMessage(notificacion);
+		 socket->recieveMessage(verification);
 	}
-	pthread_exit(NULL);
+
 }
 
 void enviarConfirmReceived(MySocket* myClient, Interprete* interprete){
@@ -130,14 +114,14 @@ void* acceptedClientThread(void *threadArg ){
 
 	/* Abre thread notificador para este user */
 
-	pthread_t tNotifierClient;
+	//pthread_t tNotifierClient;
 	struct thread_notifier_data threadNotifierArg;
 
 	threadNotifierArg.user = user;
 	threadNotifierArg.newClient = socket;
 	threadNotifierArg.interprete = interprete;
 
-	pthread_create(&tNotifierClient, NULL, notifierClientThread,(void *) &threadNotifierArg);
+//pthread_create(&tNotifierClient, NULL, notifierClientThread,(void *) &threadNotifierArg);
 
 	/* Tareas del thread Este que obtiene mensajes del client */
 
@@ -149,11 +133,15 @@ void* acceptedClientThread(void *threadArg ){
 
 	messageFromClient= "";
 
+	enviarNotificaciones((void *)&threadNotifierArg);
+
    while ( (!interprete->isQuit(messageFromClient)) && (socket->isConnected())){
+
+	  enviarKeepAlive(socket, interprete);
 
 	  messageFromClient= "";
 	  socket->recieveMessage(messageFromClient);
-
+	  printf("%s \n", messageFromClient.c_str());
 	  if (socket->isConnected()){
 
 		  agregarACola(colaEventos,&messageFromClient,user, mutex);
@@ -162,7 +150,7 @@ void* acceptedClientThread(void *threadArg ){
 	  }
     }
    user->setConnectedFlag(false);
-   pthread_exit(&tNotifierClient);
+   //pthread_exit(&tNotifierClient);
    pthread_exit(NULL);
 }
 
