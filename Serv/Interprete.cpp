@@ -8,19 +8,22 @@
 #include "Interprete.h"
 
 Interprete::Interprete() {
-	this->gameCtrl = NULL;
+	this->gameCtrl = new GameControllerSrv();
 }
 string Interprete:: getKeepAliveMsg(){
-	return string("ALIVE");
+	string r = "ALIVE";
+	return r;
 }
 string Interprete:: getReceivedMsg(){
-	return string("OK");
+	string r = "OK";
+	return r;
 }
 string Interprete:: getQuit(){
-	return string("QUIT");
+	string r = "QUIT";
+	return r;
 }
 bool Interprete::isQuit(string& quit){
-	return (quit.compare("QUIT") == 0);
+	return (quit.compare(getQuit()) == 0);
 }
 string Interprete:: getActualizarRecursosMsg(int oro, int madera,int piedra){
 	char buffer[50];
@@ -33,7 +36,8 @@ string Interprete:: getActualizarRecursosMsg(int oro, int madera,int piedra){
 }
 string Interprete::getFinalUpdates(){
 
-	return string("FINAL_UPDATES");
+	string r = "FINAL_UPDATES";
+	return r;
 }
 
 void Interprete:: notifyUpdate(string& msg){
@@ -45,6 +49,6 @@ void Interprete::postLoginMsg(string& msg, User* user){
 }
 
 Interprete::~Interprete() {
-
+	delete this->gameCtrl;
 }
 

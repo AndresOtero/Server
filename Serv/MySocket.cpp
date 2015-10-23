@@ -16,8 +16,6 @@ MySocket::MySocket(){
 	portNumber = 0;
 	connected = true;
 	socketId = 0;
-
-	//setKeepAlive(2);
 }
 
 MySocket::MySocket(int pNumber){
@@ -32,8 +30,6 @@ MySocket::MySocket(int pNumber){
 	clientAddr.sin_family = AF_INET;
 	clientAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	clientAddr.sin_port = htons(portNumber);
-
-	//setKeepAlive(2);
 }
 
 void MySocket::setKeepAlive(int timeOut)
@@ -45,9 +41,7 @@ void MySocket::setKeepAlive(int timeOut)
 	if ( setsockopt(socketId,SOL_SOCKET,SO_RCVTIMEO,(char *)&tv,sizeof(struct timeval)) == -1 )
 	{
 		errorLog("error seteando el timout para el keepAlive");
-		connected = false;
 	}
-	connected = true;
 }
 void MySocket::bindSocket()
 {
@@ -82,14 +76,15 @@ void MySocket::connectToServer(const char* serverAddr)
 	{
 		errorLog("error al conectar con el server /n");
 	}
-
+	connected = true;
 }
 
 void MySocket::reconnectToServer(){
 	if (connect(socketId,(struct sockaddr *)&serverAddress,sizeof(serverAddress)) < 0)
 	{
-		errorLog("error al conectar con el server /n");
+		//errorLog("error al conectar con el server /n");
 	}
+	connected = true;
 }
 
 MySocket* MySocket::acceptClient(std::string& clientName)
@@ -122,14 +117,16 @@ void MySocket::listenToClient(int totalNumPorts)
 
 int MySocket::sendMessage(std::string& message)
 {
-	int numBytes;  // the number of bytes sent
+	int numBytes;
 
 	char msgLength[MSG_HEADER_LEN+1];
+
     sprintf(msgLength,"%6zu",message.size());
 	std::string sendMsg = std::string(msgLength);
     sendMsg += message;
 
 	// Sends the message to the connected host
+
     numBytes = send(socketId,sendMsg.c_str(),sendMsg.size(),0);
 
     verifyNumbytes(numBytes);
@@ -137,22 +134,24 @@ int MySocket::sendMessage(std::string& message)
 	return numBytes;
 }
 
-int MySocket::recieveMessage(std::string& message)
+std::string MySocket::recieveMessage()
 {
 	int numBytes;
+	std::string message;
+	message.empty();
 
 	char msgLength[MSG_HEADER_LEN+1];
 	memset(msgLength,0,sizeof(msgLength));
 
-	setKeepAlive(2);
-	numBytes = recv(socketId,msgLength,MSG_HEADER_LEN,0); // es lo mismo que un read con el parametro en 0
+	numBytes = recv(socketId,msgLength,MSG_HEADER_LEN,0);
+
 	if (numBytes > 0){
 		numBytes = recv(socketId,(char*)(message.c_str()),atoi(msgLength),0);
 	}
 
 	verifyNumbytes(numBytes);
 
-    return numBytes;
+    return message;
 }
 
 void  MySocket::verifyNumbytes(int numbytes){

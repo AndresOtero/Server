@@ -5,48 +5,47 @@
 #include "Cola.h"
 #include "User.h"
 #include "Interprete.h"
+#include <queue>
+#include "ModeloSrc/Modelo.h"
+#include "VistaSrc/Vista.h"
+#include "ModeloSrc/Configuracion.h"
+#include "VistaSrc/CambioDeCoordendas.h"
+#include "GameControllerSrc/GameControllerCliente.h"
+#include "Yaml.h"
 
 const unsigned int MAX_NUM_CLIENTS = 8;
 using namespace std;
 
-struct thread_data{
-	MySocket*  newClient;
-	Cola* colaEventos;
-	SDL_mutex *mutex;
-	User* user;
-	Interprete* interprete;
-	bool reconnect;
+struct cola_data{
+	User* senderIP;
+	string evento;
 };
 
-struct thread_notifier_data{
+struct thread_data{
 	MySocket*  newClient;
+	queue <cola_data>* colaEventos;
+	SDL_mutex *mutex;
 	User* user;
 	Interprete* interprete;
 };
 
 struct thread_ppal_data{
-	Cola* colaEventos;
-	vector<User*> users;
+	queue <cola_data>* colaEventos;
+	vector<User*>* users;
 	Interprete* interprete;
 };
 
-struct cola_data{
-	User* senderIP;
-	string* evento;
-};
+
 
 void enviarKeepAlive(MySocket* myClient, Interprete* interprete){
-
-	string messageFromServer = "";
 
 	string messageToServer = interprete->getKeepAliveMsg();
 
 	myClient->sendMessage(messageToServer);
 
-	myClient->recieveMessage(messageFromServer);
 }
 
-void agregarACola(Cola* colaEventos,string* evento,User* client, SDL_mutex *mutex){
+void agregarACola(queue <cola_data>* colaEventos,string evento,User* client, SDL_mutex *mutex){
 
 	struct cola_data cola_data;
 
@@ -54,46 +53,59 @@ void agregarACola(Cola* colaEventos,string* evento,User* client, SDL_mutex *mute
 	cola_data.evento =  evento;
 
 	if (SDL_LockMutex(mutex) == 0) {
-		//ver de hacer el copy de evento
 
-		colaEventos->push(&cola_data);
+		colaEventos->push(cola_data);
 		SDL_UnlockMutex(mutex);
 	} else {
 	  fprintf(stderr, "Couldn't lock mutex\n");
 	}
 }
 
-void enviarNotificaciones(void *threadArg){
-	struct thread_notifier_data* data;
-	string verification,notificacion;
+void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
+	string notificacion;
 
-	data = (struct thread_notifier_data*) threadArg;
+	if( (user->isColaVacia() == false) &&  (socket->isConnected())){
 
-	MySocket* socket = data->newClient;
-	User* user = data ->user;
-	Interprete* interprete = data ->interprete;
-
-	while( (user->isColaVacia() == false) && (socket->isConnected())){
 		 notificacion = user->popNotifiacion();
 
 		 socket->sendMessage(notificacion);
-		 socket->recieveMessage(verification);
+	}else{
+		enviarKeepAlive(socket, interprete);
 	}
 
 }
 
-void enviarConfirmReceived(MySocket* myClient, Interprete* interprete){
-	string msgToSrv = interprete->getReceivedMsg();
-	myClient->sendMessage(msgToSrv);
-}
-void establecerLogin(MySocket* socket, User* user, Interprete* interprete){
-	string msgFromClient = "";
+User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interprete, string clientIP, unsigned int &counter){
 
-	socket->recieveMessage(msgFromClient);
+	string msgFromClient = socket->recieveMessage();
+
 	if (socket->isConnected()){
-		enviarConfirmReceived(socket,interprete);
-		interprete->postLoginMsg(msgFromClient, user);
+		printf("Login: %s \n", msgFromClient.c_str());
+		//interprete->postLoginMsg(msgFromClient, user);
+
+		for (unsigned int i = 0; i <= counter; i++){
+		   User* tempUser = users [i];
+			if (tempUser != NULL) {
+				//comparar por el nombre del jugador tambien
+				if(tempUser->clientIP.compare(clientIP) == 0){
+					//notificar a todos reconexion
+					printf("reconexion del jugador \n");
+					tempUser->setConnectedFlag(true);
+					return tempUser;
+				}
+			}else{
+				//notificar a todos conexion
+				users [i] = new User(clientIP);
+
+				users [i] ->setConnectedFlag(true);
+				counter = counter + 1;
+				printf("conexion del jugador \n");
+				return users [i];
+			}
+		}
 	}
+
+   return NULL;
 
 }
 
@@ -105,52 +117,27 @@ void* acceptedClientThread(void *threadArg ){
 	/* Recive argumentos */
 	my_data = (struct thread_data *) threadArg;
 	MySocket* socket = my_data ->newClient;
-	Cola* colaEventos = my_data -> colaEventos;
+	queue <cola_data>* colaEventos = my_data -> colaEventos;
 	SDL_mutex *mutex = my_data -> mutex;
 	User* user = my_data -> user;
 	Interprete* interprete = my_data ->interprete;
-
-	establecerLogin(socket,user,interprete);
-
-	/* Abre thread notificador para este user */
-
-	//pthread_t tNotifierClient;
-	struct thread_notifier_data threadNotifierArg;
-
-	threadNotifierArg.user = user;
-	threadNotifierArg.newClient = socket;
-	threadNotifierArg.interprete = interprete;
-
-//pthread_create(&tNotifierClient, NULL, notifierClientThread,(void *) &threadNotifierArg);
-
-	/* Tareas del thread Este que obtiene mensajes del client */
-
-	if(my_data->reconnect == true){
-		//notificar reconexion - desfreeze
-	}else{
-		//notificar aparicion
-	}
-
-	messageFromClient= "";
-
-	enviarNotificaciones((void *)&threadNotifierArg);
+	/* FIN Recive argumentos */
 
    while ( (!interprete->isQuit(messageFromClient)) && (socket->isConnected())){
 
-	  enviarKeepAlive(socket, interprete);
+	  notifyClient(socket,user,interprete);
 
-	  messageFromClient= "";
-	  socket->recieveMessage(messageFromClient);
-	  printf("%s \n", messageFromClient.c_str());
+	  messageFromClient = socket->recieveMessage();
+
 	  if (socket->isConnected()){
-
-		  agregarACola(colaEventos,&messageFromClient,user, mutex);
-
-		  enviarConfirmReceived(socket,interprete);
+		  //printf("recibe: %s \n", messageFromClient.c_str());
+		  agregarACola(colaEventos,messageFromClient,user, mutex);
 	  }
     }
    user->setConnectedFlag(false);
-   //pthread_exit(&tNotifierClient);
+
+   printf("se desconecta cliente  \n");
+
    pthread_exit(NULL);
 }
 
@@ -161,8 +148,8 @@ void serverHandleThread(void* threadArgPpal){
 	struct thread_ppal_data* ppal_data;
 	ppal_data = (struct thread_ppal_data*) threadArgPpal;
 
-	Cola* colaEventos = ppal_data ->colaEventos;
-	vector<User*> users = ppal_data -> users;
+	queue <cola_data>* colaEventos = ppal_data ->colaEventos;
+	vector<User*> users = *(ppal_data -> users);
 	Interprete* interprete = ppal_data -> interprete;
 
 	MySocket myServer(PORTNUM);
@@ -179,32 +166,13 @@ void serverHandleThread(void* threadArgPpal){
 	if (!mutex) {
 		fprintf(stderr, "Couldn't create mutex\n");
 	}
-
 	unsigned int counter = 0;
-	while ( counter < MAX_NUM_CLIENTS )
+	while (  counter < MAX_NUM_CLIENTS )
 	{
-	   string clientIP;//me devuelve la IP del cliente que se conecta en "clientIP"
+	   string clientIP;
 	   MySocket* newClient = myServer.acceptClient(clientIP); //conexion dedicada al nuevo cliente
 
-	   User* user;
-	   bool incCounter = false;
-	   for (unsigned int i = 0; i <= counter; i++){
-		   User* tempUser = users [i];
-	   		if (tempUser != NULL) {
-	   			if(tempUser->clientIP.compare(clientIP) == 0){
-	   				tempUser->setConnectedFlag(true); //ojo con thread notificador que hay que volverlo a encender
-	   				user = tempUser;
-	   				threadArg[counter].reconnect = true;
-	   			}
-	   		}else{
-	   			//ojo aca si hay que mandar todo el YAML o no
-	   			user = new User(clientIP);
-	   			users [i] = user;
-	   			incCounter = true;
-	   			threadArg[counter].reconnect = false;
-	   		}
-	   	}
-	   if (incCounter) counter = counter + 1;
+	   User* user = establecerLogin(newClient,users,interprete,clientIP, counter);
 
 	   threadArg[counter].colaEventos = colaEventos;
 	   threadArg[counter].newClient = newClient;
@@ -218,14 +186,22 @@ void serverHandleThread(void* threadArgPpal){
 	SDL_DestroyMutex(mutex);
 }
 
-void simularEventosEnCola(Cola* colaEventos){
+void simularEventosEnCola(queue <cola_data>* colaEventos, vector<User*> users){
 	struct cola_data cola_dato;
 	double tiempo_actual,tiempo_viejo=0;
 	tiempo_viejo=SDL_GetTicks();
 
 	while (1){
-		while(!colaEventos->estaVacia()){
-			 cola_dato = *(struct cola_data*)colaEventos->pop(); //tengo en cola_dato el Ip del cliente que envio el evento y el mensaje
+		while(!colaEventos->empty()){
+			 cola_dato = colaEventos->front();
+			 colaEventos->pop();
+
+			 //printf("Server- Procesa: %s \n", cola_dato.evento.c_str());
+
+			 //tengo en cola_dato el Ip del cliente que envio el evento y el mensaje
+
+			 //mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
+			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)
 		}
 		 usleep((40 - (tiempo_actual-tiempo_viejo))*1000);
 		 tiempo_actual= SDL_GetTicks();
@@ -235,21 +211,36 @@ void simularEventosEnCola(Cola* colaEventos){
 }
 
 int main(int argc, char *argv[]) {
+	/**Main del juego**/
+	bool reiniciar = true;
 
-	Cola colaEventos;
+	while (reiniciar) {
+		Yaml* reader = new Yaml();
+		Juego* juego = reader->read();
+		delete reader;
+		Modelo* modelo = new Modelo(juego);
+		Vista* vista = new Vista(modelo);
+		vista->init();
+		vista->loadMedia();
+		reiniciar = vista->run();
+		delete modelo;
+		delete vista;
+	}
+	/**Fin del main del juego**/
+	queue <cola_data>  colaEventos;
 	Interprete interprete;
-
 	vector<User*> users(MAX_NUM_CLIENTS) ;
-
 	struct thread_ppal_data  threadArgu;
 
+	/* abre thread que controla a los clientes */
 	threadArgu.colaEventos = &colaEventos;
-	threadArgu.users = users;
+	threadArgu.users = &users;
 	threadArgu.interprete = &interprete;
 
 	thread tServer(serverHandleThread, (void*)&threadArgu );
+	/* FIN abre thread que controla a los clientes */
 
-	simularEventosEnCola(&colaEventos);
+	simularEventosEnCola(&colaEventos, users);
 
 	tServer.join();
 

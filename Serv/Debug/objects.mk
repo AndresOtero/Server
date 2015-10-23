@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lpthread -lSDL2 -lSDL2main
+LIBS := -lAgeOfEmpiresTaller -lyaml-cpp -lpthread -lSDL2 -lSDL2main
 

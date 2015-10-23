@@ -1,12 +1,15 @@
 #include "User.h"
 
 User::User(string& clientIP){
-	this->colaNotificaciones = new Cola();
+	string noti = "primera noti";
+	this->agregarNotificacion(noti);
+	string seg = "segnoti";
+	this->agregarNotificacion(seg);
 	this->clientIP = clientIP;
 	this->connectedFlag = true;
 }
 User::~User() {
 	delete &clientIP;
-	delete this->colaNotificaciones;
+	delete &colaNotificaciones;
 }
 

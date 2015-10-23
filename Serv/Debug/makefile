@@ -40,13 +40,13 @@ endif
 all: Serv
 
 dependents:
-	-cd /home/federico/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug && $(MAKE) all
+	-cd /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug && $(MAKE) clean all
 
 # Tool invocations
-Serv: $(OBJS) $(USER_OBJS) /home/federico/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug/AgeOfEmpiresTaller
+Serv: $(OBJS) $(USER_OBJS) /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug/libAgeOfEmpiresTaller.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++  -o "Serv" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L"/home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug" -o "Serv" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -57,6 +57,6 @@ clean:
 
 .PHONY: all clean dependents
 .SECONDARY:
-/home/federico/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug/AgeOfEmpiresTaller:
+/home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug/libAgeOfEmpiresTaller.so:
 
 -include ../makefile.targets

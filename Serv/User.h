@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <iostream>
 #include <string.h>
-#include "Cola.h"
+#include <queue>
 
 using namespace std;
 
@@ -22,12 +22,16 @@ public:
 	string clientIP;
 	User(string& clientIP );
 
-	void agregarNotificacion(string& evento){
-		colaNotificaciones->push(&evento);
+	void agregarNotificacion(string evento){
+		colaNotificaciones.push(evento);
 	}
-	bool isColaVacia(){return colaNotificaciones->estaVacia();}
+	bool isColaVacia(){return colaNotificaciones.empty();}
+
 	string popNotifiacion(){
-		return *(string*)colaNotificaciones->pop();
+		string r= colaNotificaciones.front();
+		colaNotificaciones.pop();
+
+		return r ;
 	}
 	void setLoginName(string& login){
 		loginName = clientIP;
@@ -42,9 +46,8 @@ public:
 private:
 	bool connectedFlag;
 
-
 	string loginName;
-	Cola* colaNotificaciones;
+	queue <string> colaNotificaciones;
 };
 
 #endif /* USER_H_ */

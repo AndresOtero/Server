@@ -1,0 +1,79 @@
+pantalla: 
+ ancho: 1000
+ alto: 700
+
+configuracion:
+ vel_personaje: 1
+ margen_scroll: 200
+
+tipos:
+ - nombre: barraca
+   imagen: img/dibujo_estatico/construcciones/barraks/barraks.png
+   pixel_ref_x: 45
+   pixel_ref_y: 95
+
+ - nombre: soldado
+   imagen: img/protagonista/spartan_small.png
+   fps: 10
+   delay: 5
+
+ - nombre: wheel
+   imagen: img/dibujo_dinamico/wheel.png
+   pixel_ref_x: 57
+   pixel_ref_y: 25
+   fps: 20
+   delay: 0
+
+ - nombre: herreria
+   imagen: img/dibujo_dinamico/mirador.png
+   pixel_ref_x: 60
+   pixel_ref_y: 50   
+   fps: 50
+   delay: 0
+
+ - nombre: pino
+   imagen: img/dibujo_estatico/arbol/pinetree.png
+   pixel_ref_x: 85
+   pixel_ref_y: 88
+
+ - nombre: church
+   imagen: img/dibujo_estatico/construcciones/church.png
+   pixel_ref_x: 60
+   pixel_ref_y: 52
+
+ - nombre: oro
+   imagen: img/oro.png
+   pixel_ref_x: 65
+   pixel_ref_y: 10 
+
+ - nombre: piedra
+   imagen: img/piedra.png
+   pixel_ref_x: 60
+   pixel_ref_y: 7
+
+ - nombre: madera
+   imagen: img/madera.png
+   pixel_ref_x: 61
+   pixel_ref_y: 0
+
+ - nombre: firestation
+   imagen: img/dibujo_estatico/construcciones/firestation.png
+   pixel_ref_x: 62
+   pixel_ref_y: 35
+
+ - nombre: arbol
+   imagen: img/dibujo_estatico/arbol/firtree.png
+   pixel_ref_x: 60
+   pixel_ref_y: 20
+
+escenario:
+ nombre: orleans
+ size_x: 100
+ size_y: 100
+protagonista:
+  - tipo: soldado
+    x: 10
+    y: 10
+entidades:
+
+
