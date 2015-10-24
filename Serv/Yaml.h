@@ -13,6 +13,51 @@
 
 #ifndef YAML_H_
 #define YAML_H_
+typedef struct {
+	int x;
+	int y;
+	std::string tipo;
+} Entidad_t;
+
+typedef struct {
+	std::string tipo;
+	int x;
+	int y;
+} Protagonista_t;
+
+typedef struct {
+	std::string nombre;
+	int size_x;
+	int size_y;
+	Protagonista_t protagonista;
+} Escenario_t;
+
+typedef struct {
+	int ancho;
+	int alto;
+} Pantalla_t;
+
+typedef struct {
+	int vel_personaje;
+	int margen_scroll;
+} Configuracion_t;
+
+typedef struct  {
+   std::string nombre;
+   std::string imagen;
+   int ancho_base;
+   int alto_base;
+   int pixel_ref_x ;
+   int pixel_ref_y ;
+   int fps;
+   int delay;
+} Objeto_mapa_t;
+
+typedef struct {
+	Pantalla_t pantalla;
+	Configuracion_t configuracion;
+	Escenario_t escenario;
+}ConfiguracionJuego_t;
 
 class Yaml {
 	string config_filepath;
@@ -20,7 +65,21 @@ public:
 	Yaml();
 	Yaml(string path);
 	Juego* read();
+	Pantalla* cargarPantalla(ConfiguracionJuego_t conf, YAML::Node* doc);
+	Configuracion* cargarConfiguracion(ConfiguracionJuego_t conf, YAML::Node* doc);
+	void cargarObjetoMapa(const YAML::Node* pTipos);
+	Escenario* cargarEscenario(ConfiguracionJuego_t conf,  const YAML::Node* pEscenario);
+	Personaje* cargarPersonaje(ConfiguracionJuego_t conf,const  YAML::Node* pEscenario);
+	Entidad* cargarEntidad(const YAML::Node* pEntidades);
+	Juego* readServer();
+	Juego* readCliente();
 	virtual ~Yaml();
+private:
+	std::map<std::string, ObjetoMapa*> tipos;
+	int cantidad_de_objetos;
+	std::vector< Entidad*> entidades;
+		int cantidad_de_entidades;
+
 };
 
 #endif /* YAML_H_ */
