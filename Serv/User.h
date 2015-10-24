@@ -13,41 +13,48 @@
 #include <iostream>
 #include <string.h>
 #include <queue>
+#include "mensaje.h"
 
 using namespace std;
 
 class User {
 public:
 
-	string clientIP;
+
 	User(string& clientIP );
 
-	void agregarNotificacion(string evento){
+	void agregarNotificacion(msg_t evento){
 		colaNotificaciones.push(evento);
 	}
 	bool isColaVacia(){return colaNotificaciones.empty();}
 
-	string popNotifiacion(){
-		string r= colaNotificaciones.front();
+	msg_t popNotifiacion(){
+		msg_t r= colaNotificaciones.front();
 		colaNotificaciones.pop();
 
 		return r ;
 	}
-	void setLoginName(string& login){
-		loginName = clientIP;
+	void setLoginName(string login){
+		loginName = login;
 	}
 	void setConnectedFlag(bool flag){ this->connectedFlag = flag;};
 
 	bool isConnected(){return this->connectedFlag;}
-	string getLoginName(){return loginName;}
+
+	string getLoginName(){
+		string name = loginName;
+		return name;
+	}
+
 	string getClientIP(){return clientIP;}
 	virtual ~User();
 
 private:
 	bool connectedFlag;
 
+	string clientIP;
 	string loginName;
-	queue <string> colaNotificaciones;
+	queue <msg_t> colaNotificaciones;
 };
 
 #endif /* USER_H_ */

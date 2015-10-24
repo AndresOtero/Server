@@ -10,42 +10,42 @@
 Interprete::Interprete() {
 	this->gameCtrl = new GameControllerSrv();
 }
-string Interprete:: getKeepAliveMsg(){
-	string r = "ALIVE";
+msg_t Interprete:: getKeepAliveMsg(){
+	msg_t r = {KEEPALIVE,"",0,0};
 	return r;
 }
-string Interprete:: getReceivedMsg(){
-	string r = "OK";
+msg_t Interprete:: getQuit(){
+	msg_t r = {QUIT,"",0,0};
 	return r;
 }
-string Interprete:: getQuit(){
-	string r = "QUIT";
-	return r;
-}
-bool Interprete::isQuit(string& quit){
-	return (quit.compare(getQuit()) == 0);
-}
-string Interprete:: getActualizarRecursosMsg(int oro, int madera,int piedra){
-	char buffer[50];
-
-	sprintf(buffer,"RECURSOS %10d %10d %10d",oro,madera,piedra);
-
-	string result = string(buffer);
-
-	return result;
-}
-string Interprete::getFinalUpdates(){
-
-	string r = "FINAL_UPDATES";
-	return r;
+bool Interprete::isQuit(msg_t quit){
+	return (quit.type == QUIT);
 }
 
-void Interprete:: notifyUpdate(string& msg){
+void Interprete:: notifyUpdate(msg_t msg,User* user, vector<User*> users){
 //aca hacer la decodificacion de msgs y ejecutar el comando del gameCtrl;
 }
 
-void Interprete::postLoginMsg(string& msg, User* user){
-	//decoficar msg y meter en user el name
+void Interprete::postLoginMsg(msg_t msg, User* user){
+
+	string loginName= string(msg.paramNombre);
+	user->setLoginName(loginName);
+}
+void Interprete::notifyReccconection(User* user, vector<User*> users){
+
+}
+
+void Interprete::notifyNewUser(User* user, vector<User*> users){
+
+}
+
+void Interprete::notifyLostUserConnection(User* user, vector<User*> users){
+
+
+}
+
+void Interprete::notifyQuitUser(User* user, vector<User*> users){
+
 }
 
 Interprete::~Interprete() {

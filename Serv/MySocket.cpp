@@ -16,11 +16,13 @@ MySocket::MySocket(){
 	portNumber = 0;
 	connected = true;
 	socketId = 0;
+	msg_size = sizeof(msg_t );
 }
 
 MySocket::MySocket(int pNumber){
 	 portNumber = pNumber;
 	 connected = false;
+	 msg_size = sizeof(msg_t );
 
 	if ( (socketId=socket(AF_INET,SOCK_STREAM,0)) == -1)
 	{
@@ -115,43 +117,30 @@ void MySocket::listenToClient(int totalNumPorts)
 	}
 }
 
-int MySocket::sendMessage(std::string& message)
+int MySocket::sendMessage(msg_t& message)
 {
-	int numBytes;
 
-	char msgLength[MSG_HEADER_LEN+1];
+	int n;
 
-    sprintf(msgLength,"%6zu",message.size());
-	std::string sendMsg = std::string(msgLength);
-    sendMsg += message;
+	n = write(socketId, &message, msg_size);
+	verifyNumbytes(n);
 
-	// Sends the message to the connected host
-
-    numBytes = send(socketId,sendMsg.c_str(),sendMsg.size(),0);
-
-    verifyNumbytes(numBytes);
-
-	return numBytes;
+	return n;
 }
 
-std::string MySocket::recieveMessage()
+msg_t MySocket::recieveMessage()
 {
-	int numBytes;
-	std::string message;
-	message.empty();
+	msg_t msg_buffer;
+	int n = 0;
+	int bytes_read = 0;
+	while ((bytes_read < msg_size) && (n >= 0)){
+		n = read(socketId, &(msg_buffer) + bytes_read, msg_size - bytes_read);
 
-	char msgLength[MSG_HEADER_LEN+1];
-	memset(msgLength,0,sizeof(msgLength));
-
-	numBytes = recv(socketId,msgLength,MSG_HEADER_LEN,0);
-
-	if (numBytes > 0){
-		numBytes = recv(socketId,(char*)(message.c_str()),atoi(msgLength),0);
+		bytes_read += n;
 	}
+	verifyNumbytes(n);
 
-	verifyNumbytes(numBytes);
-
-    return message;
+    return msg_buffer;
 }
 
 void  MySocket::verifyNumbytes(int numbytes){

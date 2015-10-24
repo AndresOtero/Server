@@ -7,7 +7,7 @@
 
 #ifndef MYSOCKET_H_
 #define MYSOCKET_H_
-#include <unistd.h>  // problem solved! it compiles!
+
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "mensaje.h"
 
 const int PORTNUM = 51717;
 const int MSG_HEADER_LEN = 6;
@@ -28,6 +29,7 @@ protected:
 	int socketId;          // Socket file descriptor
 
 	bool connected;          // ConnectedFlag flag
+	int msg_size;
 
 	struct sockaddr_in clientAddr;
 
@@ -54,12 +56,12 @@ public:
 	   Sends a message to a connected host. The number of bytes sent is returned
 	   -  server call or client call
 	*/
-	int sendMessage( std::string& message);
+	int sendMessage( msg_t& message);
 
 	/*
 	   receive messages and stores the message in a buffer
 	*/
-	std::string recieveMessage();
+	msg_t recieveMessage();
 
 	/*
 	   Binds the socket to an address and port number - a server call

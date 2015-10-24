@@ -2,23 +2,16 @@
 #include <thread>
 #include <vector>
 #include <SDL2/SDL.h>
-#include "Cola.h"
 #include "User.h"
 #include "Interprete.h"
 #include <queue>
-#include "ModeloSrc/Modelo.h"
-#include "VistaSrc/Vista.h"
-#include "ModeloSrc/Configuracion.h"
-#include "VistaSrc/CambioDeCoordendas.h"
-#include "GameControllerSrc/GameControllerCliente.h"
-#include "Yaml.h"
 
 const unsigned int MAX_NUM_CLIENTS = 8;
 using namespace std;
 
 struct cola_data{
-	User* senderIP;
-	string evento;
+	User* senderUser;
+	msg_t evento;
 };
 
 struct thread_data{
@@ -27,6 +20,7 @@ struct thread_data{
 	SDL_mutex *mutex;
 	User* user;
 	Interprete* interprete;
+	vector<User*>* users;
 };
 
 struct thread_ppal_data{
@@ -39,17 +33,17 @@ struct thread_ppal_data{
 
 void enviarKeepAlive(MySocket* myClient, Interprete* interprete){
 
-	string messageToServer = interprete->getKeepAliveMsg();
+	msg_t messageToServer = interprete->getKeepAliveMsg();
 
 	myClient->sendMessage(messageToServer);
 
 }
 
-void agregarACola(queue <cola_data>* colaEventos,string evento,User* client, SDL_mutex *mutex){
+void agregarACola(queue <cola_data>* colaEventos,msg_t evento,User* client, SDL_mutex *mutex){
 
 	struct cola_data cola_data;
 
-	cola_data.senderIP =  client;
+	cola_data.senderUser =  client;
 	cola_data.evento =  evento;
 
 	if (SDL_LockMutex(mutex) == 0) {
@@ -62,7 +56,7 @@ void agregarACola(queue <cola_data>* colaEventos,string evento,User* client, SDL
 }
 
 void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
-	string notificacion;
+	msg_t notificacion;
 
 	if( (user->isColaVacia() == false) &&  (socket->isConnected())){
 
@@ -77,27 +71,35 @@ void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 
 User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interprete, string clientIP, unsigned int &counter){
 
-	string msgFromClient = socket->recieveMessage();
+	msg_t msgFromClient = socket->recieveMessage();
 
 	if (socket->isConnected()){
-		printf("Login: %s \n", msgFromClient.c_str());
-		//interprete->postLoginMsg(msgFromClient, user);
+		printf("Login: %s \n", msgFromClient.paramNombre);
 
 		for (unsigned int i = 0; i <= counter; i++){
 		   User* tempUser = users [i];
 			if (tempUser != NULL) {
-				//comparar por el nombre del jugador tambien
-				if(tempUser->clientIP.compare(clientIP) == 0){
-					//notificar a todos reconexion
+
+				string loginName= string(msgFromClient.paramNombre);
+
+				//VER QUE SE FIJA POR EL NOMBRE DE JUGADOR Y NO POR LA IP
+				if(tempUser->getLoginName() == loginName){
+
 					printf("reconexion del jugador \n");
 					tempUser->setConnectedFlag(true);
+
+					interprete->notifyReccconection(tempUser,users);
+
 					return tempUser;
 				}
 			}else{
-				//notificar a todos conexion
-				users [i] = new User(clientIP);
 
+				users [i] = new User(clientIP);
 				users [i] ->setConnectedFlag(true);
+
+				interprete->postLoginMsg(msgFromClient, users [i]);
+				interprete->notifyNewUser(users [i],users);
+
 				counter = counter + 1;
 				printf("conexion del jugador \n");
 				return users [i];
@@ -112,7 +114,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 void* acceptedClientThread(void *threadArg ){
 
 	struct thread_data *my_data;
-	string messageFromClient, messageToClient;
+	msg_t messageFromClient;
 
 	/* Recive argumentos */
 	my_data = (struct thread_data *) threadArg;
@@ -121,6 +123,8 @@ void* acceptedClientThread(void *threadArg ){
 	SDL_mutex *mutex = my_data -> mutex;
 	User* user = my_data -> user;
 	Interprete* interprete = my_data ->interprete;
+	vector<User*> users = *(my_data -> users);
+
 	/* FIN Recive argumentos */
 
    while ( (!interprete->isQuit(messageFromClient)) && (socket->isConnected())){
@@ -135,6 +139,9 @@ void* acceptedClientThread(void *threadArg ){
 	  }
     }
    user->setConnectedFlag(false);
+
+   //ver si fue QUIT notificar ese QUIT (no va a servir ahora me parece)
+   interprete->notifyLostUserConnection(user,users);
 
    printf("se desconecta cliente  \n");
 
@@ -179,6 +186,7 @@ void serverHandleThread(void* threadArgPpal){
 	   threadArg[counter].mutex = mutex;
 	   threadArg[counter].user = user;
 	   threadArg[counter].interprete = interprete;
+	   threadArg[counter].users = &users;
 
 	   pthread_create(&tAcceptedClient[counter], NULL, acceptedClientThread,(void *) &threadArg[counter]);
 
@@ -186,7 +194,7 @@ void serverHandleThread(void* threadArgPpal){
 	SDL_DestroyMutex(mutex);
 }
 
-void simularEventosEnCola(queue <cola_data>* colaEventos, vector<User*> users){
+void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete, vector<User*> users){
 	struct cola_data cola_dato;
 	double tiempo_actual,tiempo_viejo=0;
 	tiempo_viejo=SDL_GetTicks();
@@ -198,7 +206,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, vector<User*> users){
 
 			 //printf("Server- Procesa: %s \n", cola_dato.evento.c_str());
 
-			 //tengo en cola_dato el Ip del cliente que envio el evento y el mensaje
+			 interprete->notifyUpdate(cola_dato.evento,cola_dato.senderUser,users);
 
 			 //mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
 			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)
@@ -211,22 +219,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, vector<User*> users){
 }
 
 int main(int argc, char *argv[]) {
-	/**Main del juego**/
-	bool reiniciar = true;
 
-	while (reiniciar) {
-		Yaml* reader = new Yaml();
-		Juego* juego = reader->read();
-		delete reader;
-		Modelo* modelo = new Modelo(juego);
-		Vista* vista = new Vista(modelo);
-		vista->init();
-		vista->loadMedia();
-		reiniciar = vista->run();
-		delete modelo;
-		delete vista;
-	}
-	/**Fin del main del juego**/
 	queue <cola_data>  colaEventos;
 	Interprete interprete;
 	vector<User*> users(MAX_NUM_CLIENTS) ;
@@ -240,7 +233,7 @@ int main(int argc, char *argv[]) {
 	thread tServer(serverHandleThread, (void*)&threadArgu );
 	/* FIN abre thread que controla a los clientes */
 
-	simularEventosEnCola(&colaEventos, users);
+	simularEventosEnCola(&colaEventos,&interprete, users);
 
 	tServer.join();
 
