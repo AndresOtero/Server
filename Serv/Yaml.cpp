@@ -334,7 +334,6 @@ Juego* Yaml::read() {
 		if (pTipos) {
 			for (unsigned i = 0; i < (*pTipos).size(); i++) {
 				cargarObjetoMapa(pTipos);
-				cantidad_de_objetos ++;
 			}
 		} else {
 			LOG_WARNING << "No se define ningun tipo";
@@ -348,7 +347,6 @@ Juego* Yaml::read() {
 					tag_escenario_entidades)) {
 				for (unsigned i = 0; i < (*pEntidades).size(); i++) {
 					entidades.push_back(cargarEntidad(pEntidades));
-					cantidad_de_entidades++;
 				}
 				escenario->entidades=entidades;
 
