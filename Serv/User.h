@@ -13,7 +13,7 @@
 #include <iostream>
 #include <string.h>
 #include <queue>
-#include "mensaje.h"
+#include "GameControllerSrc/mensaje.h"
 
 using namespace std;
 

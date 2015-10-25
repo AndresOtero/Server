@@ -5,6 +5,7 @@
 #include "User.h"
 #include "Interprete.h"
 #include <queue>
+#include "GameControllerSrc/mensaje.h"
 
 const unsigned int MAX_NUM_CLIENTS = 8;
 using namespace std;

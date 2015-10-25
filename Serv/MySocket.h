@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "mensaje.h"
+#include "GameControllerSrc/mensaje.h"
 
 const int PORTNUM = 51717;
 const int MSG_HEADER_LEN = 6;

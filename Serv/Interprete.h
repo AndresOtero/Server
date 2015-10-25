@@ -11,7 +11,7 @@
 #include <string>
 #include "GameControllerSrc/GameControllerServer.h"
 #include "User.h"
-#include "mensaje.h"
+#include "GameControllerSrc/mensaje.h"
 
 using namespace std;
 
