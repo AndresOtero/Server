@@ -5,32 +5,32 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../Cola.cpp \
-../GameControllerSrv.cpp \
 ../Interprete.cpp \
 ../MySocket.cpp \
 ../NodoSimplementeEnlazado.cpp \
 ../User.cpp \
 ../Yaml.cpp \
+../mensaje.cpp \
 ../server.cpp 
 
 OBJS += \
 ./Cola.o \
-./GameControllerSrv.o \
 ./Interprete.o \
 ./MySocket.o \
 ./NodoSimplementeEnlazado.o \
 ./User.o \
 ./Yaml.o \
+./mensaje.o \
 ./server.o 
 
 CPP_DEPS += \
 ./Cola.d \
-./GameControllerSrv.d \
 ./Interprete.d \
 ./MySocket.d \
 ./NodoSimplementeEnlazado.d \
 ./User.d \
 ./Yaml.d \
+./mensaje.d \
 ./server.d 
 
 

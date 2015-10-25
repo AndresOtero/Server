@@ -8,7 +8,7 @@
 #include "Interprete.h"
 
 Interprete::Interprete() {
-	this->gameCtrl = new GameControllerSrv();
+	this->gameCtrl = new GameControllerServer();
 }
 msg_t Interprete:: getKeepAliveMsg(){
 	msg_t r = {KEEPALIVE,"",0,0};

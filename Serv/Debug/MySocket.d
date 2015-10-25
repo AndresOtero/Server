@@ -1,3 +1,5 @@
-MySocket.d: ../MySocket.cpp ../MySocket.h
+MySocket.d: ../MySocket.cpp ../MySocket.h ../mensaje.h
 
 ../MySocket.h:
+
+../mensaje.h:

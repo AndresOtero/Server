@@ -7,7 +7,7 @@
 
 #ifndef MYSOCKET_H_
 #define MYSOCKET_H_
-
+#include <unistd.h>  // problem solved! it compiles!
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
