@@ -25,7 +25,7 @@ public:
 
 	void postLoginMsg(msg_t msg, User* user);
 
-	void notifyUpdate(msg_t msg,User* user, vector<User*> users);
+	void processUpdate(msg_t msg,User* user, vector<User*> users);
 
 	void notifyReccconection(User* user, vector<User*> users);
 
@@ -35,10 +35,21 @@ public:
 
 	void notifyQuitUser(User* user, vector<User*> users);
 
+	/**
+	 	 Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
+	 */
+	void enviarActualizacionesDelModeloAUsuarios(vector<User*> users);
+
+	void notifyUsersMovimientoPersonaje(int id, double x, double y);
+
 	virtual ~Interprete();
 
 private:
 	GameControllerServer* gameCtrl;
+
+	char* string_to_char_array(string str);
+
+	void enviar_mensaje_a_users(msg_t msg, vector<User*> users);
 };
 
 #endif /* INTERPRETE_H_ */

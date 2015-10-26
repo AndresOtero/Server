@@ -1,7 +1,9 @@
-server.d: ../server.cpp ../MySocket.h ../mensaje.h ../User.h \
- ../Interprete.h \
+server.d: ../server.cpp ../MySocket.h \
+ /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/mensaje.h \
+ ../User.h ../Interprete.h \
  /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/GameControllerServer.h \
  /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/../GameControllerSrc/GameController.h \
+ /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/../GameControllerSrc/mensaje.h \
  /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/../GameControllerSrc/../ModeloSrc/Modelo.h \
  /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/../GameControllerSrc/../ModeloSrc/../ModeloSrc/Mapa.h \
  /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/../GameControllerSrc/../ModeloSrc/../ModeloSrc/../ModeloSrc/Celda.h \
@@ -41,7 +43,7 @@ server.d: ../server.cpp ../MySocket.h ../mensaje.h ../User.h \
 
 ../MySocket.h:
 
-../mensaje.h:
+/home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/mensaje.h:
 
 ../User.h:
 
@@ -50,6 +52,8 @@ server.d: ../server.cpp ../MySocket.h ../mensaje.h ../User.h \
 /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/GameControllerServer.h:
 
 /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/../GameControllerSrc/GameController.h:
+
+/home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/../GameControllerSrc/mensaje.h:
 
 /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/../GameControllerSrc/../ModeloSrc/Modelo.h:
 

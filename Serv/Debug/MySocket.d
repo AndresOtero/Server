@@ -1,5 +1,6 @@
-MySocket.d: ../MySocket.cpp ../MySocket.h ../mensaje.h
+MySocket.d: ../MySocket.cpp ../MySocket.h \
+ /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/mensaje.h
 
 ../MySocket.h:
 
-../mensaje.h:
+/home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/GameControllerSrc/mensaje.h:
