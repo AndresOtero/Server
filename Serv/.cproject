@@ -31,6 +31,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1252380556" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/AgeOfEmpiresTaller}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/AgeOfEmpiresTaller/libs/plog-master/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/AgeOfEmpiresTaller/Debug}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.364581179" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -45,7 +46,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.259543264" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.69163425" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug">
 								<option id="gnu.cpp.link.option.libs.138629438" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" value="AgeOfEmpiresTaller"/>
+									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="AgeOfEmpiresTaller"/>
 									<listOptionValue builtIn="false" value="yaml-cpp"/>
 									<listOptionValue builtIn="false" value="pthread"/>
 									<listOptionValue builtIn="false" value="SDL2"/>
@@ -70,7 +71,7 @@
 				</configuration>
 			</storageModule>
 			<storageModule moduleId="org.eclipse.cdt.core.externalSettings">
-				<externalSettings containerId="AgeOfEmpiresTaller;" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
+				<externalSettings containerId="AgeOfEmpiresTaller;cdt.managedbuild.config.gnu.exe.debug.181976561" factoryId="org.eclipse.cdt.core.cfg.export.settings.sipplier">
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/AgeOfEmpiresTaller"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/AgeOfEmpiresTaller/Debug"/>

@@ -40,7 +40,7 @@ endif
 all: Serv
 
 dependents:
-	-cd /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug && $(MAKE) all
+	-cd /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug && $(MAKE) clean all
 
 # Tool invocations
 Serv: $(OBJS) $(USER_OBJS) /home/andres/git/AgeOfEmpiresTaller/AgeOfEmpiresTaller/Debug/libAgeOfEmpiresTaller.so

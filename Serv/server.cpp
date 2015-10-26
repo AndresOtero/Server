@@ -83,7 +83,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 
 				string loginName= string(msgFromClient.paramNombre);
 
-				//VER QUE SE FIJA POR EL NOMBRE DE JUGADOR Y NO POR LA IP
+				//TODO VER QUE SE FIJA POR EL NOMBRE DE JUGADOR Y NO POR LA IP
 				if(tempUser->getLoginName() == loginName){
 
 					printf("reconexion del jugador \n");
@@ -141,7 +141,7 @@ void* acceptedClientThread(void *threadArg ){
     }
    user->setConnectedFlag(false);
 
-   //ver si fue QUIT notificar ese QUIT (no va a servir ahora me parece)
+   //TODO ver si fue QUIT notificar ese QUIT (no va a servir ahora me parece)
    interprete->notifyLostUserConnection(user,users);
 
    printf("se desconecta cliente  \n");
@@ -201,15 +201,19 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 	tiempo_viejo=SDL_GetTicks();
 
 	while (1){
+
+		//Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
+		interprete->enviarActualizacionesDelModeloAUsuarios(users);
+
 		while(!colaEventos->empty()){
 			 cola_dato = colaEventos->front();
 			 colaEventos->pop();
 
 			 //printf("Server- Procesa: %d \n", cola_dato.evento.type);
 
-			 interprete->notifyUpdate(cola_dato.evento,cola_dato.senderUser,users);
+			 interprete->processUpdate(cola_dato.evento,cola_dato.senderUser,users);
 
-			 //mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
+			 //TODO mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
 			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)
 		}
 		 usleep((40 - (tiempo_actual-tiempo_viejo))*1000);
