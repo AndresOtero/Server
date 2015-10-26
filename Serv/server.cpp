@@ -205,7 +205,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 			 cola_dato = colaEventos->front();
 			 colaEventos->pop();
 
-			 //printf("Server- Procesa: %s \n", cola_dato.evento.c_str());
+			 //printf("Server- Procesa: %d \n", cola_dato.evento.type);
 
 			 interprete->notifyUpdate(cola_dato.evento,cola_dato.senderUser,users);
 
