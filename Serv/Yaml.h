@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include "ModeloSrc/Juego.h"
+#include "ModeloSrc/Jugador.h"
 
 #ifndef YAML_H_
 #define YAML_H_
@@ -18,7 +19,10 @@ typedef struct {
 	int y;
 	std::string tipo;
 } Entidad_t;
-
+typedef struct {
+	std::string nombre;
+	std::string ip;
+} Jugador_t;
 typedef struct {
 	std::string tipo;
 	int x;
@@ -70,6 +74,7 @@ public:
 	void cargarObjetoMapa(const YAML::Node* pTipos);
 	Escenario* cargarEscenario(ConfiguracionJuego_t conf,  const YAML::Node* pEscenario);
 	Personaje* cargarPersonaje(ConfiguracionJuego_t conf,const  YAML::Node* pEscenario);
+	Jugador* cargarJugador( YAML::Node* doc,Personaje* pers);
 	Entidad* cargarEntidad(const YAML::Node* pEntidades);
 	Juego* readServer();
 	Juego* readCliente();

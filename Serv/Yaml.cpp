@@ -6,6 +6,7 @@
  */
 
 #include "Yaml.h"
+#include "ModeloSrc/Jugador.h"
 #include "ModeloSrc/ObjetoMapa.h"
 #include "ModeloSrc/Pantalla.h"
 #include "ModeloSrc/Configuracion.h"
@@ -64,6 +65,11 @@ const std::string tag_escenario_protagonista_x = "x";
 const std::string tag_escenario_protagonista_y = "y";
 const std::string tag_escenario_protagonista_tipo = "tipo";
 
+const std::string tag_jugador = "jugador";
+const std::string tag_jugador_nombre = "nombre";
+const std::string tag_jugador_ip = "ip";
+
+
 
 
 Entidad* elegirEntidad(ObjetoMapa * objeto,Entidad_t entidad_t){
@@ -110,9 +116,6 @@ Entidad* Yaml::cargarEntidad(const
 	}
 	return ent;
 }
-
-
-
 Personaje* Yaml::cargarPersonaje(ConfiguracionJuego_t conf, const YAML::Node* pEscenario) {
 
 	Personaje* protagonista;
@@ -157,7 +160,6 @@ Personaje* Yaml::cargarPersonaje(ConfiguracionJuego_t conf, const YAML::Node* pE
 	return protagonista;
 
 }
-
 Escenario* Yaml::cargarEscenario(ConfiguracionJuego_t conf,const YAML::Node* pEscenario) {
 	Escenario* escenario;
 	if (const YAML::Node *pNombre = (*pEscenario).FindValue(
@@ -187,7 +189,6 @@ Escenario* Yaml::cargarEscenario(ConfiguracionJuego_t conf,const YAML::Node* pEs
 				return escenario;
 
 }
-
 void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 	Objeto_mapa_t tipo;
 	if (const YAML::Node *pTipoNombre =
@@ -310,6 +311,34 @@ Pantalla* Yaml::cargarPantalla(ConfiguracionJuego_t conf, YAML::Node* doc) {
 	}
 	return pantalla;
 }
+Jugador* Yaml::cargarJugador( YAML::Node* doc,Personaje* pers) {
+	Jugador* jugador=NULL;
+	Jugador_t jug;
+	if (const YAML::Node *pJugador = doc->FindValue(tag_jugador)) {
+		if (const YAML::Node *pJugadorNombre = (*pJugador).FindValue(
+				tag_jugador_nombre)) {
+			(*pJugadorNombre) >> jug.nombre;
+			if (const YAML::Node *pJugadorIp = (*pJugador).FindValue(
+					tag_jugador_ip)) {
+				(*pJugadorIp) >> jug.ip;
+				jugador = new Jugador(jug.nombre,
+						jug.ip,pers);
+			} else {
+				LOG_WARNING
+						<< "No se define un nombre para el jugador";
+			}
+		} else {
+			LOG_WARNING
+					<< "No se define Ip";
+		}
+
+	} else {
+		// log no tiene pantalla
+		LOG_WARNING
+				<< "No se define un jugador";
+	}
+	return jugador;
+}
 
 Juego* Yaml::read() {
 	Juego* juego;
@@ -358,7 +387,9 @@ Juego* Yaml::read() {
 		} else {
 			escenario = new Escenario();
 		}
-
+		Jugador* jugador=cargarJugador(&doc,escenario->protagonista);
+		if(!jugador)return NULL;
+		escenario->jugador=jugador;
 		juego = new Juego(pantalla, configuracion, escenario, tipos);
 	} catch(YAML::Exception& e) {
 			juego = new Juego();
@@ -448,6 +479,10 @@ Juego* Yaml::readCliente() {
 		configuracion = new Configuracion();
 		escenario = new Escenario();
 		escenario->protagonista=protagonista;
+
+		Jugador* jugador=cargarJugador(&doc,escenario->protagonista);
+		if(!jugador)return NULL;
+		escenario->jugador=jugador;
 		juego = new Juego(pantalla, configuracion, escenario, tipos);
 	} catch (YAML::Exception& e) {
 		juego = new Juego();
