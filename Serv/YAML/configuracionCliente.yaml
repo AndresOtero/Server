@@ -69,6 +69,6 @@ protagonista:
      y: 10
 
 jugador:
- nombre: andy
- ip: 127.0.0.1
+  - nombre: andy
+    ip: 127.0.0.1
 

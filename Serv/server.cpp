@@ -242,6 +242,7 @@ int main(int argc, char *argv[]) {
 	Interprete interprete;
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
 	Juego * juego = i->readServer();
+	delete i;
 	interprete.setJuego(juego);
 	interprete.crearModelo();
 	vector<User*> users(MAX_NUM_CLIENTS);
