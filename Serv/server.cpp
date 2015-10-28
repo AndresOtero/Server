@@ -61,12 +61,12 @@ void agregarACola(queue <cola_data>* colaEventos,msg_t evento,User* client, SDL_
 
 void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 	msg_t notificacion;
+	if( (user->isColaVacia()==false) &&  (socket->isConnected())){
 
-	if( (user->isColaVacia() == false) &&  (socket->isConnected())){
-
-		 notificacion = user->popNotifiacion();
+		 notificacion =user->popNotifiacion();
 
 		 socket->sendMessage(notificacion);
+		 printf("Manda: %d \n", notificacion.type);
 	}else{
 		enviarKeepAlive(socket, interprete);
 	}
@@ -100,20 +100,18 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 
 				users [i] = new User(clientIP);
 				users [i] ->setConnectedFlag(true);
-				//TODO inicializar modelo
+				printf("conexion del jugador \n");
+
 				interprete->inicializarModelo(socket);//incializar modelo
+
 				interprete->postLoginMsg(msgFromClient, users [i]);
 				interprete->notifyNewUser(users [i],users);
-
 				counter = counter + 1;
-				printf("conexion del jugador \n");
 				return users [i];
 			}
 		}
 	}
-
    return NULL;
-
 }
 
 void* acceptedClientThread(void *threadArg ){
@@ -136,14 +134,17 @@ void* acceptedClientThread(void *threadArg ){
 	//inicializacion modelo
 
 
-   while ( (!interprete->isQuit(messageFromClient)) && (socket->isConnected())){
+   while (socket->isConnected()){
 
+	  interprete->enviarActualizacionesDelModeloAUsuarios(users);
 	  notifyClient(socket,user,interprete);
 
 	  messageFromClient = socket->recieveMessage();
 
 	  if (socket->isConnected()){
-		  //printf("recibe: %s \n", messageFromClient.c_str());
+		  if ( messageFromClient.type == MOVER_PERSONAJE){
+			  printf("recibe: mover personaje \n", messageFromClient.type);
+		  }
 		  agregarACola(colaEventos,messageFromClient,user, mutex);
 	  }
     }
@@ -211,15 +212,19 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 	while (1){
 
 		//Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
-		interprete->enviarActualizacionesDelModeloAUsuarios(users);
+
 
 		while(!colaEventos->empty()){
 			 cola_dato = colaEventos->front();
 			 colaEventos->pop();
 
+			 if ( cola_dato.evento.type == MOVER_PERSONAJE){
+				 printf("Server- Procesa: mover %d \n", cola_dato.evento.type);
+			}
 			 //printf("Server- Procesa: %d \n", cola_dato.evento.type);
 
 			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser,users);
+			 interprete->enviarActualizacionesDelModeloAUsuarios(users);
 
 			 //TODO mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
 			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)

@@ -17,6 +17,7 @@ using namespace std;
 
 class Interprete {
 public:
+	GameControllerServer* gameCtrl;
 	Interprete();
 	msg_t getKeepAliveMsg();
 
@@ -49,7 +50,7 @@ public:
 	virtual ~Interprete();
 
 private:
-	GameControllerServer* gameCtrl;
+
 
 	char* string_to_char_array(string str);
 
