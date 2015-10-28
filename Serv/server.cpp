@@ -5,7 +5,9 @@
 #include "User.h"
 #include "Interprete.h"
 #include <queue>
+#include "GameControllerSrc/GameControllerServer.h"
 #include "GameControllerSrc/mensaje.h"
+#define RITMO_RECURSO 5
 
 const unsigned int MAX_NUM_CLIENTS = 8;
 using namespace std;
@@ -198,8 +200,9 @@ void serverHandleThread(void* threadArgPpal){
 void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete, vector<User*> users){
 	struct cola_data cola_dato;
 	double tiempo_actual,tiempo_viejo=0;
+	GameControllerServer gameController;
 	tiempo_viejo=SDL_GetTicks();
-
+	double acumulado=tiempo_viejo;
 	while (1){
 
 		//Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
@@ -219,6 +222,11 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 		 usleep((40 - (tiempo_actual-tiempo_viejo))*1000);
 		 tiempo_actual= SDL_GetTicks();
 		 tiempo_viejo=tiempo_actual;
+		 if ((tiempo_actual-acumulado)/1000 > (double)RITMO_RECURSO){
+			//cargaria en game controller el mensaje de crear recurso si crea
+			 //hay que ver como cargarla en la cola eventos para todos los usuarios
+			 gameController.generarRecursoRandom();
+		 }
 	}
 
 }
