@@ -108,7 +108,22 @@ void Interprete::enviarActualizacionesDelModeloAUsuarios(vector<User*> users){
 		enviar_mensaje_a_users(actualizacion, users);
 	}
 }
+void Interprete::inicializarModelo(MySocket * socket){
+	printf("entre\n");
+	this->gameCtrl->inicializacion();
+	printf("cargue cola inicializacion\n");
+	//hay que ver si funciona
+	while(this->gameCtrl->hayEventosInicializacion()){
+		msg_t mensaje = this->gameCtrl->nextEventoInicializacion();
+		socket->sendMessage(mensaje);
+		printf("Mande %d\n",mensaje.type);
+	}
 
+	msg_t fin;
+	fin.type = FIN_INICIALIZACION;
+	socket->sendMessage(fin);
+
+}
 Interprete::~Interprete() {
 	delete this->gameCtrl;
 }

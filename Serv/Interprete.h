@@ -12,6 +12,7 @@
 #include "GameControllerSrc/GameControllerServer.h"
 #include "User.h"
 #include "GameControllerSrc/mensaje.h"
+#include "MySocket.h"
 using namespace std;
 
 class Interprete {
@@ -34,6 +35,7 @@ public:
 
 	void generarRecursoRandom();
 
+	void inicializarModelo(MySocket* socket);
 	/**
 	 	 Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
 	 */

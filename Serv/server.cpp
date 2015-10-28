@@ -90,7 +90,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 
 					printf("reconexion del jugador \n");
 					tempUser->setConnectedFlag(true);
-
+					interprete->inicializarModelo(socket);//inicializar modelo
 					interprete->notifyReccconection(tempUser,users);
 
 					return tempUser;
@@ -99,7 +99,8 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 
 				users [i] = new User(clientIP);
 				users [i] ->setConnectedFlag(true);
-
+				//TODO inicializar modelo
+				interprete->inicializarModelo(socket);//incializar modelo
 				interprete->postLoginMsg(msgFromClient, users [i]);
 				interprete->notifyNewUser(users [i],users);
 
@@ -129,6 +130,10 @@ void* acceptedClientThread(void *threadArg ){
 	vector<User*> users = *(my_data -> users);
 
 	/* FIN Recive argumentos */
+
+
+	//inicializacion modelo
+
 
    while ( (!interprete->isQuit(messageFromClient)) && (socket->isConnected())){
 
@@ -234,7 +239,10 @@ int main(int argc, char *argv[]) {
 
 	queue <cola_data>  colaEventos;
 	Interprete interprete;
-	vector<User*> users(MAX_NUM_CLIENTS) ;
+	Yaml * i = new YAML("YAML/configuracionserver.yaml");
+	Juego * juego = i->readServer();
+	//terminar de inicializar
+	vector<User*> users(MAX_NUM_CLIENTS);
 	struct thread_ppal_data  threadArgu;
 
 	/* abre thread que controla a los clientes */
