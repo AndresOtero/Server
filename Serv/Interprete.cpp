@@ -48,7 +48,7 @@ void Interprete::procesarMensajeDeCliente(msg_t msg, User* user,
 //TODO aca hacer la decodificacion de msgs y ejecutar el comando del gameCtrl;
 	switch (msg.type) {
 	case MOVER_PERSONAJE:
-		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1, msg.paramDouble1, msg.paramDouble2);
+		this->gameCtrl->cambiar_destino_personaje(msg.paramNombre, msg.paramDouble1, msg.paramDouble2);
 		break;
 
 	case ACTUALIZACION_RECURSOS:
@@ -80,7 +80,7 @@ void Interprete::notifyReccconection(User* user, vector<User*> users){
 
 void Interprete::notifyNewUser(User* user, vector<User*> users){
 //	TODO la idea es que agregarCliente reciba el nombre del usuario a agregar, que va a tener el mismo nombre que el jugador.
-	this->gameCtrl->agregarCliente(user->getLoginName());
+	this->gameCtrl->agregarCliente(user->getLoginName(), "soldado");
 	msg_t mensajeLogin;
 	mensajeLogin.type = LOGIN;
 	strcpy(mensajeLogin.paramNombre, string_to_char_array(user->getLoginName()));
