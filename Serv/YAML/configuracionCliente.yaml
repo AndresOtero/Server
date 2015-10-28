@@ -2,9 +2,6 @@ pantalla:
  ancho: 1000
  alto: 700
 
-configuracion:
- vel_personaje: 1
- margen_scroll: 200
 
 tipos:
  - nombre: barraca
@@ -66,14 +63,12 @@ tipos:
    pixel_ref_x: 60
    pixel_ref_y: 20
 
-escenario:
- nombre: orleans
- size_x: 100
- size_y: 100
- protagonista:
+protagonista:
    - tipo: soldado
      x: 10
      y: 10
-entidades:
 
+jugador:
+ nombre: andy
+ ip: 127.0.0.1
 

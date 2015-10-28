@@ -104,3 +104,7 @@ escenario:
   - tipo: soldado
     x: 10
     y: 10
+
+jugador:
+ nombre: andy
+ ip: 127.0.0.1

@@ -100,7 +100,4 @@ escenario:
   - { x : 40, y: 4, tipo: wheel }
   - { x : 30, y: 10, tipo: barraca }
   - { x : 30, y: 0, tipo: firestation }
- protagonista:
-  - tipo: soldado
-    x: 10
-    y: 10
+
