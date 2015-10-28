@@ -5,6 +5,7 @@
 #include "User.h"
 #include "Interprete.h"
 #include <queue>
+#include "Yaml.h"
 #include "GameControllerSrc/GameControllerServer.h"
 #include "GameControllerSrc/mensaje.h"
 #define RITMO_RECURSO 5
@@ -239,9 +240,10 @@ int main(int argc, char *argv[]) {
 
 	queue <cola_data>  colaEventos;
 	Interprete interprete;
-	Yaml * i = new YAML("YAML/configuracionserver.yaml");
+	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
 	Juego * juego = i->readServer();
-	//terminar de inicializar
+	interprete.setJuego(juego);
+	interprete.crearModelo();
 	vector<User*> users(MAX_NUM_CLIENTS);
 	struct thread_ppal_data  threadArgu;
 

@@ -22,6 +22,9 @@ public:
 
 	msg_t getQuit();
 	bool isQuit(msg_t quit);
+	void crearModelo();
+
+	void setJuego(Juego * juego);
 
 	void postLoginMsg(msg_t msg, User* user);
 

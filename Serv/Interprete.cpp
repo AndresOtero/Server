@@ -17,6 +17,15 @@ char* Interprete::string_to_char_array(string str){
 	return charArray;
 }
 
+void Interprete::setJuego(Juego * juego){
+	this->gameCtrl->insertarJuego(juego);
+
+}
+
+void Interprete::crearModelo(){
+	this->gameCtrl->crearModelo();
+}
+
 void Interprete::enviar_mensaje_a_users(msg_t msg, vector<User*> users){
 	for (User* user : users){
 		user->agregarNotificacion(msg);
