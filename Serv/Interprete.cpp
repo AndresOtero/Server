@@ -7,6 +7,7 @@
 
 #include "Interprete.h"
 #include "GameControllerSrc/GameControllerServer.h"
+
 char* Interprete::string_to_char_array(string str){
 	int str_size = str.size();
 	char charArray[PARAM_STRING_LEN];
@@ -25,32 +26,41 @@ void Interprete::enviar_mensaje_a_users(msg_t msg, vector<User*> users){
 Interprete::Interprete() {
 	this->gameCtrl = new GameControllerServer();
 }
+
 msg_t Interprete:: getKeepAliveMsg(){
-	msg_t r = {KEEPALIVE,"",0,0};
+	msg_t r;
+	r.type = KEEPALIVE;
 	return r;
 }
+
 msg_t Interprete:: getQuit(){
-	msg_t r = {QUIT,"",0,0};
+	msg_t r;
+	r.type = QUIT;
 	return r;
 }
+
 bool Interprete::isQuit(msg_t quit){
 	return (quit.type == QUIT);
 }
 
-void Interprete:: processUpdate(msg_t msg,User* user, vector<User*> users){
+void Interprete::procesarMensajeDeCliente(msg_t msg, User* user,
+		vector<User*> users) {
 //TODO aca hacer la decodificacion de msgs y ejecutar el comando del gameCtrl;
-	switch (msg.type)
-	{
-	  case MOVER_PERSONAJE:
-		 // this->gameCtrl->cambiar_destino_personaje(msg.paramInt1, msg.paramDouble1, msg.paramDouble2);
-		  break;
+	switch (msg.type) {
+	case MOVER_PERSONAJE:
+		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1, msg.paramDouble1, msg.paramDouble2);
+		break;
 
-	  case ACTUALIZACION_RECURSOS:
-		  //Esto por ahora se resuelve en el cliente.
-		  break;
+	case ACTUALIZACION_RECURSOS:
+		//Esto por ahora se resuelve en el cliente.
+		break;
 
-	  default:
-		  break;
+	case KEEPALIVE:
+		//no se hace nada
+		break;
+
+	default:
+		break;
 	}
 }
 
@@ -87,14 +97,8 @@ void Interprete::notifyLostUserConnection(User* user, vector<User*> users){
 	enviar_mensaje_a_users(mensajeDesconexion, users);
 }
 
-//TODO mismo que notifyLostUserConnection?
-void Interprete::notifyQuitUser(User* user, vector<User*> users){
-	//TODO la idea es que desconectar reciba el nombre del usuario que se reconecto, que va a tener el mismo nombre que el jugador.
-	this->gameCtrl->desconectar(user->getLoginName());
-	msg_t mensajeDesconexion;
-	mensajeDesconexion.type = QUIT;
-	strcpy(mensajeDesconexion.paramNombre, string_to_char_array(user->getLoginName()));
-	enviar_mensaje_a_users(mensajeDesconexion, users);
+void Interprete::generarRecursoRandom(){
+	this->gameCtrl->generarRecursoRandom();
 }
 
 void Interprete::enviarActualizacionesDelModeloAUsuarios(vector<User*> users){
@@ -108,4 +112,3 @@ void Interprete::enviarActualizacionesDelModeloAUsuarios(vector<User*> users){
 Interprete::~Interprete() {
 	delete this->gameCtrl;
 }
-

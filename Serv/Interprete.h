@@ -12,7 +12,6 @@
 #include "GameControllerSrc/GameControllerServer.h"
 #include "User.h"
 #include "GameControllerSrc/mensaje.h"
-
 using namespace std;
 
 class Interprete {
@@ -25,7 +24,7 @@ public:
 
 	void postLoginMsg(msg_t msg, User* user);
 
-	void processUpdate(msg_t msg,User* user, vector<User*> users);
+	void procesarMensajeDeCliente(msg_t msg,User* user, vector<User*> users);
 
 	void notifyReccconection(User* user, vector<User*> users);
 
@@ -33,7 +32,7 @@ public:
 
 	void notifyNewUser(User* user, vector<User*> users);
 
-	void notifyQuitUser(User* user, vector<User*> users);
+	void generarRecursoRandom();
 
 	/**
 	 	 Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.

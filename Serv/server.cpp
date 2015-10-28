@@ -200,7 +200,6 @@ void serverHandleThread(void* threadArgPpal){
 void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete, vector<User*> users){
 	struct cola_data cola_dato;
 	double tiempo_actual,tiempo_viejo=0;
-	GameControllerServer gameController;
 	tiempo_viejo=SDL_GetTicks();
 	double acumulado=tiempo_viejo;
 	while (1){
@@ -214,7 +213,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 			 //printf("Server- Procesa: %d \n", cola_dato.evento.type);
 
-			 interprete->processUpdate(cola_dato.evento,cola_dato.senderUser,users);
+			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser,users);
 
 			 //TODO mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
 			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)
@@ -225,7 +224,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 		 if ((tiempo_actual-acumulado)/1000 > (double)RITMO_RECURSO){
 			//cargaria en game controller el mensaje de crear recurso si crea
 			 //hay que ver como cargarla en la cola eventos para todos los usuarios
-			 gameController.generarRecursoRandom();
+			 //interprete->generarRecurso();
 		 }
 	}
 
