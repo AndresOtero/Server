@@ -26,11 +26,12 @@ void Interprete::crearModelo(){
 	this->gameCtrl->crearModelo();
 }
 
-void Interprete::enviar_mensaje_a_users(msg_t msg, vector<User*> users){
-	for (User* user : users){
+void Interprete::enviar_mensaje_a_users(msg_t msg){
+	printf("Mandar a todos lo users\n");
+	for (User* user : *users){
 		if(user != NULL){
+			printf("manda a usuario\n");
 			if(user-> isConnected())
-				//this->gameCtrl->agregarMensaje(msg);
 				user->agregarNotificacion(msg);
 		}
 	}
@@ -56,8 +57,7 @@ bool Interprete::isQuit(msg_t quit){
 	return (quit.type == QUIT);
 }
 
-void Interprete::procesarMensajeDeCliente(msg_t msg, User* user,
-		vector<User*> users) {
+void Interprete::procesarMensajeDeCliente(msg_t msg, User* user) {
 //TODO aca hacer la decodificacion de msgs y ejecutar el comando del gameCtrl;
 	switch (msg.type) {
 	case MOVER_PERSONAJE:
@@ -83,45 +83,40 @@ void Interprete::postLoginMsg(msg_t msg, User* user){
 	string loginName= string(msg.paramNombre);
 	user->setLoginName(loginName);
 }
-void Interprete::notifyReccconection(User* user, vector<User*> users){
+void Interprete::notifyReccconection(User* user){
 	// el nombre del usuario que se reconecto, que va a tener el mismo nombre que el jugador.
 	this->gameCtrl->reconectar(user->getLoginName());
 	msg_t mensajeReconexion;
 	mensajeReconexion.type = RECONNECT;
 	memcpy(mensajeReconexion.paramNombre,string_to_char_array(user->getLoginName()),sizeof(mensajeReconexion.paramNombre));
-	enviar_mensaje_a_users(mensajeReconexion, users);
+	enviar_mensaje_a_users(mensajeReconexion);
 }
 
-void Interprete::notifyNewUser(User* user, vector<User*> users){
+void Interprete::notifyNewUser(User* user){
 
 	this->gameCtrl->agregarCliente(user->getLoginName(), "soldado");
-//	msg_t mensajeLogin;
-//	mensajeLogin.type = LOGIN;
-//
-//	memcpy(mensajeLogin.paramNombre,string_to_char_array(user->getLoginName()),sizeof(mensajeLogin.paramNombre));
-//	enviar_mensaje_a_users(mensajeLogin, users);
 }
 
-void Interprete::notifyLostUserConnection(User* user, vector<User*> users){
+void Interprete::notifyLostUserConnection(User* user){
 	//TODO la idea es que desconectar reciba el nombre del usuario que se reconecto, que va a tener el mismo nombre que el jugador.
 	this->gameCtrl->desconectar(user->getLoginName());
 	msg_t mensajeDesconexion;
 	mensajeDesconexion.type = QUIT;
 	memcpy(mensajeDesconexion.paramNombre,string_to_char_array(user->getLoginName()),sizeof(mensajeDesconexion.paramNombre));
-	enviar_mensaje_a_users(mensajeDesconexion, users);
+	enviar_mensaje_a_users(mensajeDesconexion);
 }
 
 void Interprete::generarRecursoRandom(){
 	this->gameCtrl->generarRecursoRandom();
 }
 
-void Interprete::enviarActualizacionesDelModeloAUsuarios(vector<User*> users){
+void Interprete::enviarActualizacionesDelModeloAUsuarios(){
 	this->gameCtrl->actualizar();
 	while(this->gameCtrl->hayEventos()){
 		msg_t actualizacion = gameCtrl->sacarMensaje();
 
-		// printf("Server- Manda %d \n", actualizacion .type);
-		enviar_mensaje_a_users(actualizacion, users);
+		 printf("Server- Manda %d \n", actualizacion .type);
+		enviar_mensaje_a_users(actualizacion);
 	}
 }
 void Interprete::inicializarModelo(MySocket * socket){

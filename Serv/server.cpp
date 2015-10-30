@@ -61,16 +61,12 @@ void agregarACola(queue <cola_data>* colaEventos,msg_t evento,User* client, SDL_
 
 void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 	msg_t notificacion;
-	if( (user->isColaVacia()==false) &&  (socket->isConnected())){
-
-		 notificacion =user->popNotifiacion();
-
-		 socket->sendMessage(notificacion);
-		 printf("Manda: %d \n", notificacion.type);
-	}else{
-		enviarKeepAlive(socket, interprete);
+	while( (user->isColaVacia()==false) &&  (socket->isConnected())){
+			notificacion =user->popNotifiacion();
+			socket->sendMessage(notificacion);
+			printf("Manda: %d  %g %g\n", notificacion.type,notificacion.paramDouble1,notificacion.paramDouble2);
 	}
-
+	enviarKeepAlive(socket, interprete);
 }
 
 User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interprete, string clientIP, unsigned int &counter){
@@ -92,7 +88,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 					printf("reconexion del jugador \n");
 					tempUser->setConnectedFlag(true);
 					interprete->inicializarModelo(socket);//inicializar modelo
-					interprete->notifyReccconection(tempUser,users);
+					interprete->notifyReccconection(tempUser);
 
 					return tempUser;
 				}
@@ -105,7 +101,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 				interprete->inicializarModelo(socket);//incializar modelo
 
 				interprete->postLoginMsg(msgFromClient, users [i]);
-				interprete->notifyNewUser(users [i],users);
+				interprete->notifyNewUser(users [i]);
 				counter = counter + 1;
 				return users [i];
 			}
@@ -127,7 +123,7 @@ void* acceptedClientThread(void *threadArg ){
 	User* user = my_data -> user;
 	Interprete* interprete = my_data ->interprete;
 	vector<User*> users = *(my_data -> users);
-
+	interprete->setUsers(&users);
 	/* FIN Recive argumentos */
 
 
@@ -136,22 +132,19 @@ void* acceptedClientThread(void *threadArg ){
 
    while (socket->isConnected()){
 
-	  interprete->enviarActualizacionesDelModeloAUsuarios(users);
+	  interprete->enviarActualizacionesDelModeloAUsuarios();
+
 	  notifyClient(socket,user,interprete);
 
 	  messageFromClient = socket->recieveMessage();
 
 	  if (socket->isConnected()){
-		  if ( messageFromClient.type == MOVER_PERSONAJE){
-			  printf("recibe: mover personaje \n", messageFromClient.type);
-		  }
 		  agregarACola(colaEventos,messageFromClient,user, mutex);
 	  }
     }
    user->setConnectedFlag(false);
 
-   //TODO ver si fue QUIT notificar ese QUIT (no va a servir ahora me parece)
-   interprete->notifyLostUserConnection(user,users);
+   interprete->notifyLostUserConnection(user);
 
    printf("se desconecta cliente  \n");
 
@@ -219,12 +212,11 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 			 colaEventos->pop();
 
 			 if ( cola_dato.evento.type == MOVER_PERSONAJE){
-				 printf("Server- Procesa: mover %d \n", cola_dato.evento.type);
+				 printf("Server- Procesa: mover %d %g %g \n", cola_dato.evento.type,cola_dato.evento.paramDouble1, cola_dato.evento.paramDouble2 );
 			}
-			 //printf("Server- Procesa: %d \n", cola_dato.evento.type);
 
-			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser,users);
-			 interprete->enviarActualizacionesDelModeloAUsuarios(users);
+			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser);
+			 interprete->enviarActualizacionesDelModeloAUsuarios();
 
 			 //TODO mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
 			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)

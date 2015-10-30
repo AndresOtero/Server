@@ -29,13 +29,13 @@ public:
 
 	void postLoginMsg(msg_t msg, User* user);
 
-	void procesarMensajeDeCliente(msg_t msg,User* user, vector<User*> users);
+	void procesarMensajeDeCliente(msg_t msg,User* user);
 
-	void notifyReccconection(User* user, vector<User*> users);
+	void notifyReccconection(User* user);
 
-	void notifyLostUserConnection(User* user, vector<User*> users);
+	void notifyLostUserConnection(User* user);
 
-	void notifyNewUser(User* user, vector<User*> users);
+	void notifyNewUser(User* user);
 
 	void generarRecursoRandom();
 
@@ -43,18 +43,25 @@ public:
 	/**
 	 	 Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
 	 */
-	void enviarActualizacionesDelModeloAUsuarios(vector<User*> users);
+	void enviarActualizacionesDelModeloAUsuarios();
 
 	void notifyUsersMovimientoPersonaje(int id, double x, double y);
 
 	virtual ~Interprete();
 
+	vector<User*>* getUsers() const {
+		return users;
+	}
+
+	void setUsers(vector<User*>* users) {
+		this->users = users;
+	}
+
 private:
-
-
+	vector<User*>* users;
 	char* string_to_char_array(string str);
+	void enviar_mensaje_a_users(msg_t msg);
 
-	void enviar_mensaje_a_users(msg_t msg, vector<User*> users);
 };
 
 #endif /* INTERPRETE_H_ */
