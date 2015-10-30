@@ -121,11 +121,11 @@ void Interprete::enviarActualizacionesDelModeloAUsuarios(){
 }
 void Interprete::inicializarModelo(MySocket * socket){
 
-	this->gameCtrl->inicializacion();
+	queue <msg_t> colaInicializacion=this->gameCtrl->inicializacion();
 
-	while(this->gameCtrl->hayEventosInicializacion()){
-		msg_t mensaje = this->gameCtrl->nextEventoInicializacion();
-		printf("Server enviando inicializacion\n");
+	while(!colaInicializacion.empty()){
+		msg_t mensaje = colaInicializacion.front();
+		colaInicializacion.pop();
 		socket->sendMessage(mensaje);
 	}
 	msg_t fin;
