@@ -95,10 +95,11 @@ void Interprete::notifyReccconection(User* user, vector<User*> users){
 void Interprete::notifyNewUser(User* user, vector<User*> users){
 
 	this->gameCtrl->agregarCliente(user->getLoginName(), "soldado");
-	msg_t mensajeLogin;
-	mensajeLogin.type = LOGIN;
-	memcpy(mensajeLogin.paramNombre,string_to_char_array(user->getLoginName()),sizeof(mensajeLogin.paramNombre));
-	enviar_mensaje_a_users(mensajeLogin, users);
+//	msg_t mensajeLogin;
+//	mensajeLogin.type = LOGIN;
+//
+//	memcpy(mensajeLogin.paramNombre,string_to_char_array(user->getLoginName()),sizeof(mensajeLogin.paramNombre));
+//	enviar_mensaje_a_users(mensajeLogin, users);
 }
 
 void Interprete::notifyLostUserConnection(User* user, vector<User*> users){
@@ -129,6 +130,7 @@ void Interprete::inicializarModelo(MySocket * socket){
 
 	while(this->gameCtrl->hayEventosInicializacion()){
 		msg_t mensaje = this->gameCtrl->nextEventoInicializacion();
+		printf("Server enviando inicializacion\n");
 		socket->sendMessage(mensaje);
 	}
 	msg_t fin;

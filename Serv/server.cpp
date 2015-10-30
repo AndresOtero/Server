@@ -242,11 +242,12 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 }
 
 int main(int argc, char *argv[]) {
-
+	printf("holis\n");
 	queue <cola_data>  colaEventos;
 	Interprete interprete;
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
 	Juego * juego = i->readServer();
+	printf("lei\n");
 	delete i;
 	interprete.setJuego(juego);
 	interprete.crearModelo();

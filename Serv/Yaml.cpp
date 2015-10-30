@@ -100,6 +100,7 @@ Entidad* Yaml::cargarEntidad(const
 				(*pTipo) >> entidad.tipo;
 				if (ObjetoMapa* obj = tipos[entidad.tipo]) {
 					ent = elegirEntidad(obj, entidad);
+					cantidad_de_entidades++;
 				} else {
 					LOG_WARNING << "No existe el tipo " << entidad.tipo
 							<< " especificado por la entidad";
@@ -424,20 +425,28 @@ Juego* Yaml::readServer(){
 			} else {
 				LOG_WARNING << "No se define ningun tipo";
 			}
+			/****/
+			printf("\ncarga Yaml\n");
+			/****/
 			if (const YAML::Node *pEscenario = doc.FindValue(tag_escenario)) {
 				escenario= cargarEscenario(conf,pEscenario);
 				if (const YAML::Node *pEntidades = (*pEscenario).FindValue(
 						tag_escenario_entidades)) {
 					for (unsigned i = 0; i < (*pEntidades).size(); i++) {
 						entidades.push_back(cargarEntidad(pEntidades));
+						/***/
+						Entidad* ent=entidades[i];
+						printf("Nombre: %s\n",ent->objetoMapa->nombre.c_str());
+						printf("X: %d",ent->posicion->getX());
+						printf("Y: %d",ent->posicion->getY());
+						/**/
 					}
 					escenario->entidades=entidades;
+					printf("\nfin\n")
 
 				}else {
 					LOG_WARNING << "No hay entidades a instanciar inicialmente";
-					}
-
-
+				}
 			} else {
 				escenario = new Escenario();
 			}
