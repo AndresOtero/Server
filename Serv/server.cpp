@@ -87,6 +87,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 
 					printf("reconexion del jugador \n");
 					tempUser->setConnectedFlag(true);
+					printf("manda a usuario %s %d \n", tempUser->getLoginName().c_str(), tempUser->isConnected());
 					interprete->inicializarModelo(socket);//inicializar modelo
 					interprete->notifyReccconection(tempUser);
 
@@ -96,6 +97,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 
 				users [i] = new User(clientIP);
 				users [i] ->setConnectedFlag(true);
+				interprete->setUsers(&users);
 				printf("conexion del jugador \n");
 
 				interprete->inicializarModelo(socket);//incializar modelo
@@ -123,9 +125,10 @@ void* acceptedClientThread(void *threadArg ){
 	User* user = my_data -> user;
 	Interprete* interprete = my_data ->interprete;
 	vector<User*> users = *(my_data -> users);
-	interprete->setUsers(&users);
+	//interprete->setUsers(&users);
 	/* FIN Recive argumentos */
 
+	user->setConnectedFlag(true);
 
 	//inicializacion modelo
 
@@ -176,6 +179,7 @@ void serverHandleThread(void* threadArgPpal){
 	if (!mutex) {
 		fprintf(stderr, "Couldn't create mutex\n");
 	}
+
 	unsigned int counter = 0;
 	while (  counter < MAX_NUM_CLIENTS )
 	{
@@ -246,7 +250,7 @@ int main(int argc, char *argv[]) {
 	delete i;
 	interprete.setJuego(juego);
 	interprete.crearModelo();
-	vector<User*> users(MAX_NUM_CLIENTS);
+	vector<User*> users(MAX_NUM_CLIENTS,NULL);
 	struct thread_ppal_data  threadArgu;
 
 	/* abre thread que controla a los clientes */
