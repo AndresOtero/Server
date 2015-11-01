@@ -49,6 +49,7 @@ msg_t Interprete:: getKeepAliveMsg(){
 
 msg_t Interprete:: getQuit(){
 	msg_t r;
+
 	r.type = QUIT;
 	return r;
 }
@@ -99,6 +100,7 @@ void Interprete::notifyNewUser(User* user){
 
 void Interprete::notifyLostUserConnection(User* user){
 	//TODO la idea es que desconectar reciba el nombre del usuario que se reconecto, que va a tener el mismo nombre que el jugador.
+	printf("\n \n Mando QUIT \n \n");
 	this->gameCtrl->desconectar(user->getLoginName());
 	msg_t mensajeDesconexion;
 	mensajeDesconexion.type = QUIT;
