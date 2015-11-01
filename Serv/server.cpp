@@ -220,15 +220,20 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 			 //TODO mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
 			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)
+
+
 		}
-		 usleep((40 - (tiempo_actual-tiempo_viejo))*1000);
-		 tiempo_actual= SDL_GetTicks();
-		 tiempo_viejo=tiempo_actual;
-		 if ((tiempo_actual-acumulado)/1000 > (double)RITMO_RECURSO){
+		usleep((40 - (tiempo_actual - tiempo_viejo)) * 1000);
+		tiempo_actual = SDL_GetTicks();
+		tiempo_viejo = tiempo_actual;
+
+		if (((tiempo_actual - acumulado) / 1000) > (double) RITMO_RECURSO) {
 			//cargaria en game controller el mensaje de crear recurso si crea
-			 //hay que ver como cargarla en la cola eventos para todos los usuarios
-			 //interprete->generarRecurso();
-		 }
+			//hay que ver como cargarla en la cola eventos para todos los usuarios
+			interprete->generarRecursoRandom();
+			acumulado = tiempo_actual;
+		}
+
 	}
 
 }
