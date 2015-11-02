@@ -77,7 +77,7 @@ public:
 	// Listens to connecting clients, a server call
 	void listenToClient(int numPorts = 5);
 
-	void verifyNumbytes(int numbytes);
+	void verifyNumbytes(int &error_counter, int numbytes);
 
 	// connect to the server, a client call
 	virtual void connectToServer(const char* serverAddr);

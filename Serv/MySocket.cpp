@@ -123,7 +123,6 @@ int MySocket::sendMessage(msg_t& message)
 	int n;
 
 	n = write(socketId, &message, msg_size);
-	verifyNumbytes(n);
 
 	return n;
 }
@@ -133,18 +132,23 @@ msg_t MySocket::recieveMessage()
 	msg_t msg_buffer;
 	int n = 0;
 	int bytes_read = 0;
-	while ((bytes_read < msg_size) && (n >= 0)){
+	int error_counter = 0;
+	while ((bytes_read < msg_size) && (connected)){
 		n = read(socketId, &(msg_buffer) + bytes_read, msg_size - bytes_read);
-
+		verifyNumbytes(error_counter, n);
 		bytes_read += n;
 	}
-	verifyNumbytes(n);
-
     return msg_buffer;
 }
 
-void  MySocket::verifyNumbytes(int numbytes){
-	if ( numbytes <= 0) {
+void  MySocket::verifyNumbytes(int &error_counter, int numbytes){
+	if (numbytes <= 0){
+		if (error_counter <= 0) {
+			error_counter = error_counter + 1;
+		} else {
 			connected = false;
+		}
+	} else {
+		error_counter = 0;
 	}
 }
