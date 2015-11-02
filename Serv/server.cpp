@@ -8,6 +8,8 @@
 #include "Yaml.h"
 #include "GameControllerSrc/GameControllerServer.h"
 #include "GameControllerSrc/mensaje.h"
+#include <plog/Log.h>
+
 #define RITMO_RECURSO 5
 
 const unsigned int MAX_NUM_CLIENTS = 8;
@@ -70,10 +72,11 @@ void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 }
 
 User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interprete, string clientIP, unsigned int &counter,SDL_mutex *mutexGameCtrl){
-
+	plog::init(plog::warning, "Log.txt");
 	msg_t msgFromClient = socket->recieveMessage();
 
 	if (socket->isConnected()){
+		LOG_WARNING << "Login: " << msgFromClient.paramNombre;
 		printf("Login: %s \n", msgFromClient.paramNombre);
 
 		for (unsigned int i = 0; i <= counter; i++){
@@ -86,6 +89,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 				if(tempUser->getLoginName() == loginName){
 
 					printf("reconexion del jugador \n");
+					LOG_WARNING << "Reconexion";
 					tempUser->setConnectedFlag(true);
 					printf("manda a usuario %s %d \n", tempUser->getLoginName().c_str(), tempUser->isConnected());
 					interprete->inicializarModelo(socket);//inicializar modelo
@@ -99,6 +103,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 				users [i] -> setMutex(mutexGameCtrl);
 				users [i] ->setConnectedFlag(true);
 				interprete->setUsers(&users);
+				LOG_WARNING << "Primera conexion";
 				printf("conexion del jugador \n");
 
 				interprete->inicializarModelo(socket);//incializar modelo
@@ -150,8 +155,6 @@ void* acceptedClientThread(void *threadArg ){
 
    interprete->notifyLostUserConnection(user);
 
-   printf("se desconecta cliente  \n");
-
    pthread_exit(NULL);
 }
 
@@ -178,7 +181,7 @@ void serverHandleThread(void* threadArgPpal){
 	SDL_mutex *mutex;
 	mutex = SDL_CreateMutex();
 	if (!mutex) {
-		fprintf(stderr, "Couldn't create mutex\n");
+		LOG_ERROR << "SocketError:Couldn't create mutex\n";
 	}
 
 	SDL_mutex* mutexGameCtrl = interprete->getMutexGameCtrl();
@@ -205,10 +208,12 @@ void serverHandleThread(void* threadArgPpal){
 }
 
 void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete, vector<User*> users){
+
 	struct cola_data cola_dato;
 	double tiempo_actual,tiempo_viejo=0;
 	tiempo_viejo=SDL_GetTicks();
 	double acumulado=tiempo_viejo;
+	plog::init(plog::warning, "Log.txt");
 	while (1){
 
 		//Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
@@ -245,6 +250,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 }
 
 int main(int argc, char *argv[]) {
+	plog::init(plog::error, "Log.txt");
 	queue <cola_data>  colaEventos;
 	SDL_mutex *mutexGameCtrl;
 	mutexGameCtrl = SDL_CreateMutex();

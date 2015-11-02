@@ -110,6 +110,7 @@ void Interprete::notifyNewUser(User* user){
 
 void Interprete::notifyLostUserConnection(User* user){
 	//TODO la idea es que desconectar reciba el nombre del usuario que se reconecto, que va a tener el mismo nombre que el jugador.
+	LOG_WARNING << "Se desconecta el cliente "<< user->getLoginName();
 	printf("\n \n Mando QUIT \n \n");
 	this->gameCtrl->desconectar(user->getLoginName());
 	msg_t mensajeDesconexion;

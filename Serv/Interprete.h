@@ -13,6 +13,8 @@
 #include "User.h"
 #include "GameControllerSrc/mensaje.h"
 #include "MySocket.h"
+#include <plog/Log.h>
+
 using namespace std;
 
 class Interprete {
