@@ -13,6 +13,7 @@
 #include <iostream>
 #include <string.h>
 #include <queue>
+#include <SDL2/SDL.h>
 #include "GameControllerSrc/mensaje.h"
 
 using namespace std;
@@ -48,11 +49,19 @@ public:
 	}
 
 	string getClientIP(){return clientIP;}
+
+	SDL_mutex* getMutex(){return mutexGameCtrl;}
+
+	void setMutex(SDL_mutex* mutexGameCtrl){
+		this->mutexGameCtrl = mutexGameCtrl;
+	}
+
+
 	virtual ~User();
 
 private:
 	bool connectedFlag;
-
+	SDL_mutex *mutexGameCtrl;
 	string clientIP;
 	string loginName;
 	queue <msg_t> colaNotificaciones;

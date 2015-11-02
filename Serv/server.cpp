@@ -69,7 +69,7 @@ void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 	enviarKeepAlive(socket, interprete);
 }
 
-User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interprete, string clientIP, unsigned int &counter){
+User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interprete, string clientIP, unsigned int &counter,SDL_mutex *mutexGameCtrl){
 
 	msg_t msgFromClient = socket->recieveMessage();
 
@@ -96,6 +96,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 			}else{
 
 				users [i] = new User(clientIP);
+				users [i] -> setMutex(mutexGameCtrl);
 				users [i] ->setConnectedFlag(true);
 				interprete->setUsers(&users);
 				printf("conexion del jugador \n");
@@ -135,7 +136,7 @@ void* acceptedClientThread(void *threadArg ){
 
    while (socket->isConnected()){
 
-	  interprete->enviarActualizacionesDelModeloAUsuarios();
+	  interprete->enviarActualizacionesDelModeloAUsuarios(user->getMutex());
 
 	  notifyClient(socket,user,interprete);
 
@@ -180,13 +181,15 @@ void serverHandleThread(void* threadArgPpal){
 		fprintf(stderr, "Couldn't create mutex\n");
 	}
 
+	SDL_mutex* mutexGameCtrl = interprete->getMutexGameCtrl();
+
 	unsigned int counter = 0;
 	while (  counter < MAX_NUM_CLIENTS )
 	{
 	   string clientIP;
 	   MySocket* newClient = myServer.acceptClient(clientIP); //conexion dedicada al nuevo cliente
 
-	   User* user = establecerLogin(newClient,users,interprete,clientIP, counter);
+	   User* user = establecerLogin(newClient,users,interprete,clientIP, counter,mutexGameCtrl);
 
 	   threadArg[counter].colaEventos = colaEventos;
 	   threadArg[counter].newClient = newClient;
@@ -220,8 +223,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 			}
 
 			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser);
-			 interprete->enviarActualizacionesDelModeloAUsuarios();
-
+			 interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());
 			 //TODO mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
 			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)
 
@@ -244,7 +246,12 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 int main(int argc, char *argv[]) {
 	queue <cola_data>  colaEventos;
-	Interprete interprete;
+	SDL_mutex *mutexGameCtrl;
+	mutexGameCtrl = SDL_CreateMutex();
+	if (!mutexGameCtrl) {
+		fprintf(stderr, "Couldn't create mutexGameCtrl\n");
+	}
+	Interprete interprete(mutexGameCtrl);
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
 	Juego * juego = i->readServer();
 	delete i;

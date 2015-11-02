@@ -46,8 +46,9 @@ void Interprete::enviar_mensaje_a_users(msg_t msg){
 	printf("llego 3\n");
 }
 
-Interprete::Interprete() {
+Interprete::Interprete(SDL_mutex *mutexGameCtrl) {
 	this->gameCtrl = new GameControllerServer();
+	this->mutexGameCtrl = mutexGameCtrl;
 }
 
 msg_t Interprete:: getKeepAliveMsg(){
@@ -104,7 +105,7 @@ void Interprete::notifyReccconection(User* user){
 
 void Interprete::notifyNewUser(User* user){
 
-	this->gameCtrl->agregarCliente(user->getLoginName(), "soldado");
+	this->gameCtrl->agregarCliente(user->getLoginName(), "soldado", user->getMutex());
 }
 
 void Interprete::notifyLostUserConnection(User* user){
@@ -118,13 +119,13 @@ void Interprete::notifyLostUserConnection(User* user){
 }
 
 void Interprete::generarRecursoRandom(){
-	this->gameCtrl->generarRecursoRandom();
+	this->gameCtrl->generarRecursoRandom(mutexGameCtrl);
 }
 
-void Interprete::enviarActualizacionesDelModeloAUsuarios(){
-	this->gameCtrl->actualizar();
-	while(this->gameCtrl->hayEventos()){
-		msg_t actualizacion = gameCtrl->sacarMensaje();
+void Interprete::enviarActualizacionesDelModeloAUsuarios(SDL_mutex *mutexGameCtrl){
+	this->gameCtrl->actualizar(mutexGameCtrl);
+	while(this->gameCtrl->hayEventos(mutexGameCtrl)){
+		msg_t actualizacion = gameCtrl->sacarMensaje(mutexGameCtrl);
 
 		 printf("Server- Manda %d \n", actualizacion .type);
 		enviar_mensaje_a_users(actualizacion);
