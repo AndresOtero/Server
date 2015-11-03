@@ -141,6 +141,7 @@ msg_t MySocket::recieveMessage()
 	int bytes_read = 0;
 	int error_counter = 0;
 	while ((bytes_read < msg_size) && (connected)){
+		setKeepAlive(2);
 		n = read(socketId, &(msg_buffer) + bytes_read, msg_size - bytes_read);
 		verifyNumbytes(error_counter, n);
 		bytes_read += n;

@@ -27,23 +27,15 @@ void Interprete::crearModelo(){
 }
 
 void Interprete::enviar_mensaje_a_users(msg_t msg){
-	printf("Mandar a todos lo users\n");
-
 	vector<User*>::iterator it = users->begin();
 	for (; it != users->end(); ++it) {
 		User* user = (*it);
 		if(user != NULL){
-			printf("manda a  %s %d \n", user->getLoginName().c_str(), user->isConnected());
 			if(user-> isConnected()){
-				printf("usuario esta conectado\n");
 				user->agregarNotificacion(msg);
-				printf("notificacion agregada a usuario.\n");
 			}
-			printf("llego 1\n");
 		}
-		printf("llego 2\n");
 	}
-	printf("llego 3\n");
 }
 
 Interprete::Interprete(SDL_mutex *mutexGameCtrl) {
