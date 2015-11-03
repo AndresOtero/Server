@@ -26,8 +26,8 @@ MySocket::MySocket(int pNumber){
 
 	if ( (socketId=socket(AF_INET,SOCK_STREAM,0)) == -1)
 	{
-		LOG_ERROR << "SocketError: ERROR abriendo el socket";
-		errorLog("ERROR abriendo el socket");
+		LOG_WARNING << "SocketError: ERROR abriendo el socket";
+
 	}
 
 	clientAddr.sin_family = AF_INET;
@@ -43,16 +43,15 @@ void MySocket::setKeepAlive(int timeOut)
 	tv.tv_usec = 0;  // Not init'ing this can cause strange errors
 	if ( setsockopt(socketId,SOL_SOCKET,SO_RCVTIMEO,(char *)&tv,sizeof(struct timeval)) == -1 )
 	{
-		LOG_ERROR << "SocketError : error seteando el timout para el keepAlive";
-		errorLog("error seteando el timout para el keepAlive");
+		LOG_WARNING << "SocketError : error seteando el timout para el keepAlive";
 	}
 }
 void MySocket::bindSocket()
 {
 	if (bind(socketId,(struct sockaddr *)&clientAddr,sizeof(struct sockaddr_in))==-1)
 	{
-		LOG_ERROR << "SocketError :error en bind()";
-		errorLog("error en bind() /n");
+		LOG_WARNING << "SocketError :error en bind()";
+
 	}
 }
 void MySocket::connectToServer(const char* serverAddr)
@@ -68,8 +67,8 @@ void MySocket::connectToServer(const char* serverAddr)
 
 	server = gethostbyname(serverAddr);
 	if (server == NULL) {
-		LOG_ERROR << "SocketError: no such host";
-		errorLog("ERROR, no such host /n");
+		LOG_WARNING << "SocketError: no such host";
+
 	    }
 	bzero((char *) &serverAddress, sizeof(serverAddress));
 
@@ -80,8 +79,8 @@ void MySocket::connectToServer(const char* serverAddr)
 
 	if (connect(socketId,(struct sockaddr *)&serverAddress,sizeof(serverAddress)) < 0)
 	{
-		LOG_ERROR << "SocketError: error al conectar con el server";
-		errorLog("error al conectar con el server /n");
+		LOG_WARNING << "SocketError: error al conectar con el server";
+
 	}
 	connected = true;
 }
@@ -104,8 +103,8 @@ MySocket* MySocket::acceptClient(std::string& clientName)
 
 	if ((newSocket = accept(socketId, (struct sockaddr *)&clientAddress, &clientAddressLen)) == -1)
 	{
-		LOG_ERROR << "SocketError: error en accept()";
-		errorLog("error en accept()");
+		LOG_WARNING << "SocketError: error en accept()";
+
 	}
 
 	 clientName = inet_ntoa((struct in_addr)clientAddress.sin_addr); //return the IP
@@ -119,8 +118,8 @@ void MySocket::listenToClient(int totalNumPorts)
 {
 	if (listen(socketId,totalNumPorts) == -1)
 	{
-		LOG_ERROR << "SocketError: error en listen()";
-		errorLog("error en listen()");
+		LOG_WARNING << "SocketError: error en listen()";
+
 	}
 }
 

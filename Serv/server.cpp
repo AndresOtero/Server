@@ -57,7 +57,8 @@ void agregarACola(queue <cola_data>* colaEventos,msg_t evento,User* client, SDL_
 		colaEventos->push(cola_data);
 		SDL_UnlockMutex(mutex);
 	} else {
-	  fprintf(stderr, "Couldn't lock mutex\n");
+		LOG_WARNING << "Couldn't lock mutex\n";
+
 	}
 }
 
@@ -66,7 +67,7 @@ void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 	while( (user->isColaVacia()==false) &&  (socket->isConnected())){
 			notificacion =user->popNotifiacion();
 			socket->sendMessage(notificacion);
-			printf("Manda: %d  %g %g\n", notificacion.type,notificacion.paramDouble1,notificacion.paramDouble2);
+			//printf("Manda: %d  %g %g\n", notificacion.type,notificacion.paramDouble1,notificacion.paramDouble2);
 	}
 	enviarKeepAlive(socket, interprete);
 }
@@ -91,7 +92,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 					printf("reconexion del jugador \n");
 					LOG_WARNING << "Reconexion";
 					tempUser->setConnectedFlag(true);
-					printf("manda a usuario %s %d \n", tempUser->getLoginName().c_str(), tempUser->isConnected());
+					//printf("manda a usuario %s %d \n", tempUser->getLoginName().c_str(), tempUser->isConnected());
 					interprete->inicializarModelo(socket);//inicializar modelo
 					interprete->notifyReccconection(tempUser);
 
@@ -104,7 +105,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interp
 				users [i] ->setConnectedFlag(true);
 				interprete->setUsers(&users);
 				LOG_WARNING << "Primera conexion";
-				printf("conexion del jugador \n");
+				//printf("conexion del jugador \n");
 
 				interprete->inicializarModelo(socket);//incializar modelo
 
@@ -181,7 +182,7 @@ void serverHandleThread(void* threadArgPpal){
 	SDL_mutex *mutex;
 	mutex = SDL_CreateMutex();
 	if (!mutex) {
-		LOG_ERROR << "SocketError:Couldn't create mutex\n";
+		LOG_WARNING << "SocketError:Couldn't create mutex\n";
 	}
 
 	SDL_mutex* mutexGameCtrl = interprete->getMutexGameCtrl();
@@ -224,7 +225,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 			 colaEventos->pop();
 
 			 if ( cola_dato.evento.type == MOVER_PERSONAJE){
-				 printf("Server- Procesa: mover %d %g %g \n", cola_dato.evento.type,cola_dato.evento.paramDouble1, cola_dato.evento.paramDouble2 );
+				 //printf("Server- Procesa: mover %d %g %g \n", cola_dato.evento.type,cola_dato.evento.paramDouble1, cola_dato.evento.paramDouble2 );
 			}
 
 			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser);
@@ -250,12 +251,12 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 }
 
 int main(int argc, char *argv[]) {
-	plog::init(plog::error, "Log.txt");
+	plog::init(plog::warning, "Log.txt");
 	queue <cola_data>  colaEventos;
 	SDL_mutex *mutexGameCtrl;
 	mutexGameCtrl = SDL_CreateMutex();
 	if (!mutexGameCtrl) {
-		fprintf(stderr, "Couldn't create mutexGameCtrl\n");
+		LOG_WARNING << "Couldn't create mutexGameCtrl\n";
 	}
 	Interprete interprete(mutexGameCtrl);
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");

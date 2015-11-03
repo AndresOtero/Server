@@ -25,7 +25,6 @@ public:
 	User(string& clientIP );
 
 	void agregarNotificacion(msg_t evento){
-		printf("AgregaNotificacion: %d \n", evento.type),
 		colaNotificaciones.push(evento);
 	}
 	bool isColaVacia(){return colaNotificaciones.empty();}

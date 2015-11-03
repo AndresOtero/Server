@@ -27,23 +27,20 @@ void Interprete::crearModelo(){
 }
 
 void Interprete::enviar_mensaje_a_users(msg_t msg){
-	printf("Mandar a todos lo users\n");
-
 	vector<User*>::iterator it = users->begin();
 	for (; it != users->end(); ++it) {
 		User* user = (*it);
 		if(user != NULL){
-			printf("manda a  %s %d \n", user->getLoginName().c_str(), user->isConnected());
+
 			if(user-> isConnected()){
-				printf("usuario esta conectado\n");
+				//printf("usuario esta conectado\n");
 				user->agregarNotificacion(msg);
-				printf("notificacion agregada a usuario.\n");
 			}
-			printf("llego 1\n");
+
 		}
-		printf("llego 2\n");
+
 	}
-	printf("llego 3\n");
+
 }
 
 Interprete::Interprete(SDL_mutex *mutexGameCtrl) {
@@ -110,8 +107,9 @@ void Interprete::notifyNewUser(User* user){
 
 void Interprete::notifyLostUserConnection(User* user){
 	//TODO la idea es que desconectar reciba el nombre del usuario que se reconecto, que va a tener el mismo nombre que el jugador.
+	plog::init(plog::warning, "Log.txt" );
 	LOG_WARNING << "Se desconecta el cliente "<< user->getLoginName();
-	printf("\n \n Mando QUIT \n \n");
+	printf("Dsconexcin de %s\n",user->getLoginName().c_str());
 	this->gameCtrl->desconectar(user->getLoginName());
 	msg_t mensajeDesconexion;
 	mensajeDesconexion.type = QUIT;
@@ -128,7 +126,6 @@ void Interprete::enviarActualizacionesDelModeloAUsuarios(SDL_mutex *mutexGameCtr
 	while(this->gameCtrl->hayEventos(mutexGameCtrl)){
 		msg_t actualizacion = gameCtrl->sacarMensaje(mutexGameCtrl);
 
-		 printf("Server- Manda %d \n", actualizacion .type);
 		enviar_mensaje_a_users(actualizacion);
 	}
 }
