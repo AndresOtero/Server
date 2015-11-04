@@ -76,7 +76,6 @@ void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 	while( (user->isColaVacia()==false) &&  (socket->isConnected())){
 			notificacion =user->popNotifiacion();
 			socket->sendMessage(notificacion);
-			//printf("Manda: %d  %g %g\n", notificacion.type,notificacion.paramDouble1,notificacion.paramDouble2);
 	}
 	enviarKeepAlive(socket, interprete);
 }
@@ -89,7 +88,6 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 
 	if (socket->isConnected()) {
 		LOG_WARNING << "Login: " << msgFromClient.paramNombre;
-		printf("Login: %s \n", msgFromClient.paramNombre);
 
 		for (unsigned int i = 0; i <= counter; i++) {
 			User* tempUser = users[i];
@@ -105,7 +103,6 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 						enviarKeepAlive(socket, interprete); //Porque aca el cliente espera un mensaje por si el usuario esta tomado.
 						LOG_WARNING << "Reconexion";
 						tempUser->setConnectedFlag(true);
-						//printf("manda a usuario %s %d \n", tempUser->getLoginName().c_str(), tempUser->isConnected());
 						interprete->inicializarModelo(socket); //inicializar modelo
 						interprete->notifyReccconection(tempUser);
 
@@ -124,7 +121,6 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 				users[i]->setConnectedFlag(true);
 				interprete->setUsers(&users);
 				LOG_WARNING << "Primera conexion";
-				//printf("conexion del jugador \n");
 
 				interprete->inicializarModelo(socket); //incializar modelo
 
