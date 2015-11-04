@@ -244,9 +244,6 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 			 cola_dato = colaEventos->front();
 			 colaEventos->pop();
 
-			 if ( cola_dato.evento.type == MOVER_PERSONAJE){
-				 //printf("Server- Procesa: mover %d %g %g \n", cola_dato.evento.type,cola_dato.evento.paramDouble1, cola_dato.evento.paramDouble2 );
-			}
 
 			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser);
 			 interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());

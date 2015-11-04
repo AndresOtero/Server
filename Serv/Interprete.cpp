@@ -69,7 +69,6 @@ void Interprete::procesarMensajeDeCliente(msg_t msg, User* user) {
 //TODO aca hacer la decodificacion de msgs y ejecutar el comando del gameCtrl;
 	switch (msg.type) {
 	case MOVER_PERSONAJE:
-
 		this->gameCtrl->cambiar_destino_personaje(msg.paramNombre, msg.paramDouble1, msg.paramDouble2);
 		break;
 
