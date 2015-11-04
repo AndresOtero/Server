@@ -45,6 +45,15 @@ void enviarKeepAlive(MySocket* myClient, Interprete* interprete){
 
 }
 
+void enviarMensajeUsuarioTomado(MySocket* socket){
+
+	msg_t messageToClient;
+	messageToClient.type = ERROR_NOMBRE_TOMADO;
+
+	socket->sendMessage(messageToClient);
+
+}
+
 void agregarACola(queue <cola_data>* colaEventos,msg_t evento,User* client, SDL_mutex *mutex){
 
 	struct cola_data cola_data;
@@ -72,51 +81,61 @@ void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 	enviarKeepAlive(socket, interprete);
 }
 
-User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interprete, string clientIP, unsigned int &counter,SDL_mutex *mutexGameCtrl){
+User* establecerLogin(MySocket* socket, vector<User*> &users,
+		Interprete* interprete, string clientIP, unsigned int &counter,
+		SDL_mutex *mutexGameCtrl) {
 	plog::init(plog::warning, "Log.txt");
 	msg_t msgFromClient = socket->recieveMessage();
 
-	if (socket->isConnected()){
+	if (socket->isConnected()) {
 		LOG_WARNING << "Login: " << msgFromClient.paramNombre;
 		printf("Login: %s \n", msgFromClient.paramNombre);
 
-		for (unsigned int i = 0; i <= counter; i++){
-		   User* tempUser = users [i];
+		for (unsigned int i = 0; i <= counter; i++) {
+			User* tempUser = users[i];
 			if (tempUser != NULL) {
 
-				string loginName= string(msgFromClient.paramNombre);
+				string loginName = string(msgFromClient.paramNombre);
 
 				//TODO VER QUE SE FIJA POR EL NOMBRE DE JUGADOR Y NO POR LA IP
-				if(tempUser->getLoginName() == loginName){
+				if (tempUser->getLoginName() == loginName) {
 
-					printf("reconexion del jugador \n");
-					LOG_WARNING << "Reconexion";
-					tempUser->setConnectedFlag(true);
-					//printf("manda a usuario %s %d \n", tempUser->getLoginName().c_str(), tempUser->isConnected());
-					interprete->inicializarModelo(socket);//inicializar modelo
-					interprete->notifyReccconection(tempUser);
+					if (!tempUser->isConnected()) {
+						printf("reconexion del jugador \n");
+						enviarKeepAlive(socket, interprete); //Porque aca el cliente espera un mensaje por si el usuario esta tomado.
+						LOG_WARNING << "Reconexion";
+						tempUser->setConnectedFlag(true);
+						//printf("manda a usuario %s %d \n", tempUser->getLoginName().c_str(), tempUser->isConnected());
+						interprete->inicializarModelo(socket); //inicializar modelo
+						interprete->notifyReccconection(tempUser);
 
-					return tempUser;
+						return tempUser;
+
+					} else {
+						enviarMensajeUsuarioTomado(socket);
+						return NULL;
+					}
 				}
-			}else{
 
-				users [i] = new User(clientIP);
-				users [i] -> setMutex(mutexGameCtrl);
-				users [i] ->setConnectedFlag(true);
+			} else {
+				enviarKeepAlive(socket, interprete); //Porque aca el cliente espera un mensaje por si el usuario esta tomado.
+				users[i] = new User(clientIP);
+				users[i]->setMutex(mutexGameCtrl);
+				users[i]->setConnectedFlag(true);
 				interprete->setUsers(&users);
 				LOG_WARNING << "Primera conexion";
 				//printf("conexion del jugador \n");
 
-				interprete->inicializarModelo(socket);//incializar modelo
+				interprete->inicializarModelo(socket); //incializar modelo
 
-				interprete->postLoginMsg(msgFromClient, users [i]);
-				interprete->notifyNewUser(users [i]);
+				interprete->postLoginMsg(msgFromClient, users[i]);
+				interprete->notifyNewUser(users[i]);
 				counter = counter + 1;
-				return users [i];
+				return users[i];
 			}
 		}
 	}
-   return NULL;
+	return NULL;
 }
 
 void* acceptedClientThread(void *threadArg ){
@@ -195,15 +214,16 @@ void serverHandleThread(void* threadArgPpal){
 
 	   User* user = establecerLogin(newClient,users,interprete,clientIP, counter,mutexGameCtrl);
 
-	   threadArg[counter].colaEventos = colaEventos;
-	   threadArg[counter].newClient = newClient;
-	   threadArg[counter].mutex = mutex;
-	   threadArg[counter].user = user;
-	   threadArg[counter].interprete = interprete;
-	   threadArg[counter].users = &users;
+	   if (user != NULL){
+		   threadArg[counter].colaEventos = colaEventos;
+		   threadArg[counter].newClient = newClient;
+		   threadArg[counter].mutex = mutex;
+		   threadArg[counter].user = user;
+		   threadArg[counter].interprete = interprete;
+		   threadArg[counter].users = &users;
 
-	   pthread_create(&tAcceptedClient[counter], NULL, acceptedClientThread,(void *) &threadArg[counter]);
-
+		   pthread_create(&tAcceptedClient[counter], NULL, acceptedClientThread,(void *) &threadArg[counter]);
+	   }
 	}
 	SDL_DestroyMutex(mutex);
 }
