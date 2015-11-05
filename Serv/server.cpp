@@ -66,7 +66,7 @@ void agregarACola(queue <cola_data>* colaEventos,msg_t evento,User* client, SDL_
 		colaEventos->push(cola_data);
 		SDL_UnlockMutex(mutex);
 	} else {
-		LOG_WARNING << "Couldn't lock mutex\n";
+		//LOG_WARNING << "Couldn't lock mutex\n";
 
 	}
 }
@@ -83,11 +83,11 @@ void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
 User* establecerLogin(MySocket* socket, vector<User*> &users,
 		Interprete* interprete, string clientIP, unsigned int &counter,
 		SDL_mutex *mutexGameCtrl) {
-	plog::init(plog::warning, "Log.txt");
+	//plog::init(plog::warning, "Log.txt");
 	msg_t msgFromClient = socket->recieveMessage();
 
 	if (socket->isConnected()) {
-		LOG_WARNING << "Login: " << msgFromClient.paramNombre;
+		//LOG_WARNING << "Login: " << msgFromClient.paramNombre;
 
 		for (unsigned int i = 0; i <= counter; i++) {
 			User* tempUser = users[i];
@@ -101,7 +101,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 					if (!tempUser->isConnected()) {
 						printf("reconexion del jugador \n");
 						enviarKeepAlive(socket, interprete); //Porque aca el cliente espera un mensaje por si el usuario esta tomado.
-						LOG_WARNING << "Reconexion";
+						//LOG_WARNING << "Reconexion";
 						tempUser->setConnectedFlag(true);
 						interprete->inicializarModelo(socket); //inicializar modelo
 						interprete->notifyReccconection(tempUser);
@@ -120,7 +120,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 				users[i]->setMutex(mutexGameCtrl);
 				users[i]->setConnectedFlag(true);
 				interprete->setUsers(&users);
-				LOG_WARNING << "Primera conexion";
+				//LOG_WARNING << "Primera conexion";
 
 				interprete->inicializarModelo(socket); //incializar modelo
 
@@ -197,7 +197,7 @@ void serverHandleThread(void* threadArgPpal){
 	SDL_mutex *mutex;
 	mutex = SDL_CreateMutex();
 	if (!mutex) {
-		LOG_WARNING << "SocketError:Couldn't create mutex\n";
+		//LOG_WARNING << "SocketError:Couldn't create mutex\n";
 	}
 
 	SDL_mutex* mutexGameCtrl = interprete->getMutexGameCtrl();
@@ -230,7 +230,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 	double tiempo_actual,tiempo_viejo=0;
 	tiempo_viejo=SDL_GetTicks();
 	double acumulado=tiempo_viejo;
-	plog::init(plog::warning, "Log.txt");
+	//plog::init(plog::warning, "Log.txt");
 	while (1){
 
 		//Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
@@ -264,7 +264,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 }
 
 int main(int argc, char *argv[]) {
-	plog::init(plog::warning, "Log.txt");
+	//plog::init(plog::warning, "Log.txt");
 	queue <cola_data>  colaEventos;
 	SDL_mutex *mutexGameCtrl;
 	mutexGameCtrl = SDL_CreateMutex();
