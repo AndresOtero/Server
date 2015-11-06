@@ -46,15 +46,20 @@ typedef struct {
 	int margen_scroll;
 } Configuracion_t;
 
-typedef struct  {
-   std::string nombre;
-   std::string imagen;
-   int ancho_base;
-   int alto_base;
-   int pixel_ref_x ;
-   int pixel_ref_y ;
-   int fps;
-   int delay;
+typedef struct {
+	std::string nombre;
+	std::string imagen;
+	int ancho_base;
+	int alto_base;
+	int pixel_ref_x;
+	int pixel_ref_y;
+	int fps;
+	int delay;
+	int velocidad;
+	int fuerza;
+	int armadura;
+	int recoleccion;
+	int construccion;
 } Objeto_mapa_t;
 
 typedef struct {

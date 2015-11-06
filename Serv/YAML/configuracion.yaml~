@@ -68,8 +68,8 @@ tipos:
 
 escenario:
  nombre: orleans
- size_x: 20
- size_y: 20
+ size_x: 100
+ size_y: 100
  entidades: 
   - { x : 1, y: 2, tipo: arbol }
   - { x : 6, y: 6, tipo: church }
@@ -93,8 +93,18 @@ escenario:
   - { x : 13, y: 9, tipo: arbol }
   - { x : 13, y: 10, tipo: arbol }
   - { x : 13, y: 11, tipo: arbol }
-
+  - { x : 20, y: 10, tipo: pino }
+  - { x : 20, y: 00, tipo: arbol }
+  - { x : 40, y: 6, tipo: church }
+  - { x : 40, y: 0, tipo: herreria }
+  - { x : 40, y: 4, tipo: wheel }
+  - { x : 30, y: 10, tipo: barraca }
+  - { x : 30, y: 0, tipo: firestation }
  protagonista:
   - tipo: soldado
     x: 10
     y: 10
+
+jugador:
+ nombre: andy
+ ip: 127.0.0.1

@@ -51,6 +51,12 @@ const std::string tag_tipos_pixel_ref_x = "pixel_ref_x";
 const std::string tag_tipos_pixel_ref_y = "pixel_ref_y";
 const std::string tag_tipos_delay = "delay";
 const std::string tag_tipos_fps = "fps";
+const std::string tag_tipos_velocidad = "velocidad";
+const std::string tag_tipos_fuerza = "fuerza";
+const std::string tag_tipos_armadura = "armadura";
+const std::string tag_tipos_recoleccion = "recoleccion";
+const std::string tag_tipos_construccion = "construccion";
+
 
 const std::string tag_escenario = "escenario";
 const std::string tag_escenario_nombre = "nombre";
@@ -118,18 +124,12 @@ Entidad* Yaml::cargarEntidad(const
 }
 Personaje* Yaml::cargarPersonaje(ConfiguracionJuego_t conf, const YAML::Node* pEscenario) {
 
-	Personaje* protagonista;
+	Personaje* protagonista=NULL;
 	if (const YAML::Node *pPersonaje = (*pEscenario).FindValue(
 			tag_escenario_protagonista)) {
 		if (const YAML::Node *pTipo = (*pPersonaje)[0].FindValue(
 				tag_escenario_protagonista_tipo)) {
 			(*pTipo) >> conf.escenario.protagonista.tipo;
-			if (const YAML::Node *pX = (*pPersonaje)[0].FindValue(
-					tag_escenario_protagonista_x)) {
-				(*pX) >> conf.escenario.protagonista.x;
-				if (const YAML::Node *pY = (*pPersonaje)[0].FindValue(
-						tag_escenario_protagonista_y)) {
-					(*pY) >> conf.escenario.protagonista.y;
 					if (ObjetoMapa* obj =
 							tipos[conf.escenario.protagonista.tipo]) {
 						protagonista = new Personaje(obj,
@@ -141,22 +141,8 @@ Personaje* Yaml::cargarPersonaje(ConfiguracionJuego_t conf, const YAML::Node* pE
 								<< conf.escenario.protagonista.tipo
 								<< "' definido para el protagonista";
 					}
-				} else {
-					LOG_WARNING
-							<< "No se define la posicion y del protagonista";
-				}
-			} else {
-				LOG_WARNING
-						<< "La posicion x del protagonista no es valida";
-			}
-		} else {
-			LOG_WARNING
-					<< "No se define una posicion inicial para el protagonista";
 		}
-	} else {
-		LOG_WARNING << "No se define un protagonista para el escenario";
 	}
-	protagonista = new Personaje();
 	return protagonista;
 
 }
@@ -243,6 +229,30 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 							tag_tipos_delay)) {
 				*pDelay >> tipo.delay;
 				objeto->delay = tipo.delay;
+			}
+			if (const YAML::Node *pDelay =
+					((*pTipos)[cantidad_de_objetos]).FindValue(
+							tag_tipos_velocidad)) {
+				*pDelay >> tipo.velocidad;
+				objeto->velocidad = tipo.velocidad;
+			}
+			if (const YAML::Node *pDelay =
+					((*pTipos)[cantidad_de_objetos]).FindValue(
+							tag_tipos_fuerza)) {
+				*pDelay >> tipo.fuerza;
+				objeto->fuerza = tipo.fuerza;
+			}
+			if (const YAML::Node *pDelay =
+					((*pTipos)[cantidad_de_objetos]).FindValue(
+							tag_tipos_armadura)) {
+				*pDelay >> tipo.armadura;
+				objeto->armadura = tipo.armadura;
+			}
+			if (const YAML::Node *pDelay =
+					((*pTipos)[cantidad_de_objetos]).FindValue(
+							tag_tipos_recoleccion)) {
+				*pDelay >> tipo.recoleccion;
+				objeto->recoleccion = tipo.recoleccion;
 			}
 			tipos[tipo.nombre] = objeto;
 			cantidad_de_objetos ++;
