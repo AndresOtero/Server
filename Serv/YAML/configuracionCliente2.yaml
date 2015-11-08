@@ -14,6 +14,11 @@ tipos:
    fps: 10
    delay: 0
    velocidad: 10
+   vida: 50
+   armadura: 10
+   construccion: 10
+   recoleccion: 10   
+   fuerza: 10
 
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png

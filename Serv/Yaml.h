@@ -60,6 +60,7 @@ typedef struct {
 	int armadura;
 	int recoleccion;
 	int construccion;
+	int vida;
 } Objeto_mapa_t;
 
 typedef struct {

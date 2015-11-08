@@ -68,13 +68,16 @@ void Interprete::procesarMensajeDeCliente(msg_t msg, User* user) {
 //TODO aca hacer la decodificacion de msgs y ejecutar el comando del gameCtrl;
 	switch (msg.type) {
 	case MOVER_PERSONAJE:
-		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1, msg.paramDouble1, msg.paramDouble2);
+		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1,
+				msg.paramDouble1, msg.paramDouble2);
 		break;
 
 	case ACTUALIZACION_RECURSOS:
 		//Esto por ahora se resuelve en el cliente.
 		break;
-
+	case ATACAR:
+		this->gameCtrl->atacar(msg.paramInt1, msg.paramDouble1);
+		break;
 	case KEEPALIVE:
 		//no se hace nada
 		break;

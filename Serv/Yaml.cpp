@@ -54,6 +54,7 @@ const std::string tag_tipos_fps = "fps";
 const std::string tag_tipos_velocidad = "velocidad";
 const std::string tag_tipos_fuerza = "fuerza";
 const std::string tag_tipos_armadura = "armadura";
+const std::string tag_tipos_vida = "vida";
 const std::string tag_tipos_recoleccion = "recoleccion";
 const std::string tag_tipos_construccion = "construccion";
 
@@ -107,18 +108,18 @@ Entidad* Yaml::cargarEntidad(const
 				if (ObjetoMapa* obj = tipos[entidad.tipo]) {
 					ent = elegirEntidad(obj, entidad);
 				} else {
-					LOG_WARNING << "No existe el tipo " << entidad.tipo
-							<< " especificado por la entidad";
+					//LOG_WARNING << "No existe el tipo " << entidad.tipo
+						//	<< " especificado por la entidad";
 				}
 			} else {
-				LOG_WARNING << "No se especifica el tipo de la entidad";
+				//LOG_WARNING << "No se especifica el tipo de la entidad";
 			}
+
 		} else {
-			LOG_WARNING
-					<< "Se define la posicion inicial x de la entidad pero no la posicion y";
+			//LOG_WARNING<< "Se define la posicion inicial x de la entidad pero no la posicion y";
 		}
 	} else {
-		LOG_WARNING << "No se define la posicion de la entidad";
+		//LOG_WARNING << "No se define la posicion de la entidad";
 	}
 	return ent;
 }
@@ -137,9 +138,7 @@ Personaje* Yaml::cargarPersonaje(ConfiguracionJuego_t conf, const YAML::Node* pE
 								conf.escenario.protagonista.y);
 						return protagonista;
 					} else {
-						LOG_WARNING << "No existe el tipo '"
-								<< conf.escenario.protagonista.tipo
-								<< "' definido para el protagonista";
+						//LOG_WARNING << "No existe el tipo '"								<< conf.escenario.protagonista.tipo<< "' definido para el protagonista";
 					}
 		}
 	}
@@ -164,12 +163,11 @@ Escenario* Yaml::cargarEscenario(ConfiguracionJuego_t conf,const YAML::Node* pEs
 						escenario = new Escenario(conf.escenario.nombre,
 								conf.escenario.size_x, conf.escenario.size_y);
 					} else {
-						LOG_WARNING
-								<< "Se define el tamaño en x del escenario pero no el y ";
+						//LOG_WARNING								<< "Se define el tamaño en x del escenario pero no el y ";
 						escenario = new Escenario();
 					}
 				} else {
-					LOG_WARNING << "No se define el tamaño del escenario";
+					//LOG_WARNING << "No se define el tamaño del escenario";
 					escenario = new Escenario();
 				}
 				return escenario;
@@ -198,8 +196,7 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 					objeto->baseLogica->ancho = tipo.ancho_base;
 					objeto->baseLogica->alto = tipo.alto_base;
 				} else {
-					LOG_WARNING
-							<< "Se define el ancho pero no el alto para la base logica";
+					//LOG_WARNING							<< "Se define el ancho pero no el alto para la base logica";
 				}
 			}
 
@@ -214,8 +211,7 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 					objeto->pixelsReferencia->x = tipo.pixel_ref_x;
 					objeto->pixelsReferencia->y = tipo.pixel_ref_y;
 				} else {
-					LOG_WARNING
-							<< "Se define el pixel de referencia x pero no el pixel de referencia y";
+					//LOG_WARNING							<< "Se define el pixel de referencia x pero no el pixel de referencia y";
 				}
 			}
 			if (const YAML::Node *pFps =
@@ -254,13 +250,19 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 				*pDelay >> tipo.recoleccion;
 				objeto->recoleccion = tipo.recoleccion;
 			}
+			if (const YAML::Node *pDelay =
+								((*pTipos)[cantidad_de_objetos]).FindValue(
+									tag_tipos_vida)) {
+							*pDelay >> tipo.vida;
+							objeto->vida = tipo.vida;
+						}
 			tipos[tipo.nombre] = objeto;
 			cantidad_de_objetos ++;
 		} else {
-			LOG_WARNING << "No se define la ruta de imagen para el tipo";
+			//LOG_WARNING << "No se define la ruta de imagen para el tipo";
 		}
 	} else {
-		LOG_WARNING << "No se define nombre para el tipo";
+		//LOG_WARNING << "No se define nombre para el tipo";
 	}
 }
 Configuracion* Yaml::cargarConfiguracion(ConfiguracionJuego_t conf,YAML::Node* doc) {
@@ -276,16 +278,15 @@ Configuracion* Yaml::cargarConfiguracion(ConfiguracionJuego_t conf,YAML::Node* d
 						conf.configuracion.vel_personaje,
 						conf.configuracion.margen_scroll);
 			} else {
-				LOG_WARNING << "No se define el margen para el scroll";
+				//LOG_WARNING << "No se define el margen para el scroll";
 				configuracion = new Configuracion();
 			}
 		} else {
-			LOG_WARNING << "No se define el velocidad del personaje";
+			//LOG_WARNING << "No se define el velocidad del personaje";
 			configuracion = new Configuracion();
 		}
 	} else {
-		LOG_WARNING
-				<< "No se define configuracion para el margen del scroll y velocidad del personaje";
+		//LOG_WARNING				<< "No se define configuracion para el margen del scroll y velocidad del personaje";
 		configuracion = new Configuracion();
 	}
 	return configuracion;
@@ -302,21 +303,18 @@ Pantalla* Yaml::cargarPantalla(ConfiguracionJuego_t conf, YAML::Node* doc) {
 				pantalla = new Pantalla(conf.pantalla.ancho,
 						conf.pantalla.alto);
 			} else {
-				LOG_WARNING
-						<< "Se define configuracion de pantalla para el ancho pero no para el alto";
+				//LOG_WARNING						<< "Se define configuracion de pantalla para el ancho pero no para el alto";
 				pantalla = new Pantalla();
 			}
 		} else {
 			//log conf pantalla sin ancho
-			LOG_WARNING
-					<< "Se define configuracion de pantalla pero no su ancho";
+			//LOG_WARNING					<< "Se define configuracion de pantalla pero no su ancho";
 			pantalla = new Pantalla();
 		}
 
 	} else {
 		// log no tiene pantalla
-		LOG_WARNING
-				<< "No se define configuracion de pantalla, se usa Default 1024x728";
+		//LOG_WARNING<< "No se define configuracion de pantalla, se usa Default 1024x728";
 		pantalla = new Pantalla();
 	}
 	return pantalla;
@@ -334,18 +332,15 @@ Jugador* Yaml::cargarJugador( YAML::Node* doc,Personaje* pers) {
 				jugador = new Jugador(jug.nombre,
 						jug.ip,pers);
 			} else {
-				LOG_WARNING
-						<< "No se define un nombre para el jugador";
+				//LOG_WARNING						<< "No se define un nombre para el jugador";
 			}
 		} else {
-			LOG_WARNING
-					<< "No se define Ip";
+			//LOG_WARNING					<< "No se define Ip";
 		}
 
 	} else {
 		// log no tiene pantalla
-		LOG_WARNING
-				<< "No se define un jugador";
+		//LOG_WARNING				<< "No se define un jugador";
 	}
 	return jugador;
 }
@@ -353,7 +348,7 @@ Jugador* Yaml::cargarJugador( YAML::Node* doc,Personaje* pers) {
 Juego* Yaml::read() {
 	Juego* juego;
 	//remove( "Log.txt" );
-	plog::init(plog::warning, "Log.txt");
+	//plog::init(plog::warning, "Log.txt");
 
 	try {
 		std::ifstream fin(config_filepath);
@@ -375,7 +370,7 @@ Juego* Yaml::read() {
 				cargarObjetoMapa(pTipos);
 			}
 		} else {
-			LOG_WARNING << "No se define ningun tipo";
+			//LOG_WARNING << "No se define ningun tipo";
 		}
 		if (const YAML::Node *pEscenario = doc.FindValue(tag_escenario)) {
 			escenario= cargarEscenario(conf,pEscenario);
@@ -403,14 +398,14 @@ Juego* Yaml::read() {
 		juego = new Juego(pantalla, configuracion, escenario, tipos);
 	} catch(YAML::Exception& e) {
 			juego = new Juego();
-			LOG_WARNING << "Problemas para abrir el archivo" << e.what();
+			//LOG_WARNING << "Problemas para abrir el archivo" << e.what();
 	}
    return juego;
 }
 Juego* Yaml::readServer(){
 		Juego* juego;
 		//remove( "Log.txt" );
-		plog::init(plog::warning, "Log.txt");
+		//plog::init(plog::warning, "Log.txt");
 
 		try {
 			std::ifstream fin(config_filepath);
@@ -432,7 +427,7 @@ Juego* Yaml::readServer(){
 					cargarObjetoMapa(pTipos);
 				}
 			} else {
-			LOG_WARNING << "No se define ningun tipo";
+			//LOG_WARNING << "No se define ningun tipo";
 		}
 
 		if (const YAML::Node *pEscenario = doc.FindValue(tag_escenario)) {
@@ -450,7 +445,7 @@ Juego* Yaml::readServer(){
 				escenario->entidades = entidades;
 
 				}else {
-					LOG_WARNING << "No hay entidades a instanciar inicialmente";
+					//LOG_WARNING << "No hay entidades a instanciar inicialmente";
 				}
 			} else {
 				escenario = new Escenario();
@@ -459,14 +454,14 @@ Juego* Yaml::readServer(){
 			juego = new Juego(pantalla, configuracion, escenario, tipos);
 		} catch(YAML::Exception& e) {
 				juego = new Juego();
-				LOG_WARNING << "Problemas para abrir el archivo" << e.what();
+				//LOG_WARNING << "Problemas para abrir el archivo" << e.what();
 		}
 	   return juego;
 }
 Juego* Yaml::readCliente() {
 	Juego* juego;
 	//remove( "Log.txt" );
-	plog::init(plog::warning, "Log.txt");
+	//plog::init(plog::warning, "Log.txt");
 
 	try {
 		std::ifstream fin(config_filepath);
@@ -487,7 +482,7 @@ Juego* Yaml::readCliente() {
 				cargarObjetoMapa(pTipos);
 			}
 		} else {
-			LOG_WARNING << "No se define ningun tipo";
+			//LOG_WARNING << "No se define ningun tipo";
 		}
 		protagonista = cargarPersonaje(conf, &doc);
 		configuracion = new Configuracion();
@@ -500,7 +495,7 @@ Juego* Yaml::readCliente() {
 		juego = new Juego(pantalla, configuracion, escenario, tipos);
 	} catch (YAML::Exception& e) {
 		juego = new Juego();
-		LOG_WARNING << "Problemas para abrir el archivo" << e.what();
+		//LOG_WARNING << "Problemas para abrir el archivo" << e.what();
 	}
 	return juego;
 
