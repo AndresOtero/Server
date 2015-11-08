@@ -54,6 +54,7 @@ const std::string tag_tipos_fps = "fps";
 const std::string tag_tipos_velocidad = "velocidad";
 const std::string tag_tipos_fuerza = "fuerza";
 const std::string tag_tipos_armadura = "armadura";
+const std::string tag_tipos_vida = "vida";
 const std::string tag_tipos_recoleccion = "recoleccion";
 const std::string tag_tipos_construccion = "construccion";
 
@@ -249,6 +250,12 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 				*pDelay >> tipo.recoleccion;
 				objeto->recoleccion = tipo.recoleccion;
 			}
+			if (const YAML::Node *pDelay =
+								((*pTipos)[cantidad_de_objetos]).FindValue(
+									tag_tipos_vida)) {
+							*pDelay >> tipo.vida;
+							objeto->vida = tipo.vida;
+						}
 			tipos[tipo.nombre] = objeto;
 			cantidad_de_objetos ++;
 		} else {

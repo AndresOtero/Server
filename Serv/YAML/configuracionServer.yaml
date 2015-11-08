@@ -15,8 +15,14 @@ tipos:
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
    fps: 10
-   delay: 5
+   delay: 0
    velocidad: 10
+   vida: 50
+   armadura: 10
+   construccion: 10
+   recoleccion: 10   
+   fuerza: 10
+
 
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png
