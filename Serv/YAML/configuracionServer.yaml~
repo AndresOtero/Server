@@ -15,7 +15,11 @@ tipos:
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
    fps: 10
-   delay: 5
+   delay: 0
+   velocidad: 10
+	fuerza: 0
+	armadura: 0
+	recoleccion: 25
 
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png
@@ -71,9 +75,8 @@ escenario:
  size_x: 100
  size_y: 100
  entidades: 
-
-  - { x : 6, y: 6, tipo: church }
   - { x : 1, y: 2, tipo: arbol }
+  - { x : 6, y: 6, tipo: church }
   - { x : 4, y: 4, tipo: wheel }
   - { x : 0, y: 0, tipo: barraca }
   - { x : 3, y: 1, tipo: barraca }

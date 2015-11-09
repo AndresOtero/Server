@@ -270,7 +270,7 @@ int main(int argc, char *argv[]) {
 	SDL_mutex *mutexGameCtrl;
 	mutexGameCtrl = SDL_CreateMutex();
 	if (!mutexGameCtrl) {
-		LOG_WARNING << "Couldn't create mutexGameCtrl\n";
+		//LOG_WARNING << "Couldn't create mutexGameCtrl\n";
 	}
 	Interprete interprete(mutexGameCtrl);
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
