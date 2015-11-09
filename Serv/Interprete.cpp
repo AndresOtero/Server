@@ -31,15 +31,12 @@ void Interprete::enviar_mensaje_a_users(msg_t msg){
 	for (; it != users->end(); ++it) {
 		User* user = (*it);
 		if(user != NULL){
-
 			if(user-> isConnected()){
 				user->agregarNotificacion(msg);
 			}
-
 		}
 
 	}
-
 }
 
 Interprete::Interprete(SDL_mutex *mutexGameCtrl) {

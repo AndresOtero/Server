@@ -157,7 +157,7 @@ void* acceptedClientThread(void *threadArg ){
 
    while (socket->isConnected()){
 
-	  interprete->enviarActualizacionesDelModeloAUsuarios(user->getMutex());
+	  //interprete->enviarActualizacionesDelModeloAUsuarios(user->getMutex());
 
 	  notifyClient(socket,user,interprete);
 
@@ -243,6 +243,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser);
 			 interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());
+			 interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());
 			 //TODO mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
 			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)
 
@@ -253,8 +254,6 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 		tiempo_viejo = tiempo_actual;
 
 		if (((tiempo_actual - acumulado) / 1000) > (double) RITMO_RECURSO) {
-			//cargaria en game controller el mensaje de crear recurso si crea
-			//hay que ver como cargarla en la cola eventos para todos los usuarios
 			interprete->generarRecursoRandom();
 			acumulado = tiempo_actual;
 		}
