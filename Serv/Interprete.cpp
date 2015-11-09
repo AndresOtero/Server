@@ -71,10 +71,15 @@ void Interprete::procesarMensajeDeCliente(msg_t msg, User* user) {
 		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1, msg.paramDouble1, msg.paramDouble2);
 		break;
 
-	case ACTUALIZACION_RECURSOS:
-		//Esto por ahora se resuelve en el cliente.
+	case RECOLECCION_RECURSOS:
+		printf("Entra a recoleccion de de recursos\n");
+		this->gameCtrl->setAccionEntidad(msg.paramInt1,msg.paramDouble1);
 		break;
 
+	case ATACAR_EDIFICIO:
+		printf("Entra a atacar edificio\n");
+		//this->gameCtrl->setAccionConEntidad(msg.paramInt1,msg.paramDouble1);
+		break;
 	case KEEPALIVE:
 		//no se hace nada
 		break;
