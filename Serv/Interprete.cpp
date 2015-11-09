@@ -68,14 +68,16 @@ void Interprete::procesarMensajeDeCliente(msg_t msg, User* user) {
 //TODO aca hacer la decodificacion de msgs y ejecutar el comando del gameCtrl;
 	switch (msg.type) {
 	case MOVER_PERSONAJE:
-		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1, msg.paramDouble1, msg.paramDouble2);
+		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1,
+				msg.paramDouble1, msg.paramDouble2);
 		break;
 
 	case RECOLECCION_RECURSOS:
-		printf("Entra a recoleccion de de recursos\n");
 		this->gameCtrl->setAccionEntidad(msg.paramInt1,msg.paramDouble1);
 		break;
-
+	case ATACAR:
+		this->gameCtrl->atacar(msg.paramInt1, msg.paramDouble1);
+		break;
 	case ATACAR_EDIFICIO:
 		printf("Entra a atacar edificio\n");
 		//this->gameCtrl->setAccionConEntidad(msg.paramInt1,msg.paramDouble1);
