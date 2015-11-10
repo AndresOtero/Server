@@ -10,9 +10,15 @@ tipos:
    pixel_ref_y: 95
 
  - nombre: soldado
-   imagen: img/protagonista/spartan_small.png
-   fps: 10
+   imagen: img/protagonista/WALK.png
+   fps: 20
    delay: 0
+   velocidad: 15
+   vida: 50
+   armadura: 10
+   construccion: 10
+   recoleccion: 10   
+   fuerza: 10
 
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png

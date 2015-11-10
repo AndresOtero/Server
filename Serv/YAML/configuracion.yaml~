@@ -14,8 +14,8 @@ tipos:
 
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
-   fps: 10
-   delay: 5
+   fps: 20
+   delay: 0
 
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png
