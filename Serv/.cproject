@@ -56,7 +56,7 @@
 								<option id="gnu.cpp.link.option.paths.1279361490" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/AgeOfEmpiresTaller/Debug}&quot;"/>
 								</option>
-								<option id="gnu.cpp.link.option.userobjs.2097091785" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
+								<option id="gnu.cpp.link.option.userobjs.2097091785" name="Other objects" superClass="gnu.cpp.link.option.userobjs" valueType="userObjs">
 									<listOptionValue builtIn="false" value="/usr/local/lib/libyaml-cpp.a"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1772390868" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
