@@ -8,15 +8,17 @@ configuracion:
 
 tipos:
  - nombre: barraca
-   imagen: img/dibujo_estatico/construcciones/barraks/barraks.png
-   pixel_ref_x: 45
-   pixel_ref_y: 95
+   imagen: img/elfos/CASA.png
+   ancho_base: 2
+   alto_base: 2
+   pixel_ref_x: 0
+   pixel_ref_y: 0
 
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
-   fps: 10
+   fps: 2
    delay: 0
-   velocidad: 10
+   velocidad: 14
    vida: 50
    armadura: 10
    construccion: 10
@@ -82,7 +84,7 @@ escenario:
   - { x : 6, y: 6, tipo: church }
   - { x : 4, y: 4, tipo: wheel }
   - { x : 0, y: 0, tipo: barraca }
-  - { x : 3, y: 1, tipo: barraca }
+  - { x : 6, y: 1, tipo: barraca }
   - { x : 3, y: 0, tipo: firestation }
   - { x : 10, y: 8, tipo: arbol }
   - { x : 11, y: 8, tipo: arbol }
