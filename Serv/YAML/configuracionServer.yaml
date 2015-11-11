@@ -25,11 +25,10 @@ tipos:
    recoleccion: 10   
    fuerza: 10
 
-
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png
-   pixel_ref_x: 0
-   pixel_ref_y: 0
+   pixel_ref_x: 22
+   pixel_ref_y: 22
    fps: 20
    delay: 0
 
@@ -39,11 +38,6 @@ tipos:
    pixel_ref_y: 0   
    fps: 50
    delay: 0
-
- - nombre: pino
-   imagen: img/dibujo_estatico/arbol/pinetree.png
-   pixel_ref_x: 0
-   pixel_ref_y: 0
 
  - nombre: church
    imagen: img/dibujo_estatico/construcciones/church.png
@@ -61,7 +55,7 @@ tipos:
    pixel_ref_y: 0
 
  - nombre: madera
-   imagen: img/madera.png
+   imagen: img/dibujo_estatico/arbol/pinetree.png
    pixel_ref_x: 0
    pixel_ref_y: 0
 
@@ -82,30 +76,19 @@ escenario:
  size_x: 100
  size_y: 100
  entidades: 
-  - { x : 1, y: 2, tipo: arbol }
   - { x : 6, y: 6, tipo: church }
   - { x : 4, y: 4, tipo: wheel }
   - { x : 0, y: 0, tipo: barraca }
   - { x : 2, y: 1, tipo: barraca }
   - { x : 3, y: 0, tipo: firestation }
   - { x : 10, y: 8, tipo: barraca }
-  - { x : 11, y: 8, tipo: arbol }
-  - { x : 12, y: 8, tipo: arbol }
-  - { x : 13, y: 8, tipo: arbol }
-  - { x : 10, y: 9, tipo: barraca }
+  - { x : 10, y: 10, tipo: barraca }
   - { x : 2, y: 2, tipo: madera }
   - { x : 10, y: 7, tipo: piedra }
-  - { x : 10, y: 11, tipo: herreria }
-  - { x : 10, y: 12, tipo: pino }
+  - { x : 10, y: 12, tipo: herreria }
   - { x : 11, y: 12, tipo: barraca }
-  - { x : 12, y: 12, tipo: church }
+  - { x : 10, y: 12, tipo: church }
   - { x : 13, y: 12, tipo: wheel }
-  - { x : 13, y: 8, tipo: arbol }
-  - { x : 13, y: 9, tipo: arbol }
-  - { x : 13, y: 10, tipo: arbol }
-  - { x : 13, y: 11, tipo: arbol }
-  - { x : 20, y: 10, tipo: pino }
-  - { x : 20, y: 00, tipo: arbol }
   - { x : 40, y: 6, tipo: church }
   - { x : 40, y: 0, tipo: herreria }
   - { x : 40, y: 4, tipo: wheel }
