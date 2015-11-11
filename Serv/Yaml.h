@@ -22,6 +22,7 @@ typedef struct {
 typedef struct {
 	std::string nombre;
 	std::string ip;
+	std::string raza;
 } Jugador_t;
 typedef struct {
 	std::string tipo;

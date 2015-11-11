@@ -57,6 +57,7 @@ const std::string tag_tipos_armadura = "armadura";
 const std::string tag_tipos_vida = "vida";
 const std::string tag_tipos_recoleccion = "recoleccion";
 const std::string tag_tipos_construccion = "construccion";
+const std::string tag_tipos_raza = "raza";
 
 
 const std::string tag_escenario = "escenario";
@@ -75,6 +76,8 @@ const std::string tag_escenario_protagonista_tipo = "tipo";
 const std::string tag_jugador = "jugador";
 const std::string tag_jugador_nombre = "nombre";
 const std::string tag_jugador_ip = "ip";
+const std::string tag_jugador_raza = "raza";
+
 
 
 
@@ -319,8 +322,8 @@ Pantalla* Yaml::cargarPantalla(ConfiguracionJuego_t conf, YAML::Node* doc) {
 	}
 	return pantalla;
 }
-Jugador* Yaml::cargarJugador( YAML::Node* doc,Personaje* pers) {
-	Jugador* jugador=NULL;
+Jugador* Yaml::cargarJugador(YAML::Node* doc, Personaje* pers) {
+	Jugador* jugador = NULL;
 	Jugador_t jug;
 	if (const YAML::Node *pJugador = doc->FindValue(tag_jugador)) {
 		if (const YAML::Node *pJugadorNombre = (*pJugador).FindValue(
@@ -329,8 +332,11 @@ Jugador* Yaml::cargarJugador( YAML::Node* doc,Personaje* pers) {
 			if (const YAML::Node *pJugadorIp = (*pJugador).FindValue(
 					tag_jugador_ip)) {
 				(*pJugadorIp) >> jug.ip;
-				jugador = new Jugador(jug.nombre,
-						jug.ip,pers);
+				if (const YAML::Node *pJugadorRaza = (*pJugador).FindValue(
+						tag_jugador_raza)) {
+					(*pJugadorRaza) >> jug.raza;
+					jugador = new Jugador(jug.nombre, jug.ip, jug.raza);
+				}
 			} else {
 				//LOG_WARNING						<< "No se define un nombre para el jugador";
 			}
