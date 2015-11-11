@@ -78,10 +78,6 @@ void Interprete::procesarMensajeDeCliente(msg_t msg, User* user) {
 	case ATACAR:
 		this->gameCtrl->atacar(msg.paramInt1, msg.paramDouble1);
 		break;
-	case ATACAR_EDIFICIO:
-		printf("Entra a atacar edificio\n");
-		//this->gameCtrl->setAccionConEntidad(msg.paramInt1,msg.paramDouble1);
-		break;
 	case KEEPALIVE:
 		//no se hace nada
 		break;
