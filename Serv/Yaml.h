@@ -62,6 +62,8 @@ typedef struct {
 	int recoleccion;
 	int construccion;
 	int vida;
+	string raza;
+	int velocidad_construcccion;
 } Objeto_mapa_t;
 
 typedef struct {
