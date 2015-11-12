@@ -13,17 +13,20 @@ tipos:
    alto_base: 2
    pixel_ref_x: -50
    pixel_ref_y: 150
+   raza: Elfo
+   velocidad_de_construccion: 20
 
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
    fps: 2
    delay: 0
-   velocidad: 14
+   velocidad: 25
    vida: 50
    armadura: 10
    construccion: 10
    recoleccion: 10   
    fuerza: 10
+   raza: Elfo
 
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png
@@ -82,13 +85,9 @@ escenario:
   - { x : 2, y: 1, tipo: barraca }
   - { x : 3, y: 0, tipo: firestation }
   - { x : 10, y: 8, tipo: barraca }
-  - { x : 10, y: 10, tipo: barraca }
   - { x : 2, y: 2, tipo: madera }
   - { x : 10, y: 7, tipo: piedra }
-  - { x : 10, y: 12, tipo: herreria }
   - { x : 11, y: 12, tipo: barraca }
-  - { x : 10, y: 12, tipo: church }
-  - { x : 13, y: 12, tipo: wheel }
   - { x : 40, y: 6, tipo: church }
   - { x : 40, y: 0, tipo: herreria }
   - { x : 40, y: 4, tipo: wheel }
