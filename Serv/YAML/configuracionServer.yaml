@@ -14,11 +14,43 @@ tipos:
    pixel_ref_x: -50
    pixel_ref_y: 150
 
+ - nombre: arqueriaElfos
+   imagen: img/1elfos/ARQUERIA.png
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -90
+   pixel_ref_y: 360
+   raza: Elfos
+
+ - nombre: caballeriaElfos
+   imagen: img/1elfos/CABALLERIA.png
+   ancho_base: 3
+   alto_base: 3
+   pixel_ref_x: -50
+   pixel_ref_y: 150
+   raza: Elfo
+
+ - nombre: centro civico Elfos
+   imagen: img/1elfos/CENTRO-CIVICO.png
+   ancho_base: 3
+   alto_base: 3
+   pixel_ref_x: -50
+   pixel_ref_y: 150
+   raza: Elfo
+
+ - nombre: molElfos
+   imagen: img/1elfos/MOLINO.png
+   ancho_base: 2
+   alto_base: 2
+   pixel_ref_x: -50
+   pixel_ref_y: 80
+   raza: Elfo
+
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
    fps: 2
    delay: 0
-   velocidad: 14
+   velocidad: 6
    vida: 50
    armadura: 10
    construccion: 10
@@ -94,5 +126,5 @@ escenario:
   - { x : 40, y: 4, tipo: wheel }
   - { x : 30, y: 10, tipo: barraca }
   - { x : 30, y: 0, tipo: firestation }
-  - { x : 90, y: 90, tipo: barraca }
+  - { x : 90, y: 90, tipo: molElfos }
 
