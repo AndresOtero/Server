@@ -250,6 +250,12 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 			}
 			if (const YAML::Node *pDelay =
 					((*pTipos)[cantidad_de_objetos]).FindValue(
+							tag_tipos_construccion)) {
+				*pDelay >> tipo.construccion;
+				objeto->construccion = tipo.construccion;
+			}
+			if (const YAML::Node *pDelay =
+					((*pTipos)[cantidad_de_objetos]).FindValue(
 							tag_tipos_recoleccion)) {
 				*pDelay >> tipo.recoleccion;
 				objeto->recoleccion = tipo.recoleccion;

@@ -71,12 +71,14 @@ void Interprete::procesarMensajeDeCliente(msg_t msg, User* user) {
 		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1,
 				msg.paramDouble1, msg.paramDouble2);
 		break;
-
 	case RECOLECCION_RECURSOS:
 		this->gameCtrl->setAccionEntidad(msg.paramInt1,msg.paramDouble1);
 		break;
 	case ATACAR:
 		this->gameCtrl->atacar(msg.paramInt1, msg.paramDouble1);
+		break;
+	case CREAR_ENTIDAD:
+		this->gameCtrl->crearEdificio(msg.paramNombre,msg.paramDouble1,msg.paramDouble2,this->mutexGameCtrl);
 		break;
 	case KEEPALIVE:
 		//no se hace nada

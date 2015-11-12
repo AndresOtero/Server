@@ -13,6 +13,7 @@ tipos:
    alto_base: 2
    pixel_ref_x: -50
    pixel_ref_y: 150
+   raza: Elfo
 
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png

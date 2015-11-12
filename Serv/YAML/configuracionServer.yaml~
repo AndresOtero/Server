@@ -27,8 +27,6 @@ tipos:
 
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png
-	ancho_base: 1
-   alto_base: 2
    pixel_ref_x: 22
    pixel_ref_y: 22
    fps: 20
