@@ -8,11 +8,11 @@ configuracion:
 
 tipos:
  - nombre: barraca
-   imagen: img/2hobbit/CUARTEL.png
-   ancho_base: 2
-   alto_base: 2
-   pixel_ref_x: -50
-   pixel_ref_y: 150
+   imagen: img/1elfos/ARQUERIA.png
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -90
+   pixel_ref_y: 360
    raza: Elfo
    velocidad_de_construccion: 20
 
@@ -22,7 +22,7 @@ tipos:
    alto_base: 4
    pixel_ref_x: -90
    pixel_ref_y: 360
-   raza: Elfos
+   raza: Elfo
    velocidad_de_construccion: 30
 
  - nombre: caballeriaElfos
@@ -51,6 +51,75 @@ tipos:
    pixel_ref_y: 80
    raza: Elfo
    velocidad_de_construccion: 20
+
+ - nombre: centroCivicoHobbit
+   imagen: img/2hobbit/CENTRO-CIVICO.png
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -50
+   pixel_ref_y: 80
+   raza: Hobbit
+   velocidad_de_construccion: 20
+
+ - nombre: cuartelHobbit
+   imagen: img/2hobbit/CUARTEL.png
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -145
+   pixel_ref_y: 120
+   raza: Hobbit
+   velocidad_de_construccion: 20
+
+ - nombre: banderaHobbit
+   imagen: img/2hobbit/bandera/flag.png
+   ancho_base: 1
+   alto_base: 1
+   pixel_ref_x: 50
+   pixel_ref_y: 0
+   raza: Hobbit
+
+ - nombre: escuderiaHumano
+   imagen: img/3humanos/ESCUDERIA.png
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -145
+   pixel_ref_y: 120
+   raza: Humano
+   velocidad_de_construccion: 20
+
+ - nombre: centroCivicoHumano
+   imagen: img/3humanos/CENTRO-CIVICO.png
+   ancho_base: 5
+   alto_base: 5
+   pixel_ref_x: -125
+   pixel_ref_y: 120
+   raza: Humano
+   velocidad_de_construccion: 20
+
+ - nombre: caballeriaHumano
+   imagen: img/3humanos/CABALLERIA.png
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -115
+   pixel_ref_y: 130
+   raza: Humano
+   velocidad_de_construccion: 20
+
+ - nombre: banderaHumano
+   imagen: img/3humanos/bandera/flag.png
+   ancho_base: 1
+   alto_base: 1
+   pixel_ref_x: 25
+   pixel_ref_y: 0
+   raza: Humano
+   velocidad_de_construccion: 20
+
+ - nombre: molinoMordor
+   imagen: img/4mordor/MOLINO.png
+   pixel_ref_x: -47
+   pixel_ref_y: 50
+   fps: 20
+   delay: 0
 
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
