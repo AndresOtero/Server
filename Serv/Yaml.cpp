@@ -181,10 +181,12 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 	Objeto_mapa_t tipo;
 	if (const YAML::Node *pTipoNombre =
 			((*pTipos)[cantidad_de_objetos]).FindValue(tag_tipos_nombre)) {
+		printf("%s\n",tipo.nombre.c_str());
 		(*pTipoNombre) >> tipo.nombre;
 
 		if (const YAML::Node *pTipoImagen =
 				((*pTipos)[cantidad_de_objetos]).FindValue(tag_tipos_imagen)) {
+			printf("%s\n",tipo.imagen.c_str());
 			*pTipoImagen >> tipo.imagen;
 
 			ObjetoMapa* objeto = new ObjetoMapa(tipo.nombre, tipo.imagen);

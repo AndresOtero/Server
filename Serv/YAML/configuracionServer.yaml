@@ -16,6 +16,42 @@ tipos:
    raza: Elfo
    velocidad_de_construccion: 20
 
+ - nombre: arqueriaElfos
+   imagen: img/1elfos/ARQUERIA.png
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -90
+   pixel_ref_y: 360
+   raza: Elfos
+   velocidad_de_construccion: 30
+
+ - nombre: caballeriaElfos
+   imagen: img/1elfos/CABALLERIA.png
+   ancho_base: 3
+   alto_base: 3
+   pixel_ref_x: -50
+   pixel_ref_y: 150
+   raza: Elfo
+   velocidad_de_construccion: 20
+
+ - nombre: centrocivicoElfos
+   imagen: img/1elfos/CENTRO-CIVICO.png
+   ancho_base: 3
+   alto_base: 3
+   pixel_ref_x: -50
+   pixel_ref_y: 150
+   raza: Elfo
+   velocidad_de_construccion: 50
+
+ - nombre: molElfos
+   imagen: img/1elfos/MOLINO.png
+   ancho_base: 2
+   alto_base: 2
+   pixel_ref_x: -50
+   pixel_ref_y: 80
+   raza: Elfo
+   velocidad_de_construccion: 20
+
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
    fps: 2
@@ -92,5 +128,5 @@ escenario:
   - { x : 40, y: 4, tipo: wheel }
   - { x : 30, y: 10, tipo: barraca }
   - { x : 30, y: 0, tipo: firestation }
-  - { x : 90, y: 90, tipo: barraca }
+  - { x : 90, y: 90, tipo: molElfos }
 
