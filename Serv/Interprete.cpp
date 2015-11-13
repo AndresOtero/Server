@@ -112,9 +112,9 @@ void Interprete::notifyReccconection(User* user){
 	enviar_mensaje_a_users(mensajeReconexion);
 }
 
-void Interprete::notifyNewUser(User* user){
+void Interprete::notifyNewUser(User* user, string tipo){
 
-	this->gameCtrl->agregarCliente(user->getLoginName(), "soldado", user->getMutex());
+	this->gameCtrl->agregarCliente(user->getLoginName(), tipo, user->getMutex());
 }
 
 void Interprete::notifyLostUserConnection(User* user){
