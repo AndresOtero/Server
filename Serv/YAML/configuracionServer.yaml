@@ -115,18 +115,13 @@ escenario:
  size_x: 100
  size_y: 100
  entidades: 
-  - { x : 6, y: 6, tipo: church }
-  - { x : 4, y: 4, tipo: wheel }
-  - { x : 0, y: 0, tipo: barraca }
-  - { x : 2, y: 1, tipo: barraca }
-  - { x : 3, y: 0, tipo: firestation }
   - { x : 10, y: 8, tipo: barraca }
-  - { x : 2, y: 2, tipo: madera }
+  - { x : 0, y: 5, tipo: madera }
   - { x : 11, y: 12, tipo: barraca }
   - { x : 40, y: 6, tipo: church }
   - { x : 40, y: 0, tipo: herreria }
   - { x : 40, y: 4, tipo: wheel }
   - { x : 30, y: 10, tipo: barraca }
   - { x : 30, y: 0, tipo: firestation }
-  - { x : 90, y: 90, tipo: molElfos }
+  - { x : 3, y: 3, tipo: centrocivicoElfos }
 
