@@ -117,8 +117,47 @@ tipos:
    imagen: img/4mordor/MOLINO.png
    pixel_ref_x: -47
    pixel_ref_y: 50
+   raza: Mordor
    fps: 20
    delay: 0
+   velocidad_de_construccion: 20
+
+ - nombre: centroCivicoMordor
+   imagen: img/4mordor/MOLINO.png
+   ancho_base: 5
+   alto_base: 5
+   raza: Mordor
+   pixel_ref_x: -50
+   pixel_ref_y: 300
+   raza: Mordor
+   velocidad_de_construccion: 20
+
+ - nombre: cuartelMordor
+   imagen: img/4mordor/CUARTEL.png
+   ancho_base: 5
+   alto_base: 5
+   pixel_ref_x: -100
+   pixel_ref_y: 200
+   raza: Mordor
+   velocidad_de_construccion: 20
+
+ - nombre: cuartelBestiaMordor
+   imagen: img/4mordor/CUARTEL-ESPECIAL.png
+   ancho_base: 3
+   alto_base: 3
+   pixel_ref_x: -150
+   pixel_ref_y: 130
+   raza: Mordor
+   velocidad_de_construccion: 20
+
+ - nombre: banderaMordor
+   imagen: img/4mordor/bandera/flag.png
+   ancho_base: 1
+   alto_base: 1
+   pixel_ref_x: -5
+   pixel_ref_y: 70
+   raza: Mordor
+   velocidad_de_construccion: 20
 
  - nombre: soldado
    imagen: img/protagonista/spartan_small.png
@@ -185,7 +224,7 @@ escenario:
  entidades: 
   - { x : 6, y: 6, tipo: church }
   - { x : 4, y: 4, tipo: wheel }
-  - { x : 10, y: 10, tipo: molinoMordor }
+  - { x : 10, y: 10, tipo: banderaMordor }
   - { x : 3, y: 0, tipo: firestation }
   - { x : 2, y: 2, tipo: madera }
   - { x : 40, y: 6, tipo: church }
