@@ -50,6 +50,8 @@ typedef struct {
 typedef struct {
 	std::string nombre;
 	std::string imagen;
+	std::string imagen_atacando;
+	std::string imagen_quieto;
 	int ancho_base;
 	int alto_base;
 	int pixel_ref_x;
@@ -64,6 +66,7 @@ typedef struct {
 	int vida;
 	string raza;
 	int velocidad_construcccion;
+
 } Objeto_mapa_t;
 
 typedef struct {
