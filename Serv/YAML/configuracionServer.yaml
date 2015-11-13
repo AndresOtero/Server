@@ -9,6 +9,7 @@ configuracion:
 tipos:
  - nombre: barraca
    imagen: img/1elfos/ARQUERIA.png
+   icono:  img/1elfos/icon-arqueria.png
    ancho_base: 4
    alto_base: 4
    pixel_ref_x: -90
@@ -18,6 +19,7 @@ tipos:
 
  - nombre: arqueriaElfos
    imagen: img/1elfos/ARQUERIA.png
+   icono:  img/1elfos/icon-arqueria.png
    ancho_base: 4
    alto_base: 4
    pixel_ref_x: -90
@@ -27,6 +29,7 @@ tipos:
 
  - nombre: caballeriaElfos
    imagen: img/1elfos/CABALLERIA.png
+   icono:  img/1elfos/icon-caballeria.png
    ancho_base: 3
    alto_base: 3
    pixel_ref_x: -50
@@ -45,6 +48,7 @@ tipos:
 
  - nombre: molElfos
    imagen: img/1elfos/MOLINO.png
+   imagen: img/1elfos/icon-molino.png
    ancho_base: 2
    alto_base: 2
    pixel_ref_x: -50

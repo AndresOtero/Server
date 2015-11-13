@@ -45,6 +45,9 @@ const std::string tag_config_margen_scroll = "margen_scroll";
 const std::string tag_tipos = "tipos";
 const std::string tag_tipos_nombre = "nombre";
 const std::string tag_tipos_imagen = "imagen";
+const std::string tag_tipos_imagen_atacar = "imagen_atacar";
+const std::string tag_tipos_imagen_quieto = "imagen_quieto";
+const std::string tag_tipos_imagen_icono = "icono";
 const std::string tag_tipos_ancho_base = "ancho_base";
 const std::string tag_tipos_alto_base = "alto_base";
 const std::string tag_tipos_pixel_ref_x = "pixel_ref_x";
@@ -182,12 +185,12 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 	if (const YAML::Node *pTipoNombre =
 			((*pTipos)[cantidad_de_objetos]).FindValue(tag_tipos_nombre)) {
 		(*pTipoNombre) >> tipo.nombre;
+		printf("%s\n",tipo.nombre.c_str());
 
 		if (const YAML::Node *pTipoImagen =
 				((*pTipos)[cantidad_de_objetos]).FindValue(tag_tipos_imagen)) {
 			*pTipoImagen >> tipo.imagen;
-			printf("%s\n",tipo.nombre.c_str());
-
+			printf("%s\n",tipo.imagen.c_str());
 
 			ObjetoMapa* objeto = new ObjetoMapa(tipo.nombre, tipo.imagen);
 
@@ -280,6 +283,24 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 				*pDelay >> tipo.velocidad_construcccion;
 				objeto->velocidad_construcccion = tipo.velocidad_construcccion;
 			}
+			if (const YAML::Node *pDelay =
+					((*pTipos)[cantidad_de_objetos]).FindValue(
+							tag_tipos_imagen_atacar)) {
+				*pDelay >> tipo.imagen_atacando;
+				objeto->imagen_atacando = tipo.imagen_atacando;
+			}
+			if (const YAML::Node *pDelay =
+					((*pTipos)[cantidad_de_objetos]).FindValue(
+							tag_tipos_imagen_quieto)) {
+				*pDelay >> tipo.imagen_quieto;
+				objeto->imagen_quieto = tipo.imagen_quieto;
+			}
+			if (const YAML::Node *pIcono =((*pTipos)[cantidad_de_objetos]).FindValue(
+										tag_tipos_imagen_icono)) {
+
+							*pIcono >> tipo.imagen_atacando;
+							objeto->icono = tipo.imagen_atacando ;
+						}
 			tipos[tipo.nombre] = objeto;
 			cantidad_de_objetos ++;
 		} else {
