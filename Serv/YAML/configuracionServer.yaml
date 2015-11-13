@@ -159,7 +159,7 @@ tipos:
    raza: Mordor
    velocidad_de_construccion: 20
 
- - nombre: soldado
+ - nombre: gandalf
    imagen: img/protagonista/spartan_small.png
    fps: 2
    delay: 0
