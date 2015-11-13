@@ -7,7 +7,7 @@ configuracion:
  margen_scroll: 200
 
 tipos:
-  -nombre: barraca
+ - nombre: barraca
    imagen: img/2hobbit/CUARTEL.png
    ancho_base: 2
    alto_base: 2
@@ -16,7 +16,7 @@ tipos:
    raza: Elfo
    velocidad_de_construccion: 20
 
-  -nombre: arqueriaElfos
+ - nombre: arqueriaElfos
    imagen: img/1elfos/ARQUERIA.png
    ancho_base: 4
    alto_base: 4
@@ -25,7 +25,7 @@ tipos:
    raza: Elfos
    velocidad_de_construccion: 30
 
-  -nombre: caballeriaElfos
+ - nombre: caballeriaElfos
    imagen: img/1elfos/CABALLERIA.png
    ancho_base: 3
    alto_base: 3
@@ -34,7 +34,7 @@ tipos:
    raza: Elfo
    velocidad_de_construccion: 20
 
-  -nombre: centrocivicoElfos
+ - nombre: centrocivicoElfos
    imagen: img/1elfos/CENTRO-CIVICO.png
    ancho_base: 3
    alto_base: 3
@@ -43,7 +43,7 @@ tipos:
    raza: Elfo
    velocidad_de_construccion: 50
 
-  -nombre: molElfos
+ - nombre: molElfos
    imagen: img/1elfos/MOLINO.png
    ancho_base: 2
    alto_base: 2
