@@ -14,6 +14,7 @@ tipos:
    alto_base: 4
    pixel_ref_x: -90
    pixel_ref_y: 360
+   vida: 50
    raza: Elfo
    velocidad_de_construccion: 30
    oro: 50
@@ -27,6 +28,7 @@ tipos:
    alto_base: 4
    pixel_ref_x: -90
    pixel_ref_y: 360
+   vida: 50
    raza: Elfo   
 
  - nombre: caballeriaElfos
@@ -36,6 +38,7 @@ tipos:
    alto_base: 3
    pixel_ref_x: -70
    pixel_ref_y: 320
+   vida: 50
    raza: Elfo
    velocidad_de_construccion: 20
 
@@ -45,6 +48,7 @@ tipos:
    alto_base: 4
    pixel_ref_x: -90
    pixel_ref_y: 270
+   vida: 50
    raza: Elfo
 
  - nombre: molElfos
@@ -54,6 +58,7 @@ tipos:
    alto_base: 2
    pixel_ref_x: -50
    pixel_ref_y: 80
+   vida: 50
    raza: Elfo
    velocidad_de_construccion: 20
 
@@ -63,6 +68,7 @@ tipos:
    alto_base: 5
    pixel_ref_x: -145
    pixel_ref_y: 120
+   vida: 50
    raza: Hobbit
    velocidad_de_construccion: 20
 
@@ -72,6 +78,7 @@ tipos:
    alto_base: 4
    pixel_ref_x: -100
    pixel_ref_y: 80
+   vida: 50
    raza: Hobbit
    velocidad_de_construccion: 20
 
@@ -81,6 +88,7 @@ tipos:
    alto_base: 1
    pixel_ref_x: 25
    pixel_ref_y: 0
+   vida: 50
    raza: Hobbit
 
  - nombre: escuderiaHumano
@@ -89,6 +97,7 @@ tipos:
    alto_base: 4
    pixel_ref_x: -125
    pixel_ref_y: 120
+   vida: 50
    raza: Humano
    velocidad_de_construccion: 20
 
@@ -98,6 +107,7 @@ tipos:
    alto_base: 5
    pixel_ref_x: -125
    pixel_ref_y: 120
+   vida: 50
    raza: Humano
    velocidad_de_construccion: 20
 
@@ -107,6 +117,7 @@ tipos:
    alto_base: 4
    pixel_ref_x: -115
    pixel_ref_y: 130
+   vida: 50
    raza: Humano
    velocidad_de_construccion: 20
 
@@ -116,6 +127,7 @@ tipos:
    alto_base: 1
    pixel_ref_x: -5
    pixel_ref_y: 70
+   vida: 50
    raza: Humano
 
  - nombre: molinoMordor
@@ -126,6 +138,7 @@ tipos:
    pixel_ref_y: 75
    fps: 6
    delay: 1
+   vida: 50
 
  - nombre: cuartelMordor
    imagen: img/4mordor/CUARTEL.png
@@ -133,6 +146,7 @@ tipos:
    alto_base: 5
    pixel_ref_x: -140
    pixel_ref_y: 120
+   vida: 50
    velocidad_de_construccion: 20
 
  - nombre: centroCivicoMordor
@@ -141,6 +155,7 @@ tipos:
    alto_base: 5
    pixel_ref_x: -150
    pixel_ref_y: 450
+   vida: 50
 
  - nombre: cuartelBestiaMordor
    imagen: img/4mordor/CUARTEL-ESPECIAL.png
@@ -148,6 +163,7 @@ tipos:
    alto_base: 3
    pixel_ref_x: -60
    pixel_ref_y: 60
+   vida: 50
    velocidad_de_construccion: 20
 
  - nombre: banderaMordor
@@ -156,6 +172,7 @@ tipos:
    alto_base: 1
    pixel_ref_x: 20
    pixel_ref_y: 45
+   vida: 50
 
  - nombre: gandalf
    imagen: img/2hobbit/gandalf/WALK.png
@@ -163,7 +180,7 @@ tipos:
    imagen_atacar: img/2hobbit/gandalf/ATACK.png
    fps: 4
    delay: 0
-   velocidad: 25
+   velocidad: 22
    vida: 50
    armadura: 10
    construccion: 10
@@ -182,6 +199,7 @@ tipos:
    pixel_ref_y: 50
    fps: 20
    delay: 1
+   vida: 50
 
  - nombre: herreria
    imagen: img/dibujo_dinamico/mirador.png
@@ -189,16 +207,19 @@ tipos:
    pixel_ref_y: 50   
    fps: 20
    delay: 50
+   vida: 50
 
  - nombre: pino
    imagen: img/dibujo_estatico/arbol/pinetree.png
    pixel_ref_x: 85
    pixel_ref_y: 88
+   vida: 50
 
  - nombre: church
    imagen: img/dibujo_estatico/construcciones/church.png
    pixel_ref_x: 60
    pixel_ref_y: 52
+   vida: 50
 
  - nombre: oro
    imagen: img/extras/terrain/gold.png
@@ -219,11 +240,14 @@ tipos:
    imagen: img/dibujo_estatico/construcciones/firestation.png
    pixel_ref_x: 0
    pixel_ref_y: 44
+   vida: 50
 
  - nombre: arbol
    imagen: img/dibujo_estatico/arbol/firtree.png
    pixel_ref_x: 20
    pixel_ref_y: 45
+   vida: 50
+
 
 escenario:
  nombre: orleans
