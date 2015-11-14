@@ -4,51 +4,52 @@ pantalla:
 
 configuracion:
  vel_personaje: 1
- margen_scroll: 200
+ margen_scroll: 30
 
 tipos:
  - nombre: barraca
    imagen: img/1elfos/ARQUERIA.png
-   icono:  img/1elfos/icon-arqueria.png
-   ancho_base: 4
-   alto_base: 4
-   pixel_ref_x: -90
-   pixel_ref_y: 360
-   raza: Elfo
-   velocidad_de_construccion: 20
-
- - nombre: arqueriaElfos
-   imagen: img/1elfos/ARQUERIA.png
-   icono:  img/1elfos/icon-arqueria.png
+   icono:  img/1elfos/icon-arqueria.bmp
    ancho_base: 4
    alto_base: 4
    pixel_ref_x: -90
    pixel_ref_y: 360
    raza: Elfo
    velocidad_de_construccion: 30
+   oro: 50
+   piedra: 50
+   madera: 50
+
+ - nombre: arqueriaElfos
+   imagen: img/1elfos/ARQUERIA.png
+   icono:  img/1elfos/icon-arqueria.bmp
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -90
+   pixel_ref_y: 360
+   raza: Elfo   
 
  - nombre: caballeriaElfos
    imagen: img/1elfos/CABALLERIA.png
-   icono:  img/1elfos/icon-caballeria.png
+   icono:  img/1elfos/icon-caballeria.bmp
    ancho_base: 3
    alto_base: 3
-   pixel_ref_x: -50
-   pixel_ref_y: 150
+   pixel_ref_x: -70
+   pixel_ref_y: 320
    raza: Elfo
    velocidad_de_construccion: 20
 
  - nombre: centrocivicoElfos
    imagen: img/1elfos/CENTRO-CIVICO.png
-   ancho_base: 3
-   alto_base: 3
-   pixel_ref_x: -50
-   pixel_ref_y: 150
+   ancho_base: 4
+   alto_base: 4
+   pixel_ref_x: -90
+   pixel_ref_y: 270
    raza: Elfo
-   velocidad_de_construccion: 50
 
  - nombre: molElfos
    imagen: img/1elfos/MOLINO.png
-   imagen: img/1elfos/icon-molino.png
+   icono: img/1elfos/icon-molino.bmp
    ancho_base: 2
    alto_base: 2
    pixel_ref_x: -50
@@ -58,10 +59,10 @@ tipos:
 
  - nombre: centroCivicoHobbit
    imagen: img/2hobbit/CENTRO-CIVICO.png
-   ancho_base: 4
-   alto_base: 4
-   pixel_ref_x: -50
-   pixel_ref_y: 80
+   ancho_base: 5
+   alto_base: 5
+   pixel_ref_x: -145
+   pixel_ref_y: 120
    raza: Hobbit
    velocidad_de_construccion: 20
 
@@ -69,8 +70,8 @@ tipos:
    imagen: img/2hobbit/CUARTEL.png
    ancho_base: 4
    alto_base: 4
-   pixel_ref_x: -145
-   pixel_ref_y: 120
+   pixel_ref_x: -100
+   pixel_ref_y: 80
    raza: Hobbit
    velocidad_de_construccion: 20
 
@@ -78,7 +79,7 @@ tipos:
    imagen: img/2hobbit/bandera/flag.png
    ancho_base: 1
    alto_base: 1
-   pixel_ref_x: 50
+   pixel_ref_x: 25
    pixel_ref_y: 0
    raza: Hobbit
 
@@ -86,7 +87,7 @@ tipos:
    imagen: img/3humanos/ESCUDERIA.png
    ancho_base: 4
    alto_base: 4
-   pixel_ref_x: -145
+   pixel_ref_x: -125
    pixel_ref_y: 120
    raza: Humano
    velocidad_de_construccion: 20
@@ -113,58 +114,54 @@ tipos:
    imagen: img/3humanos/bandera/flag.png
    ancho_base: 1
    alto_base: 1
-   pixel_ref_x: 25
-   pixel_ref_y: 0
+   pixel_ref_x: -5
+   pixel_ref_y: 70
    raza: Humano
 
  - nombre: molinoMordor
    imagen: img/4mordor/MOLINO.png
-   pixel_ref_x: -47
-   pixel_ref_y: 50
-   raza: Mordor
-   fps: 20
-   delay: 0
-   velocidad_de_construccion: 20
-
- - nombre: centroCivicoMordor
-   imagen: img/4mordor/MOLINO.png
-   ancho_base: 5
-   alto_base: 5
-   raza: Mordor
+   ancho_base: 3
+   alto_base: 3
    pixel_ref_x: -50
-   pixel_ref_y: 300
-   raza: Mordor
-   velocidad_de_construccion: 20
+   pixel_ref_y: 75
+   fps: 6
+   delay: 1
 
  - nombre: cuartelMordor
    imagen: img/4mordor/CUARTEL.png
    ancho_base: 5
    alto_base: 5
-   pixel_ref_x: -100
-   pixel_ref_y: 200
-   raza: Mordor
+   pixel_ref_x: -140
+   pixel_ref_y: 120
    velocidad_de_construccion: 20
+
+ - nombre: centroCivicoMordor
+   imagen: img/4mordor/CENTRO-CIVICO.png
+   ancho_base: 5
+   alto_base: 5
+   pixel_ref_x: -150
+   pixel_ref_y: 450
 
  - nombre: cuartelBestiaMordor
    imagen: img/4mordor/CUARTEL-ESPECIAL.png
    ancho_base: 3
    alto_base: 3
-   pixel_ref_x: -150
-   pixel_ref_y: 130
-   raza: Mordor
+   pixel_ref_x: -60
+   pixel_ref_y: 60
    velocidad_de_construccion: 20
 
  - nombre: banderaMordor
    imagen: img/4mordor/bandera/flag.png
    ancho_base: 1
    alto_base: 1
-   pixel_ref_x: -5
-   pixel_ref_y: 70
-   raza: Mordor
+   pixel_ref_x: 20
+   pixel_ref_y: 45
 
  - nombre: gandalf
-   imagen: img/protagonista/spartan_small.png
-   fps: 2
+   imagen: img/2hobbit/gandalf/WALK.png
+   imagen_quieto: img/2hobbit/gandalf/STAND.png
+   imagen_atacar: img/2hobbit/gandalf/ATACK.png
+   fps: 4
    delay: 0
    velocidad: 25
    vida: 50
@@ -174,52 +171,59 @@ tipos:
    fuerza: 10
    raza: Elfo
    edificio_constructor: barraca
+   oro: 50
+   comida: 50
 
  - nombre: wheel
-   imagen: img/dibujo_dinamico/wheel.png
-   pixel_ref_x: 22
-   pixel_ref_y: 22
+   imagen: img/2hobbit/wheel.png
+   ancho_base: 1
+   alto_base: 2
+   pixel_ref_x: -47
+   pixel_ref_y: 50
    fps: 20
-   delay: 0
+   delay: 1
 
  - nombre: herreria
    imagen: img/dibujo_dinamico/mirador.png
-   pixel_ref_x: 0
-   pixel_ref_y: 0   
-   fps: 50
-   delay: 0
+   pixel_ref_x: 60
+   pixel_ref_y: 50   
+   fps: 20
+   delay: 50
+
+ - nombre: pino
+   imagen: img/dibujo_estatico/arbol/pinetree.png
+   pixel_ref_x: 85
+   pixel_ref_y: 88
 
  - nombre: church
    imagen: img/dibujo_estatico/construcciones/church.png
-   pixel_ref_x: 0
-   pixel_ref_y: 0
+   pixel_ref_x: 60
+   pixel_ref_y: 52
 
  - nombre: oro
-   imagen: img/oro.png
-   pixel_ref_x: 0
+   imagen: img/extras/terrain/gold.png
+   pixel_ref_x: 10
    pixel_ref_y: 0 
 
  - nombre: piedra
-   imagen: img/piedra.png
-   pixel_ref_x: 0
-   pixel_ref_y: 0
+   imagen: img/extras/terrain/roca/roca1.png
+   pixel_ref_x: 10
+   pixel_ref_y: 3
 
  - nombre: madera
-   imagen: img/dibujo_estatico/arbol/pinetree.png
-   pixel_ref_x: 0
-   pixel_ref_y: 0
+   imagen: img/extras/terrain/arboles/arbol1.png
+   pixel_ref_x: 16
+   pixel_ref_y: 120
 
  - nombre: firestation
    imagen: img/dibujo_estatico/construcciones/firestation.png
-   ancho_base: 2
-   alto_base: 3
    pixel_ref_x: 0
-   pixel_ref_y: 0
+   pixel_ref_y: 44
 
  - nombre: arbol
    imagen: img/dibujo_estatico/arbol/firtree.png
-   pixel_ref_x: 60
-   pixel_ref_y: 20
+   pixel_ref_x: 20
+   pixel_ref_y: 45
 
 escenario:
  nombre: orleans
