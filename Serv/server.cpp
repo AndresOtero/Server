@@ -99,7 +99,6 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 				if (tempUser->getLoginName() == loginName) {
 
 					if (!tempUser->isConnected()) {
-						printf("reconexion del jugador \n");
 						enviarKeepAlive(socket, interprete); //Porque aca el cliente espera un mensaje por si el usuario esta tomado.
 						//LOG_WARNING << "Reconexion";
 						tempUser->setConnectedFlag(true);

@@ -170,6 +170,7 @@ tipos:
    recoleccion: 10   
    fuerza: 10
    raza: Elfo
+   edificio_constructor: barraca
 
  - nombre: wheel
    imagen: img/dibujo_dinamico/wheel.png
