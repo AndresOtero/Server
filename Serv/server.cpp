@@ -278,6 +278,12 @@ int main(int argc, char *argv[]) {
 	delete i;
 	interprete.setJuego(juego);
 	interprete.crearModelo();
+	/*Si qieren probar meter 4 bases de elfo
+	interprete.gameCtrl->crearCentroCivicoNuevoUser("Elfo");
+	interprete.gameCtrl->crearCentroCivicoNuevoUser("Elfo");
+	interprete.gameCtrl->crearCentroCivicoNuevoUser("Elfo");
+	interprete.gameCtrl->crearCentroCivicoNuevoUser("Elfo");
+    */
 	vector<User*> users(MAX_NUM_CLIENTS,NULL);
 	struct thread_ppal_data  threadArgu;
 
