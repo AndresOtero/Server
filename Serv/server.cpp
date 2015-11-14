@@ -95,6 +95,7 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 
 				string loginName = string(msgFromClient.paramNombre);
 
+
 				//TODO VER QUE SE FIJA POR EL NOMBRE DE JUGADOR Y NO POR LA IP
 				if (tempUser->getLoginName() == loginName) {
 
@@ -124,7 +125,9 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 				interprete->inicializarModelo(socket); //incializar modelo
 
 				interprete->postLoginMsg(msgFromClient, users[i]);
-				interprete->notifyNewUser(users[i]);
+
+				string tipoPersonaje = string(msgFromClient.paramTipo);
+				interprete->notifyNewUser(users[i], tipoPersonaje);
 				counter = counter + 1;
 				return users[i];
 			}

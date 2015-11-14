@@ -37,7 +37,7 @@ public:
 
 	void notifyLostUserConnection(User* user);
 
-	void notifyNewUser(User* user);
+	void notifyNewUser(User* user, string tipo);
 
 	void generarRecursoRandom();
 
