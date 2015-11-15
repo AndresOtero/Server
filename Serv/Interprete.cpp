@@ -57,6 +57,8 @@ void Interprete::comenzarPartida(){
 	msg_t r;
 	r.type = COMENZAR_PARTIDA;
 
+	printf("comienza PARTIDA \n");
+
 	enviar_mensaje_a_users(r);
 }
 msg_t Interprete:: getQuit(){

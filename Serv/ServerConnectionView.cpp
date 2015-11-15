@@ -193,13 +193,12 @@ void ServerConnectionView::showForm() {
 	}
 
 	// Free memory
-
+	freeTexture(formTitle);
 	freeTexture(formButtonkillAll);
+
 	freeTexture(formButtonFlag);
 	freeTexture(formButtonKing);
 	freeTexture(formButton);
-	// Stop capturing the keyboard events
-	SDL_StopTextInput();
 
 	quit();
 }

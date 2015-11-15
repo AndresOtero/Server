@@ -227,7 +227,7 @@ void serverHandleThread(void* threadArgPpal){
 	SDL_DestroyMutex(mutex);
 }
 
-void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete, vector<User*> users, bool* start){
+void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete, vector<User*> users){
 
 	struct cola_data cola_dato;
 	double tiempo_actual,tiempo_viejo=0;
@@ -249,11 +249,6 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 		}
 
-		if(*start == true){
-			interprete->comenzarPartida();
-			*start = false;
-		}
-
 		usleep((40 - (tiempo_actual - tiempo_viejo)) * 1000);
 		tiempo_actual = SDL_GetTicks();
 		tiempo_viejo = tiempo_actual;
@@ -268,28 +263,34 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 }
 
-void showWaitingRoom(bool* start){
+void showWaitingRoom(Interprete* interprete){
 	ServerConnectionView serverConnectionView;
 
 	serverConnectionView.showWaitingRoom();
 
-	*start = true;
+	interprete->comenzarPartida();
 }
 
 int main(int argc, char *argv[]) {
 	//plog::init(plog::warning, "Log.txt");
-	ServerConnectionView serverConnectionView;
+	ServerConnectionView *serverConnectionView = new ServerConnectionView();
 
-	serverConnectionView.showForm();
-	int objetivo = serverConnectionView.getObjetivo();
-	bool start = false;
-	thread tServerConnectionView(showWaitingRoom, &start );
+	serverConnectionView->showForm();
+
+	int objetivo = serverConnectionView->getObjetivo();
+
+	delete serverConnectionView;
+
+	printf("Objetivo:  %d", objetivo);
 
 	queue <cola_data>  colaEventos;
 	SDL_mutex *mutexGameCtrl;
 	mutexGameCtrl = SDL_CreateMutex();
 
 	Interprete interprete(mutexGameCtrl);
+
+	thread tServerConnectionView(showWaitingRoom, &interprete );
+
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
 	Juego * juego = i->readServer();
 	delete i;
@@ -308,7 +309,7 @@ int main(int argc, char *argv[]) {
 	thread tServer(serverHandleThread, (void*)&threadArgu );
 	/* FIN abre thread que controla a los clientes */
 
-	simularEventosEnCola(&colaEventos,&interprete, users, &start);
+	simularEventosEnCola(&colaEventos,&interprete, users);
 
 	tServer.join();
 	tServerConnectionView.join();
@@ -316,6 +317,7 @@ int main(int argc, char *argv[]) {
 	for (unsigned int i= 0; i < users.size(); i++){
 		if (users [i]) delete users [i];
 	}
+	SDL_DestroyMutex(mutexGameCtrl);
 
 	return 0;
 }
