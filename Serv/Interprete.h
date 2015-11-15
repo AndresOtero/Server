@@ -29,6 +29,8 @@ public:
 
 	void setJuego(Juego * juego);
 
+	void comenzarPartida();
+
 	void postLoginMsg(msg_t msg, User* user);
 
 	void procesarMensajeDeCliente(msg_t msg,User* user);

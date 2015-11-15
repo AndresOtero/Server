@@ -52,7 +52,13 @@ msg_t Interprete:: getKeepAliveMsg(){
 	r.type = KEEPALIVE;
 	return r;
 }
+void Interprete::comenzarPartida(){
 
+	msg_t r;
+	r.type = COMENZAR_PARTIDA;
+
+	enviar_mensaje_a_users(r);
+}
 msg_t Interprete:: getQuit(){
 	msg_t r;
 
