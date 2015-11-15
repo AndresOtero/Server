@@ -292,7 +292,7 @@ int main(int argc, char *argv[]) {
 	int objetivo = serverConnectionView->getObjetivo();
 	delete serverConnectionView;
 
-	printf("Objetivo:  %d", objetivo);
+	interprete.setObjetivo(objetivo);
 
 	thread tServerConnectionView(showWaitingRoom, &interprete );
 

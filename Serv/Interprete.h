@@ -33,7 +33,7 @@ public:
 
 	void postLoginMsg(msg_t msg, User* user);
 
-	void procesarMensajeDeCliente(msg_t msg,User* user);
+	void procesarMensajeDeCliente(msg_t msg, User* user);
 
 	void notifyReccconection(User* user);
 
@@ -45,7 +45,7 @@ public:
 
 	void inicializarModelo(MySocket* socket);
 	/**
-	 	 Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
+	 Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
 	 */
 	void enviarActualizacionesDelModeloAUsuarios(SDL_mutex *mutexGameCtrl);
 
@@ -61,8 +61,16 @@ public:
 		this->users = users;
 	}
 
-	SDL_mutex* getMutexGameCtrl(){
+	SDL_mutex* getMutexGameCtrl() {
 		return this->mutexGameCtrl;
+	}
+
+	int getObjetivo() {
+		return this->gameCtrl->getObjetivo();
+	}
+
+	void setObjetivo(int objetivo) {
+		this->gameCtrl->setObjetivo(objetivo);
 	}
 
 private:
