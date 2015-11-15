@@ -272,24 +272,13 @@ void showWaitingRoom(Interprete* interprete){
 }
 
 int main(int argc, char *argv[]) {
-	//plog::init(plog::warning, "Log.txt");
-	ServerConnectionView *serverConnectionView = new ServerConnectionView();
-
-	serverConnectionView->showForm();
-
-	int objetivo = serverConnectionView->getObjetivo();
-
-	delete serverConnectionView;
-
-	printf("Objetivo:  %d", objetivo);
 
 	queue <cola_data>  colaEventos;
 	SDL_mutex *mutexGameCtrl;
 	mutexGameCtrl = SDL_CreateMutex();
-
 	Interprete interprete(mutexGameCtrl);
-
-	thread tServerConnectionView(showWaitingRoom, &interprete );
+	vector<User*> users(MAX_NUM_CLIENTS,NULL);
+	struct thread_ppal_data  threadArgu;
 
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
 	Juego * juego = i->readServer();
@@ -298,21 +287,24 @@ int main(int argc, char *argv[]) {
 	interprete.setJuego(juego);
 	interprete.crearModelo();
 
-	vector<User*> users(MAX_NUM_CLIENTS,NULL);
-	struct thread_ppal_data  threadArgu;
+	ServerConnectionView *serverConnectionView = new ServerConnectionView();
+	serverConnectionView->showForm();
+	int objetivo = serverConnectionView->getObjetivo();
+	delete serverConnectionView;
 
-	/* abre thread que controla a los clientes */
+	printf("Objetivo:  %d", objetivo);
+
+	thread tServerConnectionView(showWaitingRoom, &interprete );
+
 	threadArgu.colaEventos = &colaEventos;
 	threadArgu.users = &users;
 	threadArgu.interprete = &interprete;
 
 	thread tServer(serverHandleThread, (void*)&threadArgu );
-	/* FIN abre thread que controla a los clientes */
 
 	simularEventosEnCola(&colaEventos,&interprete, users);
-
-	tServer.join();
 	tServerConnectionView.join();
+	tServer.join();
 
 	for (unsigned int i= 0; i < users.size(); i++){
 		if (users [i]) delete users [i];
