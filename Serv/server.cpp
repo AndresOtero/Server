@@ -16,29 +16,27 @@
 const unsigned int MAX_NUM_CLIENTS = 8;
 using namespace std;
 
-struct cola_data{
+struct cola_data {
 	User* senderUser;
 	msg_t evento;
 };
 
-struct thread_data{
-	MySocket*  newClient;
-	queue <cola_data>* colaEventos;
+struct thread_data {
+	MySocket* newClient;
+	queue<cola_data>* colaEventos;
 	SDL_mutex *mutex;
 	User* user;
 	Interprete* interprete;
 	vector<User*>* users;
 };
 
-struct thread_ppal_data{
-	queue <cola_data>* colaEventos;
+struct thread_ppal_data {
+	queue<cola_data>* colaEventos;
 	vector<User*>* users;
 	Interprete* interprete;
 };
 
-
-
-void enviarKeepAlive(MySocket* myClient, Interprete* interprete){
+void enviarKeepAlive(MySocket* myClient, Interprete* interprete) {
 
 	msg_t messageToServer = interprete->getKeepAliveMsg();
 
@@ -46,7 +44,7 @@ void enviarKeepAlive(MySocket* myClient, Interprete* interprete){
 
 }
 
-void enviarMensajeUsuarioTomado(MySocket* socket){
+void enviarMensajeUsuarioTomado(MySocket* socket) {
 
 	msg_t messageToClient;
 	messageToClient.type = ERROR_NOMBRE_TOMADO;
@@ -55,12 +53,12 @@ void enviarMensajeUsuarioTomado(MySocket* socket){
 
 }
 
-void agregarACola(queue <cola_data>* colaEventos,msg_t evento,User* client, SDL_mutex *mutex){
+void agregarACola(queue<cola_data>* colaEventos, msg_t evento, User* client, SDL_mutex *mutex) {
 
 	struct cola_data cola_data;
 
-	cola_data.senderUser =  client;
-	cola_data.evento =  evento;
+	cola_data.senderUser = client;
+	cola_data.evento = evento;
 
 	if (SDL_LockMutex(mutex) == 0) {
 
@@ -72,17 +70,16 @@ void agregarACola(queue <cola_data>* colaEventos,msg_t evento,User* client, SDL_
 	}
 }
 
-void notifyClient(MySocket* socket,User* user, Interprete* interprete  ){
+void notifyClient(MySocket* socket, User* user, Interprete* interprete) {
 	msg_t notificacion;
-	while( (user->isColaVacia()==false) &&  (socket->isConnected())){
-			notificacion =user->popNotifiacion();
-			socket->sendMessage(notificacion);
+	while ((user->isColaVacia() == false) && (socket->isConnected())) {
+		notificacion = user->popNotifiacion();
+		socket->sendMessage(notificacion);
 	}
 	enviarKeepAlive(socket, interprete);
 }
 
-User* establecerLogin(MySocket* socket, vector<User*> &users,
-		Interprete* interprete, string clientIP, unsigned int &counter,
+User* establecerLogin(MySocket* socket, vector<User*> &users, Interprete* interprete, string clientIP, unsigned int &counter,
 		SDL_mutex *mutexGameCtrl) {
 	//plog::init(plog::warning, "Log.txt");
 	msg_t msgFromClient = socket->recieveMessage();
@@ -96,23 +93,20 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 
 				string loginName = string(msgFromClient.paramNombre);
 
-
 				//TODO VER QUE SE FIJA POR EL NOMBRE DE JUGADOR Y NO POR LA IP
 				if (tempUser->getLoginName() == loginName) {
 
-					if (!tempUser->isConnected()) {
-						enviarKeepAlive(socket, interprete); //Porque aca el cliente espera un mensaje por si el usuario esta tomado.
-						//LOG_WARNING << "Reconexion";
-						tempUser->setConnectedFlag(true);
-						interprete->inicializarModelo(socket); //inicializar modelo
-						interprete->notifyReccconection(tempUser);
+					/*if (!tempUser->isConnected()) {
+					 enviarKeepAlive(socket, interprete); //Porque aca el cliente espera un mensaje por si el usuario esta tomado.
+					 //LOG_WARNING << "Reconexion";
+					 tempUser->setConnectedFlag(true);
+					 interprete->inicializarModelo(socket); //inicializar modelo
+					 interprete->notifyReccconection(tempUser);
 
-						return tempUser;
+					 return tempUser;*/
 
-					} else {
-						enviarMensajeUsuarioTomado(socket);
-						return NULL;
-					}
+					enviarMensajeUsuarioTomado(socket);
+					return NULL;
 				}
 
 			} else {
@@ -137,19 +131,19 @@ User* establecerLogin(MySocket* socket, vector<User*> &users,
 	return NULL;
 }
 
-void* acceptedClientThread(void *threadArg ){
+void* acceptedClientThread(void *threadArg) {
 
 	struct thread_data *my_data;
 	msg_t messageFromClient;
 
 	/* Recive argumentos */
 	my_data = (struct thread_data *) threadArg;
-	MySocket* socket = my_data ->newClient;
-	queue <cola_data>* colaEventos = my_data -> colaEventos;
-	SDL_mutex *mutex = my_data -> mutex;
-	User* user = my_data -> user;
-	Interprete* interprete = my_data ->interprete;
-	vector<User*> users = *(my_data -> users);
+	MySocket* socket = my_data->newClient;
+	queue<cola_data>* colaEventos = my_data->colaEventos;
+	SDL_mutex *mutex = my_data->mutex;
+	User* user = my_data->user;
+	Interprete* interprete = my_data->interprete;
+	vector<User*> users = *(my_data->users);
 	//interprete->setUsers(&users);
 	/* FIN Recive argumentos */
 
@@ -157,43 +151,40 @@ void* acceptedClientThread(void *threadArg ){
 
 	//inicializacion modelo
 
+	while (socket->isConnected()) {
 
-   while (socket->isConnected()){
+		//interprete->enviarActualizacionesDelModeloAUsuarios(user->getMutex());
 
-	  //interprete->enviarActualizacionesDelModeloAUsuarios(user->getMutex());
+		notifyClient(socket, user, interprete);
 
-	  notifyClient(socket,user,interprete);
+		messageFromClient = socket->recieveMessage();
 
-	  messageFromClient = socket->recieveMessage();
+		if (socket->isConnected()) {
+			agregarACola(colaEventos, messageFromClient, user, mutex);
+		}
+	}
+	user->setConnectedFlag(false);
 
-	  if (socket->isConnected()){
-		  agregarACola(colaEventos,messageFromClient,user, mutex);
-	  }
-    }
-   user->setConnectedFlag(false);
+	interprete->notifyLostUserConnection(user);
 
-   interprete->notifyLostUserConnection(user);
-
-   pthread_exit(NULL);
+	pthread_exit(NULL);
 }
 
-
-
-void serverHandleThread(void* threadArgPpal){
+void serverHandleThread(void* threadArgPpal) {
 
 	struct thread_ppal_data* ppal_data;
 	ppal_data = (struct thread_ppal_data*) threadArgPpal;
 
-	queue <cola_data>* colaEventos = ppal_data ->colaEventos;
-	vector<User*> users = *(ppal_data -> users);
-	Interprete* interprete = ppal_data -> interprete;
+	queue<cola_data>* colaEventos = ppal_data->colaEventos;
+	vector<User*> users = *(ppal_data->users);
+	Interprete* interprete = ppal_data->interprete;
 
 	MySocket myServer(PORTNUM);
 
 	myServer.bindSocket();
 	myServer.listenToClient();
 
-	pthread_t tAcceptedClient [MAX_NUM_CLIENTS];
+	pthread_t tAcceptedClient[MAX_NUM_CLIENTS];
 
 	struct thread_data threadArg[MAX_NUM_CLIENTS];
 
@@ -206,46 +197,43 @@ void serverHandleThread(void* threadArgPpal){
 	SDL_mutex* mutexGameCtrl = interprete->getMutexGameCtrl();
 
 	unsigned int counter = 0;
-	while (  counter < MAX_NUM_CLIENTS )
-	{
-	   string clientIP;
-	   MySocket* newClient = myServer.acceptClient(clientIP); //conexion dedicada al nuevo cliente
+	while (counter < MAX_NUM_CLIENTS) {
+		string clientIP;
+		MySocket* newClient = myServer.acceptClient(clientIP); //conexion dedicada al nuevo cliente
 
-	   User* user = establecerLogin(newClient,users,interprete,clientIP, counter,mutexGameCtrl);
+		User* user = establecerLogin(newClient, users, interprete, clientIP, counter, mutexGameCtrl);
 
-	   if (user != NULL){
-		   threadArg[counter].colaEventos = colaEventos;
-		   threadArg[counter].newClient = newClient;
-		   threadArg[counter].mutex = mutex;
-		   threadArg[counter].user = user;
-		   threadArg[counter].interprete = interprete;
-		   threadArg[counter].users = &users;
+		if (user != NULL) {
+			threadArg[counter].colaEventos = colaEventos;
+			threadArg[counter].newClient = newClient;
+			threadArg[counter].mutex = mutex;
+			threadArg[counter].user = user;
+			threadArg[counter].interprete = interprete;
+			threadArg[counter].users = &users;
 
-		   pthread_create(&tAcceptedClient[counter], NULL, acceptedClientThread,(void *) &threadArg[counter]);
-	   }
+			pthread_create(&tAcceptedClient[counter], NULL, acceptedClientThread, (void *) &threadArg[counter]);
+		}
 	}
 	SDL_DestroyMutex(mutex);
 }
 
-void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete, vector<User*> users){
+void simularEventosEnCola(queue<cola_data>* colaEventos, Interprete* interprete, vector<User*> users) {
 
 	struct cola_data cola_dato;
-	double tiempo_actual,tiempo_viejo=0;
-	tiempo_viejo=SDL_GetTicks();
-	double acumulado=tiempo_viejo;
+	double tiempo_actual, tiempo_viejo = 0;
+	tiempo_viejo = SDL_GetTicks();
+	double acumulado = tiempo_viejo;
 	//plog::init(plog::warning, "Log.txt");
-	while (1){
+	while (1) {
 
 		//Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
 
+		while (!colaEventos->empty()) {
+			cola_dato = colaEventos->front();
+			colaEventos->pop();
 
-		while(!colaEventos->empty()){
-			 cola_dato = colaEventos->front();
-			 colaEventos->pop();
-
-			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser);
-			 interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());
-
+			interprete->procesarMensajeDeCliente(cola_dato.evento, cola_dato.senderUser);
+			interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());
 
 		}
 
@@ -263,7 +251,7 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 }
 
-void showWaitingRoom(Interprete* interprete){
+void showWaitingRoom(Interprete* interprete) {
 	ServerConnectionView serverConnectionView;
 
 	serverConnectionView.showWaitingRoom();
@@ -273,12 +261,12 @@ void showWaitingRoom(Interprete* interprete){
 
 int main(int argc, char *argv[]) {
 
-	queue <cola_data>  colaEventos;
+	queue<cola_data> colaEventos;
 	SDL_mutex *mutexGameCtrl;
 	mutexGameCtrl = SDL_CreateMutex();
 	Interprete interprete(mutexGameCtrl);
-	vector<User*> users(MAX_NUM_CLIENTS,NULL);
-	struct thread_ppal_data  threadArgu;
+	vector<User*> users(MAX_NUM_CLIENTS, NULL);
+	struct thread_ppal_data threadArgu;
 
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
 	Juego * juego = i->readServer();
@@ -294,20 +282,21 @@ int main(int argc, char *argv[]) {
 
 	interprete.setObjetivo(objetivo);
 
-	thread tServerConnectionView(showWaitingRoom, &interprete );
+	thread tServerConnectionView(showWaitingRoom, &interprete);
 
 	threadArgu.colaEventos = &colaEventos;
 	threadArgu.users = &users;
 	threadArgu.interprete = &interprete;
 
-	thread tServer(serverHandleThread, (void*)&threadArgu );
+	thread tServer(serverHandleThread, (void*) &threadArgu);
 
-	simularEventosEnCola(&colaEventos,&interprete, users);
+	simularEventosEnCola(&colaEventos, &interprete, users);
 	tServerConnectionView.join();
 	tServer.join();
 
-	for (unsigned int i= 0; i < users.size(); i++){
-		if (users [i]) delete users [i];
+	for (unsigned int i = 0; i < users.size(); i++) {
+		if (users[i])
+			delete users[i];
 	}
 	SDL_DestroyMutex(mutexGameCtrl);
 
