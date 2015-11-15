@@ -52,7 +52,15 @@ msg_t Interprete:: getKeepAliveMsg(){
 	r.type = KEEPALIVE;
 	return r;
 }
+void Interprete::comenzarPartida(){
 
+	msg_t r;
+	r.type = COMENZAR_PARTIDA;
+
+	printf("comienza PARTIDA \n");
+
+	enviar_mensaje_a_users(r);
+}
 msg_t Interprete:: getQuit(){
 	msg_t r;
 
@@ -119,9 +127,9 @@ void Interprete::notifyReccconection(User* user){
 	enviar_mensaje_a_users(mensajeReconexion);
 }
 
-void Interprete::notifyNewUser(User* user, string tipo){
+void Interprete::notifyNewUser(User* user, string raza){
 
-	this->gameCtrl->crearCentroCivicoNuevoUser(tipo,user->getLoginName(),user->getMutex());
+	this->gameCtrl->crearCentroCivicoNuevoUser(raza,user->getLoginName(),user->getMutex());
 	//this->gameCtrl->agregarCliente(user->getLoginName(), tipo, user->getMutex());
 }
 

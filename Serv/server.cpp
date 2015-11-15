@@ -9,6 +9,7 @@
 #include "GameControllerSrc/GameControllerServer.h"
 #include "GameControllerSrc/mensaje.h"
 #include <plog/Log.h>
+#include "ServerConnectionView.h"
 
 #define RITMO_RECURSO 5
 
@@ -35,9 +36,7 @@ struct thread_ppal_data{
 	Interprete* interprete;
 };
 
-
-
-void enviarKeepAlive(MySocket* myClient, Interprete* interprete){
+void enviarKeepAlive(MySocket* myClient, Interprete* interprete) {
 
 	msg_t messageToServer = interprete->getKeepAliveMsg();
 
@@ -237,19 +236,15 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 		//Recibe las actualizaciones provenientes del modelo y envia los mensajes correspondientes a todos los users.
 
+		while (!colaEventos->empty()) {
+			cola_dato = colaEventos->front();
+			colaEventos->pop();
 
-		while(!colaEventos->empty()){
-			 cola_dato = colaEventos->front();
-			 colaEventos->pop();
-
-			 interprete->procesarMensajeDeCliente(cola_dato.evento,cola_dato.senderUser);
-			 interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());
-			 //interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());
-			 //TODO mandar al interprete para que decodifique con todos los users para poder agregar mensajes en sus colas
-			 // en cada user se tiene un flag para ver si esta conecatado o no (para agregar o no la notificacion nueva)
-
+			interprete->procesarMensajeDeCliente(cola_dato.evento, cola_dato.senderUser);
+			interprete->enviarActualizacionesDelModeloAUsuarios(interprete->getMutexGameCtrl());
 
 		}
+
 		usleep((40 - (tiempo_actual - tiempo_viejo)) * 1000);
 		tiempo_actual = SDL_GetTicks();
 		tiempo_viejo = tiempo_actual;
@@ -264,44 +259,55 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 
 }
 
+void showWaitingRoom(Interprete* interprete) {
+	ServerConnectionView serverConnectionView;
+
+	serverConnectionView.showWaitingRoom();
+
+	interprete->comenzarPartida();
+}
+
 int main(int argc, char *argv[]) {
-	//plog::init(plog::warning, "Log.txt");
-	queue <cola_data>  colaEventos;
+
+	queue<cola_data> colaEventos;
 	SDL_mutex *mutexGameCtrl;
 	mutexGameCtrl = SDL_CreateMutex();
-	if (!mutexGameCtrl) {
-		//LOG_WARNING << "Couldn't create mutexGameCtrl\n";
-	}
 	Interprete interprete(mutexGameCtrl);
+	vector<User*> users(MAX_NUM_CLIENTS, NULL);
+	struct thread_ppal_data threadArgu;
+
 	Yaml * i = new Yaml("YAML/configuracionServer.yaml");
 	Juego * juego = i->readServer();
 	delete i;
+
 	interprete.setJuego(juego);
 	interprete.crearModelo();
-	/*Si qieren probar meter 4 bases de elfo
-	interprete.gameCtrl->crearCentroCivicoNuevoUser("Elfo");
-	interprete.gameCtrl->crearCentroCivicoNuevoUser("Elfo");
-	interprete.gameCtrl->crearCentroCivicoNuevoUser("Elfo");
-	interprete.gameCtrl->crearCentroCivicoNuevoUser("Elfo");
-    */
-	vector<User*> users(MAX_NUM_CLIENTS,NULL);
-	struct thread_ppal_data  threadArgu;
 
-	/* abre thread que controla a los clientes */
+
+	ServerConnectionView *serverConnectionView = new ServerConnectionView();
+	serverConnectionView->showForm();
+	int objetivo = serverConnectionView->getObjetivo();
+	delete serverConnectionView;
+
+	interprete.setObjetivo(objetivo);
+
+	thread tServerConnectionView(showWaitingRoom, &interprete);
+
 	threadArgu.colaEventos = &colaEventos;
 	threadArgu.users = &users;
 	threadArgu.interprete = &interprete;
 
-	thread tServer(serverHandleThread, (void*)&threadArgu );
-	/* FIN abre thread que controla a los clientes */
+	thread tServer(serverHandleThread, (void*) &threadArgu);
 
-	simularEventosEnCola(&colaEventos,&interprete, users);
-
+	simularEventosEnCola(&colaEventos, &interprete, users);
+	tServerConnectionView.join();
 	tServer.join();
 
-	for (unsigned int i= 0; i < users.size(); i++){
-		if (users [i]) delete users [i];
+	for (unsigned int i = 0; i < users.size(); i++) {
+		if (users[i])
+			delete users[i];
 	}
+	SDL_DestroyMutex(mutexGameCtrl);
 
 	return 0;
 }
