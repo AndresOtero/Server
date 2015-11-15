@@ -121,7 +121,8 @@ void Interprete::notifyReccconection(User* user){
 
 void Interprete::notifyNewUser(User* user, string tipo){
 
-	this->gameCtrl->agregarCliente(user->getLoginName(), tipo, user->getMutex());
+	this->gameCtrl->crearCentroCivicoNuevoUser(tipo,user->getLoginName(),user->getMutex());
+	//this->gameCtrl->agregarCliente(user->getLoginName(), tipo, user->getMutex());
 }
 
 void Interprete::notifyLostUserConnection(User* user){
