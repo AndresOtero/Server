@@ -7,20 +7,6 @@ configuracion:
  margen_scroll: 30
 
 tipos:
- - nombre: barraca
-   imagen: img/1elfos/ARQUERIA.png
-   icono:  img/1elfos/icon-arqueria.bmp
-   ancho_base: 4
-   alto_base: 4
-   pixel_ref_x: -90
-   pixel_ref_y: 360
-   vida: 50
-   raza: Elfo
-   velocidad_de_construccion: 30
-   oro: 50
-   piedra: 50
-   madera: 50
-
  - nombre: arqueriaElfos
    imagen: img/1elfos/ARQUERIA.png
    icono:  img/1elfos/icon-arqueria.bmp
@@ -29,7 +15,11 @@ tipos:
    pixel_ref_x: -90
    pixel_ref_y: 360
    vida: 50
-   raza: Elfo   
+   raza: Elfo  
+   velocidad_de_construccion: 30
+   oro: 50
+   piedra: 50
+   madera: 50   
 
  - nombre: caballeriaElfos
    imagen: img/1elfos/CABALLERIA.png
@@ -41,6 +31,9 @@ tipos:
    vida: 50
    raza: Elfo
    velocidad_de_construccion: 20
+   oro: 50
+   piedra: 50
+   madera: 50 
 
  - nombre: centrocivicoElfos
    imagen: img/1elfos/CENTRO-CIVICO.png
@@ -61,6 +54,9 @@ tipos:
    vida: 50
    raza: Elfo
    velocidad_de_construccion: 20
+   oro: 50
+   piedra: 50
+   madera: 50 
 
  - nombre: centroCivicoHobbit
    imagen: img/2hobbit/CENTRO-CIVICO.png
@@ -70,7 +66,6 @@ tipos:
    pixel_ref_y: 120
    vida: 50
    raza: Hobbit
-   velocidad_de_construccion: 20
 
  - nombre: cuartelHobbit
    imagen: img/2hobbit/CUARTEL.png
@@ -81,6 +76,9 @@ tipos:
    vida: 50
    raza: Hobbit
    velocidad_de_construccion: 20
+   oro: 50
+   piedra: 50
+   madera: 50 
 
  - nombre: banderaHobbit
    imagen: img/2hobbit/bandera/flag.png
@@ -100,6 +98,9 @@ tipos:
    vida: 50
    raza: Humano
    velocidad_de_construccion: 20
+   oro: 50
+   piedra: 50
+   madera: 50 
 
  - nombre: centroCivicoHumano
    imagen: img/3humanos/CENTRO-CIVICO.png
@@ -109,7 +110,6 @@ tipos:
    pixel_ref_y: 120
    vida: 50
    raza: Humano
-   velocidad_de_construccion: 20
 
  - nombre: caballeriaHumano
    imagen: img/3humanos/CABALLERIA.png
@@ -120,6 +120,9 @@ tipos:
    vida: 50
    raza: Humano
    velocidad_de_construccion: 20
+   oro: 50
+   piedra: 50
+   madera: 50 
 
  - nombre: banderaHumano
    imagen: img/3humanos/bandera/flag.png
@@ -147,7 +150,11 @@ tipos:
    pixel_ref_x: -140
    pixel_ref_y: 120
    vida: 50
+   raza: Mordor
    velocidad_de_construccion: 20
+   oro: 50
+   piedra: 50
+   madera: 50 
 
  - nombre: centroCivicoMordor
    imagen: img/4mordor/CENTRO-CIVICO.png
@@ -156,6 +163,7 @@ tipos:
    pixel_ref_x: -150
    pixel_ref_y: 450
    vida: 50
+   raza: Mordor
 
  - nombre: cuartelBestiaMordor
    imagen: img/4mordor/CUARTEL-ESPECIAL.png
@@ -164,7 +172,11 @@ tipos:
    pixel_ref_x: -60
    pixel_ref_y: 60
    vida: 50
+   raza: Mordor
    velocidad_de_construccion: 20
+   oro: 50
+   piedra: 50
+   madera: 50 
 
  - nombre: banderaMordor
    imagen: img/4mordor/bandera/flag.png
@@ -173,21 +185,253 @@ tipos:
    pixel_ref_x: 20
    pixel_ref_y: 45
    vida: 50
+   raza: Mordor
+
+ - nombre: siervo
+   imagen: img/1elfos/aldeano/WALK.png
+   imagen_quieto: img/1elfos/aldeano/STAND.png
+   imagen_atacar: img/1elfos/aldeano/ATACK.png
+   icono: img/2hobbit/1elfos/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   construccion: 10
+   recoleccion: 10
+   raza: Elfo
+   edificio_constructor: centrocivicoElfos
+   oro: 50
+   comida: 50
+
+ - nombre: arwen
+   imagen: img/1elfos/heroe - Noblewoman/WALK.png
+   imagen_quieto: img/1elfos/heroe - Noblewoman/STAND.png
+   imagen_atacar: img/1elfos/heroe - Noblewoman/STAND.png
+   icono: img/2hobbit/heroe - Noblewoman/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   raza: Elfo
+   edificio_constructor: centrocivicoElfos
+   oro: 50
+   comida: 50
+
+ - nombre: legolas
+   imagen: img/1elfos/legolas/WALK.png
+   imagen_quieto: img/1elfos/legolas/STAND.png
+   imagen_atacar: img/1elfos/legolas/ATACK.png
+   icono: img/2hobbit/legolas/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   fuerza: 10
+   armadura: 10
+   raza: Elfo
+   edificio_constructor: arqueriaElfos
+   oro: 50
+   comida: 50
+
+ - nombre: cirdan
+   imagen: img/1elfos/legolas a caballo/WALK.png
+   imagen_quieto: img/1elfos/legolas a caballo/STAND.png
+   imagen_atacar: img/1elfos/legolas a caballo/ATACK.png
+   icono: img/2hobbit/legolas a caballo/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   fuerza: 10
+   armadura: 10
+   raza: Elfo
+   edificio_constructor: caballeriaElfos
+   oro: 50
+   comida: 50
+
+ - nombre: hobbit
+   imagen: img/2hobbit/frodo-aldeano/WALK.png
+   imagen_quieto: img/2hobbit/frodo-aldeano/STAND.png
+   imagen_atacar: img/2hobbit/frodo-aldeano/ATACK.png
+   icono: img/2hobbit/frodo-aldeano/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   construccion: 10
+   recoleccion: 10
+   raza: Hobbit
+   edificio_constructor: centroCivicoHobbit
+   oro: 50
+   comida: 50
+
+ - nombre: enano
+   imagen: img/2hobbit/enano/WALK.png
+   imagen_quieto: img/2hobbit/enano/STAND.png
+   imagen_atacar: img/2hobbit/enano/ATACK.png
+   icono: img/2hobbit/enano/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   fuerza: 10
+   armadura: 10
+   raza: Hobbit
+   edificio_constructor: cuartelHobbit
+   oro: 50
+   comida: 50
 
  - nombre: gandalf
    imagen: img/2hobbit/gandalf/WALK.png
    imagen_quieto: img/2hobbit/gandalf/STAND.png
    imagen_atacar: img/2hobbit/gandalf/ATACK.png
+   icono: img/2hobbit/gandalf/icon.bmp
    fps: 4
    delay: 0
-   velocidad: 22
+   velocidad: 24
    vida: 50
-   armadura: 10
-   construccion: 10
-   recoleccion: 10   
    fuerza: 10
-   raza: Elfo
-   edificio_constructor: barraca
+   armadura: 10
+   raza: Hobbit
+   edificio_constructor: cuartelHobbit
+   oro: 50
+   comida: 50
+
+ - nombre: aragon
+   imagen: img/2hobbit/heroe/WALK.png
+   imagen_quieto: img/2hobbit/heroe/STAND.png
+   imagen_atacar: img/2hobbit/heroe/STAND.png
+   icono: img/2hobbit/heroe/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   raza: Hobbit
+   edificio_constructor: centroCivicoHobbit
+   oro: 50
+   comida: 50
+
+ - nombre: aldeano
+   imagen: img/3humanos/aldeano/WALK.png
+   imagen_quieto: img/3humanos/aldeano/STAND.png
+   imagen_atacar: img/3humanos/aldeano/ATACK.png
+   icono: img/3humanos/aldeano/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   construccion: 10
+   recoleccion: 10
+   raza: Humano
+   edificio_constructor: centroCivicoHumano
+   oro: 50
+   comida: 50
+
+ - nombre: soldado
+   imagen: img/3humanos/caballero/WALK.png
+   imagen_quieto: img/3humanos/caballero/STAND.png
+   imagen_atacar: img/3humanos/caballero/ATACK.png
+   icono: img/3humanos/caballo/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   fuerza: 10
+   armadura: 10
+   raza: Humano
+   edificio_constructor: caballeriaHumano
+   oro: 50
+   comida: 50
+
+ - nombre: knight
+   imagen: img/3humanos/espadachin/WALK.png
+   imagen_quieto: img/3humanos/espadachin/STAND.png
+   imagen_atacar: img/3humanos/espadachin/ATACK.png
+   icono: img/3humanos/espadachin/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   fuerza: 10
+   armadura: 10
+   raza: Humano
+   edificio_constructor: escuderiaHumano
+   oro: 50
+   comida: 50
+
+ - nombre: king
+   imagen: img/3humanos/Prince John - heroe/WALK.png
+   imagen_quieto: img/3humanos/Prince John - heroe/STAND.png
+   imagen_atacar: img/3humanos/Prince John - heroe/STAND.png
+   icono: img/3humanos/Prince John - heroe/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   raza: Humano
+   edificio_constructor: centroCivicoHumano
+   oro: 50
+   comida: 50
+
+ - nombre: trasgo
+   imagen: img/4mordor/aldeano/WALK.png
+   imagen_quieto: img/4mordor/aldeano/STAND.png
+   imagen_atacar: img/4mordor/aldeano/ATACK.png
+   icono: img/4mordor/aldeano/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   construccion: 10
+   recoleccion: 10
+   raza: Mordor
+   edificio_constructor: centroCivicoMordor
+   oro: 50
+   comida: 50
+
+ - nombre: sauron
+   imagen: img/4mordor/heroe mordor/WALK.png
+   imagen_quieto: img/4mordor/heroe mordor/STAND.png
+   imagen_atacar: img/4mordor/heroe mordor/STAND.png
+   icono: img/4mordor/heroe mordor/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   raza: Mordor
+   edificio_constructor: centroCivicoMordor
+   oro: 50
+   comida: 50
+
+ - nombre: orco
+   imagen: img/4mordor/orco/WALK.png
+   imagen_quieto: img/4mordor/orco/STAND.png
+   imagen_atacar: img/4mordor/orco/ATACK.png
+   icono: img/4mordor/orco/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   fuerza: 10
+   armadura: 10
+   raza: Mordor
+   edificio_constructor: cuartelMordor
+   oro: 50
+   comida: 50
+
+ - nombre: troll
+   imagen: img/4mordor/orco grande/WALK.png
+   imagen_quieto: img/4mordor/orco grande/STAND.png
+   imagen_atacar: img/4mordor/orco grande/ATACK.png
+   icono: img/4mordor/orco grande/icon.bmp
+   fps: 4
+   delay: 0
+   velocidad: 24
+   vida: 50
+   fuerza: 10
+   armadura: 10
+   raza: Mordor
+   edificio_constructor: cuartelBestiaMordor
    oro: 50
    comida: 50
 
@@ -248,18 +492,14 @@ tipos:
    pixel_ref_y: 45
    vida: 50
 
-
 escenario:
  nombre: orleans
  size_x: 100
  size_y: 100
  entidades: 
   - { x : 0, y: 5, tipo: madera }
-  - { x : 10, y: 10, tipo: banderaMordor }
   - { x : 40, y: 6, tipo: church }
   - { x : 40, y: 0, tipo: herreria }
   - { x : 40, y: 4, tipo: wheel }
-  - { x : 30, y: 10, tipo: barraca }
   - { x : 30, y: 0, tipo: firestation }
-  - { x : 90, y: 90, tipo: molElfos }
 

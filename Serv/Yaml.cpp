@@ -155,7 +155,7 @@ Escenario* Yaml::cargarEscenario(ConfiguracionJuego_t conf, const YAML::Node* pE
 			(*pSizeY) >> conf.escenario.size_y;
 			escenario = new Escenario(conf.escenario.nombre, conf.escenario.size_x, conf.escenario.size_y);
 		} else {
-			LOG_WARNING								<< "Se define el tamaño en x del escenario pero no el y ";
+			LOG_WARNING << "Se define el tamaño en x del escenario pero no el y ";
 			escenario = new Escenario();
 		}
 	} else {
