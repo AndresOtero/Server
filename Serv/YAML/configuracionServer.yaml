@@ -80,12 +80,38 @@ tipos:
    piedra: 50
    madera: 50 
 
+ - nombre: casaGandalfHobbit
+   imagen: img/2hobbit/CASA-GANDALF.png
+   icono: img/2hobbit/icon-casa-gandalf.bmp
+   ancho_base: 3
+   alto_base: 3
+   pixel_ref_x: -80
+   pixel_ref_y: 85
+   vida: 50
+   raza: Hobbit
+   velocidad_de_construccion: 20
+   oro: 50
+   piedra: 50
+   madera: 50 
+
  - nombre: banderaHobbit
    imagen: img/2hobbit/bandera/flag.png
    ancho_base: 1
    alto_base: 1
    pixel_ref_x: 25
    pixel_ref_y: 0
+   vida: 50
+   raza: Hobbit
+
+ - nombre: wheel
+   imagen: img/2hobbit/wheel.png
+   icono: img/2hobbit/icon-molino.bmp
+   ancho_base: 1
+   alto_base: 2
+   pixel_ref_x: -47
+   pixel_ref_y: 50
+   fps: 20
+   delay: 1
    vida: 50
    raza: Hobbit
 
@@ -293,7 +319,7 @@ tipos:
    fuerza: 10
    armadura: 10
    raza: Hobbit
-   edificio_constructor: cuartelHobbit
+   edificio_constructor: casaGandalfHobbit
    oro: 50
    comida: 50
 
