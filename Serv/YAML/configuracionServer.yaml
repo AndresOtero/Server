@@ -479,7 +479,7 @@ tipos:
    icono: img/4mordor/orco grande/icon.bmp
    fps: 6
    delay: 0
-   velocidad: 24
+   velocidad: 30
    vida: 50
    fuerza: 10
    armadura: 10
