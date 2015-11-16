@@ -94,6 +94,22 @@ tipos:
    piedra: 50
    madera: 50 
 
+ - nombre: molinoHobbit
+   imagen: img/2hobbit/wheel.png
+   icono: img/2hobbit/icon-molino.bmp
+   ancho_base: 2
+   alto_base: 1
+   pixel_ref_x: -47
+   pixel_ref_y: 50
+   velocidad_de_construccion: 20
+   fps: 20
+   delay: 1
+   vida: 50
+   oro: 50
+   piedra: 50
+   madera: 50 
+   raza: Hobbit
+
  - nombre: banderaHobbit
    imagen: img/2hobbit/bandera/flag.png
    ancho_base: 1
@@ -103,17 +119,6 @@ tipos:
    vida: 50
    raza: Hobbit
 
- - nombre: wheel
-   imagen: img/2hobbit/wheel.png
-   icono: img/2hobbit/icon-molino.bmp
-   ancho_base: 1
-   alto_base: 2
-   pixel_ref_x: -47
-   pixel_ref_y: 50
-   fps: 20
-   delay: 1
-   vida: 50
-   raza: Hobbit
 
  - nombre: escuderiaHumano
    imagen: img/3humanos/ESCUDERIA.png
@@ -159,15 +164,37 @@ tipos:
    vida: 50
    raza: Humano
 
+ - nombre: molinoHumano
+   imagen: img/3humanos/wheel.png
+   icono: img/3humanos/icon-molino.bmp
+   ancho_base: 2
+   alto_base: 1
+   pixel_ref_x: -47
+   pixel_ref_y: 50
+   velocidad_de_construccion: 20
+   fps: 20
+   delay: 1
+   vida: 50
+   oro: 50
+   piedra: 50
+   madera: 50 
+   raza: Humano
+
  - nombre: molinoMordor
    imagen: img/4mordor/MOLINO.png
+   icono: img/4mordor/icon-molino.bmp
    ancho_base: 3
    alto_base: 3
    pixel_ref_x: -50
    pixel_ref_y: 75
+   velocidad_de_construccion: 20
    fps: 6
    delay: 1
    vida: 50
+   oro: 50
+   piedra: 50
+   madera: 50
+   raza: Mordor
 
  - nombre: cuartelMordor
    imagen: img/4mordor/CUARTEL.png
@@ -450,7 +477,7 @@ tipos:
    imagen_quieto: img/4mordor/orco grande/STAND.png
    imagen_atacar: img/4mordor/orco grande/ATACK.png
    icono: img/4mordor/orco grande/icon.bmp
-   fps: 4
+   fps: 6
    delay: 0
    velocidad: 24
    vida: 50
@@ -460,36 +487,6 @@ tipos:
    edificio_constructor: cuartelBestiaMordor
    oro: 50
    comida: 50
-
- - nombre: wheel
-   imagen: img/2hobbit/wheel.png
-   ancho_base: 1
-   alto_base: 2
-   pixel_ref_x: -47
-   pixel_ref_y: 50
-   fps: 20
-   delay: 1
-   vida: 50
-
- - nombre: herreria
-   imagen: img/dibujo_dinamico/mirador.png
-   pixel_ref_x: 60
-   pixel_ref_y: 50   
-   fps: 20
-   delay: 50
-   vida: 50
-
- - nombre: pino
-   imagen: img/dibujo_estatico/arbol/pinetree.png
-   pixel_ref_x: 85
-   pixel_ref_y: 88
-   vida: 50
-
- - nombre: church
-   imagen: img/dibujo_estatico/construcciones/church.png
-   pixel_ref_x: 60
-   pixel_ref_y: 52
-   vida: 50
 
  - nombre: oro
    imagen: img/extras/terrain/gold.png
@@ -506,14 +503,8 @@ tipos:
    pixel_ref_x: 16
    pixel_ref_y: 120
 
- - nombre: firestation
-   imagen: img/dibujo_estatico/construcciones/firestation.png
-   pixel_ref_x: 0
-   pixel_ref_y: 44
-   vida: 50
-
  - nombre: arbol
-   imagen: img/dibujo_estatico/arbol/firtree.png
+   imagen: img/extras/terrain/arboles/arbol1.png
    pixel_ref_x: 20
    pixel_ref_y: 45
    vida: 50
@@ -524,8 +515,4 @@ escenario:
  size_y: 100
  entidades: 
   - { x : 0, y: 5, tipo: madera }
-  - { x : 40, y: 6, tipo: church }
-  - { x : 40, y: 0, tipo: herreria }
-  - { x : 40, y: 4, tipo: wheel }
-  - { x : 30, y: 0, tipo: firestation }
 
