@@ -58,6 +58,15 @@ tipos:
    piedra: 50
    madera: 50 
 
+ - nombre: banderaElfos
+   imagen: img/1elfos/bandera/bandera.png
+   ancho_base: 1
+   alto_base: 1
+   pixel_ref_x: 10
+   pixel_ref_y: 80
+   vida: 1
+   raza: Elfo
+
  - nombre: centroCivicoHobbit
    imagen: img/2hobbit/CENTRO-CIVICO.png
    ancho_base: 5
@@ -116,7 +125,7 @@ tipos:
    alto_base: 1
    pixel_ref_x: 25
    pixel_ref_y: 0
-   vida: 50
+   vida: 1
    raza: Hobbit
 
 
@@ -161,7 +170,7 @@ tipos:
    alto_base: 1
    pixel_ref_x: -5
    pixel_ref_y: 70
-   vida: 50
+   vida: 1
    raza: Humano
 
  - nombre: molinoHumano
@@ -237,7 +246,7 @@ tipos:
    alto_base: 1
    pixel_ref_x: 20
    pixel_ref_y: 45
-   vida: 50
+   vida: 1
    raza: Mordor
 
  - nombre: siervo

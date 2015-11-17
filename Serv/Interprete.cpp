@@ -168,6 +168,8 @@ void Interprete::inicializarModelo(MySocket * socket){
 	msg_t fin;
 	fin.type = FIN_INICIALIZACION;
 	socket->sendMessage(fin);
+
+	this->generarRecursoRandom();
 }
 Interprete::~Interprete() {
 	delete this->gameCtrl;
