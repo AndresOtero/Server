@@ -44,20 +44,6 @@ tipos:
    vida: 50
    raza: Elfo
 
- - nombre: molElfos
-   imagen: img/1elfos/MOLINO.png
-   icono: img/1elfos/icon-molino.bmp
-   ancho_base: 2
-   alto_base: 2
-   pixel_ref_x: -50
-   pixel_ref_y: 80
-   vida: 50
-   raza: Elfo
-   velocidad_de_construccion: 20
-   oro: 50
-   piedra: 50
-   madera: 50 
-
  - nombre: banderaElfos
    imagen: img/1elfos/bandera/bandera.png
    ancho_base: 1
@@ -102,22 +88,6 @@ tipos:
    oro: 50
    piedra: 50
    madera: 50 
-
- - nombre: molinoHobbit
-   imagen: img/2hobbit/wheel.png
-   icono: img/2hobbit/icon-molino.bmp
-   ancho_base: 2
-   alto_base: 1
-   pixel_ref_x: -47
-   pixel_ref_y: 50
-   velocidad_de_construccion: 20
-   fps: 20
-   delay: 1
-   vida: 50
-   oro: 50
-   piedra: 50
-   madera: 50 
-   raza: Hobbit
 
  - nombre: banderaHobbit
    imagen: img/2hobbit/bandera/flag.png
@@ -172,38 +142,6 @@ tipos:
    pixel_ref_y: 70
    vida: 1
    raza: Humano
-
- - nombre: molinoHumano
-   imagen: img/3humanos/wheel.png
-   icono: img/3humanos/icon-molino.bmp
-   ancho_base: 2
-   alto_base: 1
-   pixel_ref_x: -47
-   pixel_ref_y: 50
-   velocidad_de_construccion: 20
-   fps: 20
-   delay: 1
-   vida: 50
-   oro: 50
-   piedra: 50
-   madera: 50 
-   raza: Humano
-
- - nombre: molinoMordor
-   imagen: img/4mordor/MOLINO.png
-   icono: img/4mordor/icon-molino.bmp
-   ancho_base: 3
-   alto_base: 3
-   pixel_ref_x: -50
-   pixel_ref_y: 75
-   velocidad_de_construccion: 20
-   fps: 6
-   delay: 1
-   vida: 50
-   oro: 50
-   piedra: 50
-   madera: 50
-   raza: Mordor
 
  - nombre: cuartelMordor
    imagen: img/4mordor/CUARTEL.png
