@@ -248,12 +248,6 @@ void simularEventosEnCola(queue <cola_data>* colaEventos, Interprete* interprete
 		usleep((40 - (tiempo_actual - tiempo_viejo)) * 1000);
 		tiempo_actual = SDL_GetTicks();
 		tiempo_viejo = tiempo_actual;
-		if (((tiempo_actual - acumulado) / 1000) > (double) RITMO_RECURSO) {
-			//cargaria en game controller el mensaje de crear recurso si crea
-			//hay que ver como cargarla en la cola eventos para todos los usuarios
-			interprete->generarRecursoRandom();
-			acumulado = tiempo_actual;
-		}
 
 	}
 
