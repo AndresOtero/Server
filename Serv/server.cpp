@@ -11,7 +11,7 @@
 #include <plog/Log.h>
 #include "ServerConnectionView.h"
 
-#define RITMO_RECURSO 5
+#define RITMO_RECURSO 1
 
 const unsigned int MAX_NUM_CLIENTS = 8;
 using namespace std;
