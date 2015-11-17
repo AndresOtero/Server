@@ -76,31 +76,25 @@ void Interprete::procesarMensajeDeCliente(msg_t msg, User* user) {
 //TODO aca hacer la decodificacion de msgs y ejecutar el comando del gameCtrl;
 	switch (msg.type) {
 	case CREAR_PERSONAJE_EDIFICIO:
-			printf("CREAR_PERSONAJE_EDIFICIO\n");
 			this->gameCtrl->crearPersonajeEdificio(msg.paramNombre,msg.paramTipo,msg.paramInt1,this->mutexGameCtrl);
 			break;
 	case MOVER_PERSONAJE:
-		printf("MOVER_PERSONAJE\n");
 		this->gameCtrl->cambiar_destino_personaje(msg.paramInt1,
 				msg.paramDouble1, msg.paramDouble2);
 		break;
 	case RECOLECCION_RECURSOS:
-		printf("RECOLECCION_RECURSOS\n");
 
 		this->gameCtrl->setAccionEntidad(msg.paramInt1,msg.paramDouble1);
 		break;
 	case ATACAR:
-		printf("ATACAR\n");
 
 		this->gameCtrl->atacar(msg.paramInt1, msg.paramDouble1);
 		break;
 	case CREAR_ENTIDAD:
-		printf("CREAR_ENTIDAD\n");
 
 		this->gameCtrl->crearEdificio(msg.paramNombre,msg.paramInt1,msg.paramDouble1,msg.paramDouble2,this->mutexGameCtrl);
 		break;
 	case CONSTRUIR:
-		printf("CONSTRUIR\n");
 
 		this->gameCtrl->setAccionEntidad(msg.paramInt1,msg.paramDouble1);
 		break;
