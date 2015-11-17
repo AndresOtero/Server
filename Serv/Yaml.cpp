@@ -14,6 +14,7 @@
 #include "ModeloSrc/Oro.h"
 #include "ModeloSrc/Piedra.h"
 #include "ModeloSrc/Madera.h"
+#include "ModeloSrc/Comida.h"
 #include <plog/Log.h>
 
 //#include "../ModeloSrc/ObjetoMapaAnimado.h"
@@ -91,6 +92,8 @@ Entidad* elegirEntidad(ObjetoMapa * objeto, Entidad_t entidad_t) {
 		entidad = new Piedra(objeto, x, y);
 	else if (objeto->nombre.compare("madera") == 0)
 		entidad = new Madera(objeto, x, y);
+	else if (objeto->nombre.compare("comida") == 0)
+		entidad = new Comida(objeto, x, y);
 	else
 		entidad = new Entidad(objeto, x, y);
 	return entidad;

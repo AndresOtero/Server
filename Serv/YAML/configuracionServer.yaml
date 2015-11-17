@@ -498,10 +498,15 @@ tipos:
    pixel_ref_x: 10
    pixel_ref_y: 3
 
+ - nombre: comida
+   imagen: img/extras/comida.png
+   pixel_ref_x: 10
+   pixel_ref_y: 3
+
  - nombre: madera
    imagen: img/extras/terrain/arboles/arbol1.png
-   pixel_ref_x: 16
-   pixel_ref_y: 120
+   pixel_ref_x: -20
+   pixel_ref_y: 200
 
  - nombre: arbol
    imagen: img/extras/terrain/arboles/arbol1.png
