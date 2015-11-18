@@ -24,6 +24,9 @@ void Interprete::setJuego(Juego * juego){
 
 void Interprete::crearModelo(){
 	this->gameCtrl->crearModelo();
+	int x = this->gameCtrl->juego->escenario->size_x;
+	int y = this->gameCtrl->juego->escenario->size_y;
+	this->gameCtrl->setMapa(x,y);
 }
 
 void Interprete::enviar_mensaje_a_users(msg_t msg){
