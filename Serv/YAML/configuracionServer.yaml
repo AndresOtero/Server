@@ -233,6 +233,7 @@ tipos:
    edificio_constructor: arqueriaElfos
    oro: 50
    comida: 50
+   rango: 10 
 
  - nombre: cirdan
    imagen: img/1elfos/legolas a caballo/WALK.png
