@@ -241,7 +241,7 @@ tipos:
    icono: img/1elfos/legolas a caballo/icon.bmp
    fps: 4
    delay: 0
-   velocidad: 24
+   velocidad: 40
    vida: 85
    fuerza: 35
    armadura: 15
