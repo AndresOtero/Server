@@ -464,8 +464,9 @@ tipos:
    vida: 50
 
 escenario:
-   nombre: orleans
-   size_x: 60
-   size_y: 60
-   entidades: 
+ nombre: orleans
+ size_x: 60
+ size_y: 60
+ entidades: 
+  - { x : 0, y: 5, tipo: madera }
 
