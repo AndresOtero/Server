@@ -464,8 +464,8 @@ tipos:
 
 escenario:
  nombre: orleans
- size_x: 100
- size_y: 100
+ size_x: 60
+ size_y: 60
  entidades: 
   - { x : 0, y: 5, tipo: madera }
 
