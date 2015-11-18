@@ -176,7 +176,7 @@ tipos:
    pixel_ref_y: 60
    vida: 50
    raza: Mordor
-   velocidad_de_construccion: 20
+   velocidad_de_construccion: 80
    oro: 150
    piedra: 300
    madera: 20 
