@@ -14,9 +14,9 @@ tipos:
    alto_base: 4
    pixel_ref_x: -90
    pixel_ref_y: 360
-   vida: 50
+   vida: 800
    raza: Elfo  
-   velocidad_de_construccion: 30
+   velocidad_de_construccion: 78
    oro: 164
    piedra: 47
    madera: 82   
@@ -28,9 +28,9 @@ tipos:
    alto_base: 3
    pixel_ref_x: -70
    pixel_ref_y: 320
-   vida: 50
+   vida: 750
    raza: Elfo
-   velocidad_de_construccion: 20
+   velocidad_de_construccion: 90
    oro: 180
    piedra: 45
    madera: 50 
@@ -41,7 +41,7 @@ tipos:
    alto_base: 4
    pixel_ref_x: -90
    pixel_ref_y: 270
-   vida: 50
+   vida: 2000
    raza: Elfo
 
  - nombre: banderaElfos
@@ -59,7 +59,7 @@ tipos:
    alto_base: 5
    pixel_ref_x: -145
    pixel_ref_y: 120
-   vida: 50
+   vida: 2000
    raza: Hobbit
 
  - nombre: cuartelHobbit
@@ -69,9 +69,9 @@ tipos:
    alto_base: 4
    pixel_ref_x: -100
    pixel_ref_y: 80
-   vida: 50
+   vida: 400
    raza: Hobbit
-   velocidad_de_construccion: 20
+   velocidad_de_construccion: 25
    oro: 55
    piedra: 50
    madera: 150 
@@ -83,9 +83,9 @@ tipos:
    alto_base: 3
    pixel_ref_x: -80
    pixel_ref_y: 85
-   vida: 50
+   vida: 800
    raza: Hobbit
-   velocidad_de_construccion: 20
+   velocidad_de_construccion: 50
    oro: 100
    madera: 300 
 
@@ -105,9 +105,9 @@ tipos:
    alto_base: 4
    pixel_ref_x: -125
    pixel_ref_y: 120
-   vida: 50
+   vida: 500
    raza: Humano
-   velocidad_de_construccion: 20
+   velocidad_de_construccion: 35
    oro: 28
    piedra: 175
    madera: 23 
@@ -118,7 +118,7 @@ tipos:
    alto_base: 5
    pixel_ref_x: -125
    pixel_ref_y: 120
-   vida: 50
+   vida: 2000
    raza: Humano
 
  - nombre: caballeriaHumano
@@ -128,9 +128,9 @@ tipos:
    alto_base: 4
    pixel_ref_x: -115
    pixel_ref_y: 130
-   vida: 50
+   vida: 500
    raza: Humano
-   velocidad_de_construccion: 20
+   velocidad_de_construccion: 50
    oro: 50
    piedra: 200
    madera: 50 
@@ -151,9 +151,9 @@ tipos:
    alto_base: 5
    pixel_ref_x: -140
    pixel_ref_y: 120
-   vida: 50
+   vida: 350
    raza: Mordor
-   velocidad_de_construccion: 20
+   velocidad_de_construccion: 10
    oro: 20
    piedra: 200
    madera: 20 
@@ -164,7 +164,7 @@ tipos:
    alto_base: 5
    pixel_ref_x: -150
    pixel_ref_y: 450
-   vida: 50
+   vida: 2000
    raza: Mordor
 
  - nombre: cuartelBestiaMordor
@@ -199,8 +199,8 @@ tipos:
    delay: 0
    velocidad: 24
    vida: 30
-   construccion: 15
-   recoleccion: 15
+   construccion: 13
+   recoleccion: 11
    raza: Elfo
    edificio_constructor: centrocivicoElfos
    oro: 25
@@ -261,8 +261,8 @@ tipos:
    delay: 0
    velocidad: 30
    vida: 30
-   construccion: 10
-   recoleccion: 15
+   construccion: 8
+   recoleccion: 16
    raza: Hobbit
    edificio_constructor: centroCivicoHobbit
    oro: 25
@@ -324,8 +324,8 @@ tipos:
    delay: 0
    velocidad: 22
    vida: 25
-   construccion: 10
-   recoleccion: 15
+   construccion: 12
+   recoleccion: 9
    raza: Humano
    edificio_constructor: centroCivicoHumano
    oro: 25
