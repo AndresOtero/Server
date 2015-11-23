@@ -65,6 +65,8 @@ const std::string tag_tipos_piedra = "piedra";
 const std::string tag_tipos_oro = "oro";
 const std::string tag_tipos_madera = "madera";
 const std::string tag_tipos_rango = "rango";
+const std::string tag_tipos_es_bote  = "es_bote";
+
 
 const std::string tag_escenario = "escenario";
 const std::string tag_escenario_nombre = "nombre";
@@ -293,6 +295,12 @@ void Yaml::cargarObjetoMapa(const YAML::Node* pTipos) {
 
 				*pRango >> tipo.rango;
 				objeto->rango = tipo.rango;
+			}
+			if (const YAML::Node *pEs_Bote =
+								((*pTipos)[cantidad_de_objetos]).FindValue(tag_tipos_es_bote)) {
+
+				*pEs_Bote >> tipo.es_bote;
+				objeto->es_bote = tipo.es_bote;
 			}
 			tipos[tipo.nombre] = objeto;
 			cantidad_de_objetos++;
